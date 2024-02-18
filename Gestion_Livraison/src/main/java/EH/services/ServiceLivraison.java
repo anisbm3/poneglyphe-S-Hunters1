@@ -5,6 +5,7 @@ import EH.utils.MyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDateTime;
 
 public class ServiceLivraison implements IService<Livraison> {
@@ -15,78 +16,69 @@ public class ServiceLivraison implements IService<Livraison> {
     }
 
     @Override
-    public void add(Livraison livraison) {
-        String qry = "INSERT INTO `livraison`(`Date`, `Adresse`, `Nom_Client`, `NumTel`) VALUES (?,?,?,?)";
+    public void ajouter(Livraison livraison) {
+        Statement st;
         try {
-            PreparedStatement stm = cnx.prepareStatement(qry);
-            stm.setObject(1, livraison.getDate() != null ? livraison.getDate() : LocalDateTime.now());
-            stm.setString(2, livraison.getAdresse());
-            stm.setString(3, livraison.getNom_Client());
-            stm.setInt(4, livraison.getNumTel());
-            stm.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());;
+            st = cnx.createStatement();
+            String query = "INSERT INTO `livraison`(`Date`, `Adresse`, `Nom_Client`, `NumTel`, `quantity`, `montant`, `ID_Produit`) VALUES ('" + livraison.getDate() + "','" + livraison.getAdresse() + "','" + livraison.getNom_Client() + "','" + livraison.getNumTel() + "','" + livraison.getQuantity() + "','" + livraison.getMontant() + "','" + livraison.getID_Produit() + "')";
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
-    public ArrayList<Livraison> getAll() {
-        ArrayList<Livraison> livraisons = new ArrayList<>();
-        String qry = "SELECT * FROM `livraison` ";
-        try {
-            Statement stm = cnx.createStatement();
-            ResultSet rs = stm.executeQuery(qry);
-            while (rs.next()) {
-                Livraison l = new Livraison();
-                l.setID_Livraison(rs.getInt(1));
-                LocalDateTime dateLivraison = rs.getObject(2, LocalDateTime.class);
-                // Vérifier si la date est nulle
-                if (dateLivraison != null) {
-                    l.setDate(dateLivraison);
-                    l.setAdresse(rs.getString(3));
-                    l.setNom_Client(rs.getString(4));
-                    l.setNumTel(rs.getInt(5));
-                    livraisons.add(l);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erreur lors de la récupération des livraisons", e);
+    public List<Livraison> afficher() throws SQLException {
+        List<Livraison> LL = new ArrayList<>();
+        Statement stm = cnx.createStatement();
+        String query = "SELECT * FROM livraison";
+        ResultSet rs = stm.executeQuery(query);
+        while (rs.next()) {
+            Livraison livraison = new Livraison();
+            livraison.setID_Livraison(rs.getInt("ID_Livraison"));
+            livraison.setDate(rs.getTimestamp("Date").toLocalDateTime());
+            livraison.setAdresse(rs.getString("Adresse"));
+            livraison.setNom_Client(rs.getString("Nom_Client"));
+            livraison.setNumTel(rs.getInt("NumTel"));
+            livraison.setQuantity(rs.getInt("quantity"));
+            livraison.setMontant(rs.getFloat("montant"));
+            livraison.setID_Produit(rs.getInt("ID_Produit"));
+            LL.add(livraison);
         }
-        return livraisons;
-    }
 
-
-    @Override
-    public void update(Livraison livraison) {
-        String qry = "UPDATE livraison SET Date=?, Adresse=?, Nom_Client=?, NumTel=? WHERE ID_Livraison=?";
-        try {
-            PreparedStatement stm = cnx.prepareStatement(qry);
-            if (livraison.getDate() == null) {
-                stm.setNull(1, Types.NULL);
-            } else {
-                stm.setObject(1, livraison.getDate());
-            }
-            stm.setString(2, livraison.getAdresse());
-            stm.setString(3, livraison.getNom_Client());
-            stm.setInt(4, livraison.getNumTel());
-            stm.setInt(5, livraison.getID_Livraison());
-            stm.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erreur lors de la mise à jour de la livraison", e);
-        }
+        return LL;
     }
 
     @Override
-    public boolean delete(Livraison livraison) {
-        String qry = "DELETE FROM livraison WHERE ID_Livraison=?";
-        try {
-            PreparedStatement stm = cnx.prepareStatement(qry);
-            stm.setInt(1, livraison.getID_Livraison());
-            stm.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return false;
+    public void supprimer(int ID_Livraison) throws SQLException {
+        Statement stm = cnx.createStatement();
+        String query = "delete from livraison where ID_Livraison =" + ID_Livraison;
+        stm.executeUpdate(query);
+    }
+
+    public Livraison SearchById(long ID_Livraison) throws SQLException {
+        Statement stm = cnx.createStatement();
+        Livraison livraison = new Livraison();
+        String query = "select * from livraison where ID_Livraison=" + ID_Livraison;
+        ResultSet rs = stm.executeQuery(query);
+        while (rs.next()) {
+            livraison.setID_Livraison(rs.getInt("ID_Livraison"));
+            livraison.setDate(rs.getTimestamp("Date").toLocalDateTime());
+            livraison.setAdresse(rs.getString("Adresse"));
+            livraison.setNom_Client(rs.getString("Nom_Client"));
+            livraison.setNumTel(rs.getInt("NumTel"));
+            livraison.setQuantity(rs.getInt("quantity"));
+            livraison.setMontant(rs.getFloat("montant"));
+            livraison.setID_Produit(rs.getInt("ID_Produit"));
         }
+        return livraison;
+    }
+
+    @Override
+    public void modifier(int ID_Livraison, Livraison livraison) throws SQLException {
+        Statement stm = cnx.createStatement();
+        Livraison r = SearchById(ID_Livraison);
+        String query = "UPDATE `livraison` SET `Date`='" + LocalDateTime.now() + "',`Adresse`='" + livraison.getAdresse() + "',`Nom_Client`='" + livraison.getNom_Client() + "',`NumTel`='" + livraison.getNumTel() + "',`quantity`='" + livraison.getQuantity() + "',`montant`='" + livraison.getMontant() + "',`ID_Produit`='" + livraison.getID_Produit() + "' where ID_Livraison =" + r.getID_Livraison();
+        stm.executeUpdate(query);
     }
 }

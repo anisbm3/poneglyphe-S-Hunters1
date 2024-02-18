@@ -1,11 +1,17 @@
 package EH.interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.sql.SQLException;
 
 public interface IService <T> {
-    void add (T t);
-    ArrayList<T> getAll();
-    void update(T t);
-    boolean delete(T t);
+
+    public void ajouter(T t);
+    public List<T> afficher() throws SQLException;
+
+    public void supprimer(int id) throws SQLException;
+
+    public void modifier(int id, T t) throws SQLException;
 
 }
+
+

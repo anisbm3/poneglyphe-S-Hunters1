@@ -2,11 +2,12 @@ package EH.services;
 
 import EH.interfaces.IService;
 import EH.models.Facture;
+import EH.models.Livraison;
 import EH.utils.MyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.time.LocalDateTime;
+import java.util.List;
 
 public class ServiceFacture implements IService<Facture> {
     private Connection cnx;
@@ -16,72 +17,87 @@ public class ServiceFacture implements IService<Facture> {
     }
 
     @Override
-    public void add(Facture facture) {
-        String qry = "INSERT INTO `facture`(`NomPrenom`, `ville`, `montant_a_paye`, `date_versement`, `etat`) VALUES (?,?,?,?,?)";
-        try {
-            PreparedStatement stm = cnx.prepareStatement(qry);
-            stm.setString(1, facture.getNomPrenom());
-            stm.setString(2, facture.getVille());
-            stm.setString(3, facture.getMontant_a_paye());
-            stm.setObject(4, facture.getDate_versement());
-            stm.setString(5, facture.getEtat());
-            stm.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());;
-        }
+    public void ajouter(Facture facture) {
+
     }
 
     @Override
-    public ArrayList<Facture> getAll() {
-        ArrayList<Facture> factures = new ArrayList<>();
-        String qry = "SELECT * FROM `facture` ";
-        try {
-            Statement stm = cnx.createStatement();
-            ResultSet rs = stm.executeQuery(qry);
-            while (rs.next()) {
-                Facture f = new Facture();
-                f.setID_Facture(rs.getInt(1));
-                f.setNomPrenom(rs.getString(2));
-                f.setVille(rs.getString(3));
-                f.setMontant_a_paye(rs.getString(4));
-                f.setDate_versement(rs.getObject(5, LocalDateTime.class));
-                f.setEtat(rs.getString(6));
-                factures.add(f);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erreur lors de la récupération des factures", e);
+    public List<Facture> afficher() throws SQLException {
+        List<Facture> lf = new ArrayList<>();
+        Statement stm = cnx.createStatement();
+        String query = "SELECT * FROM facture";
+        ResultSet rs = stm.executeQuery(query);
+        while (rs.next()) {
+            Facture facture = new Facture();
+            facture.setIdFacture(rs.getInt("idFacture"));
+            facture.setID_Livraison(rs.getInt("ID_Livraison"));
+            facture.setDatefacture(rs.getTimestamp("datefacture").toLocalDateTime());
+            facture.setRemise(rs.getInt("remise"));
+            facture.setMontant(rs.getFloat("montant"));
+            lf.add(facture);
         }
-        return factures;
+        return lf;
     }
 
     @Override
-    public void update(Facture facture) {
-        String qry = "UPDATE facture SET NomPrenom=?, ville=?, montant_a_paye=?, date_versement=?, etat=? WHERE ID_Facture=?";
-        try {
-            PreparedStatement stm = cnx.prepareStatement(qry);
-            stm.setString(1, facture.getNomPrenom());
-            stm.setString(2, facture.getVille());
-            stm.setString(3, facture.getMontant_a_paye());
-            stm.setObject(4, facture.getDate_versement());
-            stm.setString(5, facture.getEtat());
-            stm.setInt(6, facture.getID_Facture());
-            stm.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erreur lors de la mise à jour de la facture", e);
-        }
+    public void supprimer(int idFacture) throws SQLException {
+        Statement stm = cnx.createStatement();
+        String query = "DELETE FROM facture WHERE idFacture = " + idFacture;
+        stm.executeUpdate(query);
     }
 
     @Override
-    public boolean delete(Facture facture) {
-        String qry = "DELETE FROM facture WHERE ID_Facture=?";
+    public void modifier(int id, Facture facture) throws SQLException {
+
+    }
+
+    public Facture SearchById(long idFacture) throws SQLException {
+        Statement stm = cnx.createStatement();
+        Facture facture = new Facture();
+        String query = "SELECT * FROM facture WHERE idFacture=" + idFacture;
+        ResultSet rs = stm.executeQuery(query);
+        while (rs.next()) {
+            facture.setIdFacture(rs.getInt("idFacture"));
+            facture.setID_Livraison(rs.getInt("ID_Livraison"));
+            facture.setDatefacture(rs.getTimestamp("datefacture").toLocalDateTime());
+            facture.setRemise(rs.getInt("remise"));
+            facture.setMontant(rs.getFloat("montant"));
+        }
+        return facture;
+    }
+
+    public void modifier(int idFactureModifier, int ID_Livraison, Facture facture) throws SQLException {
+        Statement stm = cnx.createStatement();
+        Facture f = SearchById(idFactureModifier);
+        Livraison l = SearchLivraisonById(f.getID_Livraison());
+        String query = "UPDATE facture SET ID_Livraison = '" + facture.getID_Livraison() + "', datefacture = '" + facture.getDatefacture() + "', remise = '" + facture.getRemise() + "', montant = '" + (l.getMontant() * facture.getRemise()) + "' WHERE idFacture =" + f.getIdFacture();
+        stm.executeUpdate(query);
+    }
+
+    public Livraison SearchLivraisonById(long ID_Livraison) throws SQLException {
+        Statement stm = cnx.createStatement();
+        Livraison livraison = new Livraison();
+        String query = "SELECT * FROM livraison WHERE ID_Livraison=" + ID_Livraison;
+        ResultSet rs = stm.executeQuery(query);
+        while (rs.next()) {
+            livraison.setID_Livraison(rs.getInt("ID_Livraison"));
+            livraison.setDate(rs.getTimestamp("Date").toLocalDateTime());
+            livraison.setQuantity(rs.getInt("quantity"));
+            livraison.setMontant(rs.getFloat("montant"));
+            livraison.setID_Pannier(rs.getInt("ID_Pannier"));
+        }
+        return livraison;
+    }
+
+    public void AjouterFacture(int ID_Livraison, Facture facture) throws SQLException {
+        Livraison l = SearchLivraisonById(ID_Livraison);
+        Statement st;
         try {
-            PreparedStatement stm = cnx.prepareStatement(qry);
-            stm.setInt(1, facture.getID_Facture());
-            stm.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return false;
+            st = cnx.createStatement();
+            String query = "INSERT INTO facture (ID_Livraison, datefacture, remise, montant) VALUES ('" + ID_Livraison + "', '" + facture.getDatefacture() + "', '" + facture.getRemise() + "', '" + (l.getMontant() * ((100 - facture.getRemise()) * 0.01)) + "')";
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }

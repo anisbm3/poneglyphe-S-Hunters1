@@ -1,65 +1,77 @@
 package EH.test;
-
-import EH.models.Livraison;
-import EH.services.ServiceLivraison;
 import EH.models.Facture;
+import EH.models.Livraison;
 import EH.services.ServiceFacture;
+import EH.services.ServiceLivraison;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
-        Livraison l1 = new Livraison(1, LocalDateTime.now(), "tunis", "eya", 52414880);
-        Livraison l2 = new Livraison(2, LocalDateTime.now(), "tunis", "vvvvv", 52646898);
+        ServiceLivraison serviceLivraison = new ServiceLivraison();
+        ServiceFacture serviceFacture = new ServiceFacture();
 
+        // Ajouter une livraison
+        Livraison livraison = new Livraison(1, LocalDateTime.now(), "Adresse1", "Client1", 123456789, 1, 100.0f,1);
+        serviceLivraison.ajouter(livraison);
 
-        ServiceLivraison sl = new ServiceLivraison();
-        sl.add(l1);
-        sl.add(l2);
+        // Afficher toutes les livraisons
+        try {
+            List<Livraison> livraisons = serviceLivraison.afficher();
+            for (Livraison l : livraisons) {
+                System.out.println(l);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'affichage des livraisons : " + e.getMessage());
+        }
 
-        System.out.println("Avant la suppression :");
-        System.out.println(sl.getAll());
+        // Modifier une livraison
+        Livraison livraisonModifiee = new Livraison(1, LocalDateTime.now(), "NouvelleAdresse", "NouveauClient", 987654321, 2, 200.0f, 2);
+        try {
+            serviceLivraison.modifier(1, livraisonModifiee);
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la modification d'une livraison : " + e.getMessage());
+        }
 
-        // Supprimer la livraison avec l'ID 1
-        sl.delete(l1);
+        // Supprimer une livraison
+        try {
+            serviceLivraison.supprimer(1);
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression d'une livraison : " + e.getMessage());
+        }
 
-        System.out.println("Après la suppression :");
-        System.out.println(sl.getAll());
+        // Ajouter une facture
+        try {
+            serviceFacture.AjouterFacture(1, new Facture(1, LocalDateTime.now(), 10));
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'ajout d'une facture : " + e.getMessage());
+        }
 
-        // Mettre à jour la livraison avec l'ID 2
-        l2.setAdresse("nouvelle adresse");
-        l2.setNom_Client("nouveau nom client");
-        l2.setNumTel(12345678);
-        sl.update(l2);
+        // Afficher toutes les factures
+        try {
+            List<Facture> factures = serviceFacture.afficher();
+            for (Facture f : factures) {
+                System.out.println(f);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'affichage des factures : " + e.getMessage());
+        }
 
-        System.out.println("Après la mise à jour :");
-        System.out.println(sl.getAll());
+        // Modifier une facture
+        try {
+            serviceFacture.modifier(1, new Facture(1, LocalDateTime.now(), 20));
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la modification d'une facture : " + e.getMessage());
+        }
 
-
-
-        Facture f1 = new Facture(1, "Nom Prenom 1", "ville 1", "100", LocalDateTime.now(), "en cours");
-        Facture f2 = new Facture(2, "Nom Prenom 2", "ville 2", "200", LocalDateTime.now(), "en cours");
-        ServiceFacture sf = new ServiceFacture();
-        sf.add(f1);
-        sf.add(f2);
-
-        System.out.println("Avant la suppression :");
-        System.out.println(sf.getAll());
-
-        // Supprimer la facture avec l'ID 1
-        sf.delete(f1);
-
-        System.out.println("Après la suppression :");
-        System.out.println(sf.getAll());
-
-        // Mettre à jour la facture avec l'ID 2
-        f2.setVille("nouvelle ville");
-        f2.setNomPrenom("nouveau nom prenom");
-        f2.setMontant_a_paye("300");
-        sf.update(f2);
-
-        System.out.println("Après la mise à jour :");
-        System.out.println(sf.getAll());
+        // Supprimer une facture
+        try {
+            serviceFacture.supprimer(1);
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression d'une facture : " + e.getMessage());
+        }
     }
 }
 
