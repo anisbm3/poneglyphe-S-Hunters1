@@ -9,7 +9,7 @@ public class Reservation {
 
     }
 
-    public Reservation(int ID_Reservation,String Nom_Reseervation,int NB_Places,String Etat,int ID_Event){
+    public Reservation(int ID_Reservation, String Nom_Reseervation,int NB_Places,String Etat,int ID_Event){
         this.ID_Reservation=ID_Reservation;
         this.Nom_Reseervation=Nom_Reseervation;
         this.NB_Places=NB_Places;
