@@ -25,6 +25,18 @@ public class Evenement {
 
     }
 
+    public Evenement(String Nom_Event, String Description_Event, String Lieu_Event,LocalDateTime Date_Event) {
+        this.Nom_Event = Nom_Event;
+        this.Description_Event = Description_Event;
+        this.Lieu_Event = Lieu_Event;
+        this.Date_Event = Date_Event;
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH.mm");
+        // this.Date_Event = LocalTime.parse(temps, DateTimeFormatter.ofPattern("HH:mm"));
+        //this.Date_Event = LocalDateTime.parse(temps, formatter);
+
+    }
+
+
     public int getID_Event() {
         return ID_Event;
     }

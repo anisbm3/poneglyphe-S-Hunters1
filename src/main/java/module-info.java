@@ -1,14 +1,11 @@
-/**
- *
- */
 module tn.esprit.test {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
 
-
-    opens tn.esprit to javafx.fxml;
-
     exports tn.esprit.test;
-    opens tn.esprit.test to javafx.fxml;
+    exports tn.esprit.controlls;
+
+    opens tn.esprit.controlls to javafx.fxml;
+    opens tn.esprit.models to javafx.base;
 }
