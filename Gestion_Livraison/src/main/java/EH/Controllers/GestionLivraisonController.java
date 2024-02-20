@@ -69,9 +69,6 @@ public class GestionLivraisonController implements Initializable {
     @FXML
     private TextField TfMontant;
 
-    /**
-     * Initializes the controller class.
-     */
 
     ServiceLivraison sl =new ServiceLivraison();
     int id;

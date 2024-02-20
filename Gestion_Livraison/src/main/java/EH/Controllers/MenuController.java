@@ -18,21 +18,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * FXML Controller class
- *
- * @author Homrani
- */
 public class MenuController implements Initializable {
 
     @FXML
     private AnchorPane left_main;
     @FXML
     private ScrollPane scroll;
-
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -41,7 +32,7 @@ public class MenuController implements Initializable {
     @FXML
     private void Livraison(ActionEvent event) {
                      try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("EH/Gui/GestionLivraisonController.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("EH/Gui/AjouterLivraison.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);

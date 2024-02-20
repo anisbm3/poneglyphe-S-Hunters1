@@ -1,4 +1,5 @@
 package EH.test;
+
 import EH.models.Facture;
 import EH.models.Livraison;
 import EH.services.ServiceFacture;
@@ -28,16 +29,20 @@ class Main {
         }
 
         // Modifier une livraison
-        Livraison livraisonModifiee = new Livraison(1,2,3, 300,452.0f,LocalDateTime.now());
+        Livraison livraisonModifiee = new Livraison(87,2,3,300,452.0f,LocalDateTime.now());
+        System.out.println("Modification de la livraison...");
         try {
-            serviceLivraison.modifier(1, livraisonModifiee);
+            serviceLivraison.modifier(87, livraisonModifiee);
+            System.out.println("Livraison modifiée avec succès.");
         } catch (SQLException e) {
             System.out.println("Erreur lors de la modification d'une livraison : " + e.getMessage());
         }
 
         // Supprimer une livraison
+        System.out.println("Suppression de la livraison...");
         try {
-            serviceLivraison.supprimer(1);
+            serviceLivraison.supprimer(88);
+            System.out.println("Livraison supprimée avec succès.");
         } catch (SQLException e) {
             System.out.println("Erreur lors de la suppression d'une livraison : " + e.getMessage());
         }
@@ -61,17 +66,18 @@ class Main {
 
         // Modifier une facture
         try {
-            serviceFacture.modifier(1, new Facture(1, LocalDateTime.now(), 20));
+            serviceFacture.modifier(12, new Facture(1, LocalDateTime.now(), 20));
         } catch (SQLException e) {
             System.out.println("Erreur lors de la modification d'une facture : " + e.getMessage());
         }
 
         // Supprimer une facture
         try {
-            serviceFacture.supprimer(1);
+            serviceFacture.supprimer(13);
         } catch (SQLException e) {
             System.out.println("Erreur lors de la suppression d'une facture : " + e.getMessage());
         }
     }
 }
+
 

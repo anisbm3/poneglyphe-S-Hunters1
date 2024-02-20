@@ -41,15 +41,34 @@ public class ServiceFacture implements IService<Facture> {
 
     @Override
     public void supprimer(int idFacture) throws SQLException {
-        Statement stm = cnx.createStatement();
-        String query = "DELETE FROM facture WHERE idFacture = " + idFacture;
-        stm.executeUpdate(query);
+        String query = "DELETE FROM facture WHERE idFacture = ?";
+        try (PreparedStatement stm = cnx.prepareStatement(query)) {
+            stm.setInt(1, idFacture);
+            int rowsAffected = stm.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Facture supprimée avec succès.");
+            } else {
+                System.out.println("Aucune facture trouvée avec l'ID : " + idFacture);
+            }
+        }
     }
 
     @Override
-    public void modifier(int id, Facture facture) throws SQLException {
-
+    public void modifier(int idFacture, Facture facture) throws SQLException {
+        String query = "UPDATE facture SET dateFacture=?, montant=? WHERE idFacture=?";
+        try (PreparedStatement stm = cnx.prepareStatement(query)) {
+            stm.setTimestamp(1, Timestamp.valueOf(facture.getDatefacture()));
+            stm.setFloat(2, facture.getMontant());
+            stm.setInt(3, idFacture);
+            int rowsAffected = stm.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Facture modifiée avec succès.");
+            } else {
+                System.out.println("Aucune facture trouvée avec l'ID : " + idFacture);
+            }
+        }
     }
+
 
     public Facture SearchById(long idFacture) throws SQLException {
         Statement stm = cnx.createStatement();
