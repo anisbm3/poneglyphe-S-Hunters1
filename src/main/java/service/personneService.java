@@ -1,6 +1,13 @@
 package service;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import util.datasource;
-
+import controller.login_controller;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +32,7 @@ public class personneService implements IService<user>{
         ps.setInt(2, user.getCin());
         ps.setString(3, user.getNom());
         ps.setString(4, user.getPrenom());
-        ps.setString(5, user.getAge());
+        ps.setInt(5, user.getAge());
         ps.setInt(6, user.getNumTel());
         ps.setString(7, user.getEmail());
         ps.setString(8, user.getMdp());
@@ -52,7 +59,7 @@ public class personneService implements IService<user>{
         ps.setInt(1, user.getCin());
         ps.setString(2, user.getNom());
         ps.setString(3, user.getPrenom());
-        ps.setString(4, user.getAge());
+        ps.setInt(4, user.getAge());
         ps.setInt(5, user.getNumTel());
         ps.setString(6, user.getEmail());
         ps.setString(7, user.getMdp());
@@ -74,7 +81,7 @@ public class personneService implements IService<user>{
             u.setCin(rs.getInt("CIN"));
             u.setNom(rs.getString("NOM"));
             u.setPrenom(rs.getString("PRENOM"));
-            u.setAge(rs.getString("AGE"));
+            u.setAge(rs.getInt("AGE"));
             u.setNumTel(rs.getInt("NUMTEL"));
             u.setEmail(rs.getString("EMAIL"));
             u.setMdp(rs.getString("MDP"));
@@ -83,5 +90,44 @@ public class personneService implements IService<user>{
         }
         return utilisateurs;
     }
+
+    public boolean utilisateurLoggedIn(String pseudo, String mdp) throws SQLException {
+        String req = "SELECT * FROM `user` WHERE pseudo=? AND mdp=?";
+        PreparedStatement ps = cnx.prepareStatement(req);
+        ps.setString(1, pseudo);
+        ps.setString(2, mdp);
+        ResultSet rs = ps.executeQuery();
+        return rs.next();
+    }
+    public user afficherParPseudo(String pseudo) throws SQLException {
+        user u = null; // Initialisez à null en dehors de la boucle
+        String req = "SELECT * FROM `user` WHERE pseudo=?";
+        PreparedStatement ps= cnx.prepareStatement(req);
+        ps.setString(1, pseudo);
+        ResultSet rs = ps.executeQuery(); // Remove req from executeQuery
+        while (rs.next()){
+            u = new user(rs.getString("PSEUDO"), rs.getInt("CIN"), rs.getString("NOM"), rs.getString("PRENOM"), rs.getInt("AGE"), rs.getInt("NUMTEL"), rs.getString("EMAIL"), rs.getString("MDP"), rs.getString("ROLE"));
+        }
+        return u;
+    }
+    public boolean pseudoExiste(String pseudo) throws SQLException {
+        String req = "SELECT * FROM `user` WHERE pseudo=?";
+        PreparedStatement ps = cnx.prepareStatement(req);
+        ps.setString(1, pseudo);
+        ResultSet rs = ps.executeQuery();
+        return rs.next();
     }
 
+    public void changeScreen(ActionEvent event, String fxmlFile, String title){
+        try {
+            FXMLLoader loader = new FXMLLoader(login_controller.class.getResource(fxmlFile));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle(title);
+            stage.setScene(new Scene(root));
+            stage.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+}

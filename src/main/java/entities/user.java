@@ -5,19 +5,13 @@ public class user {
     private int cin;
     private String prenom;
     private String nom;
-    private String age;
-
-
-
-
-
-
+    private int age;
     private int numTel;
     private String email;
     private String mdp;
     private String role;
 
-    public user(String pseudo, int cin, String prenom, String nom, String age, int numTel, String email, String mdp, String role) {
+    public user(String pseudo, int cin, String prenom, String nom, int age, int numTel, String email, String mdp, String role) {
         this.pseudo = pseudo;
         this.cin = cin;
         this.prenom = prenom;
@@ -64,11 +58,11 @@ public class user {
         this.nom = nom;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
