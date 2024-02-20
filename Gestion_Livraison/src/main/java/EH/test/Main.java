@@ -14,7 +14,7 @@ class Main {
         ServiceFacture serviceFacture = new ServiceFacture();
 
         // Ajouter une livraison
-        Livraison livraison = new Livraison(1, LocalDateTime.now(), "Adresse1", "Client1", 123456789, 1, 100.0f,1);
+        Livraison livraison = new Livraison(1,5,10,587,200.0f,LocalDateTime.now());
         serviceLivraison.ajouter(livraison);
 
         // Afficher toutes les livraisons
@@ -28,7 +28,7 @@ class Main {
         }
 
         // Modifier une livraison
-        Livraison livraisonModifiee = new Livraison(1, LocalDateTime.now(), "NouvelleAdresse", "NouveauClient", 987654321, 2, 200.0f, 2);
+        Livraison livraisonModifiee = new Livraison(1,2,3, 300,452.0f,LocalDateTime.now());
         try {
             serviceLivraison.modifier(1, livraisonModifiee);
         } catch (SQLException e) {

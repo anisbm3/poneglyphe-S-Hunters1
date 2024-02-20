@@ -26,77 +26,63 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GestionLivraisonController implements Initializable {
     @FXML
-    private TextField Adresse;
-
+    private AnchorPane left_main;
     @FXML
-    private TableColumn<?, ?> ClientTab;
-
+    private Button btn_delete;
     @FXML
-    private TableColumn<?, ?> DateTab;
-
+    private Button btn_edit;
     @FXML
-    private TableColumn<?, ?> AdresseTab;
-
+    private TableView<Livraison> LivraisonTab;
     @FXML
-    private TableColumn<?, ?> IDLivraisonTab;
-
+    private TableColumn<Livraison, Integer> IDLivraisonTab;
     @FXML
-    private TableView<Livraison> Livraisontab;
-
+    private TableColumn<Livraison, Integer> ProduitTab;
     @FXML
-    private TableColumn<?, ?> MontantTab;
-
+    private TableColumn<Livraison, Integer> ClientTab;
     @FXML
-    private TableColumn<?, ?> ProduitTab;
-
+    private TableColumn<Livraison, Integer> QuantityTab;
     @FXML
-    private TableColumn<?, ?> QuantityTab;
-
+    private TableColumn<Livraison, Float> MontantTab;
     @FXML
-    private Button Statistique1;
-
+    private TableColumn<Livraison, LocalDateTime> DateTab;
     @FXML
     private TextField TFSearch;
-
+    @FXML
+    private Button Statistique1;
+    @FXML
+    private TextField TfQuantity;
+    @FXML
+    private DatePicker date;
+    @FXML
+    private ComboBox<Integer> cb_Produit;
+    ObservableList<Integer> optionsProduit=FXCollections.observableArrayList();
+    @FXML
+    private ComboBox<Integer> cb_Client;
+    ObservableList<Integer> optionsClient=FXCollections.observableArrayList();
     @FXML
     private TextField TfMontant;
 
-    @FXML
-    private TextField TfQuantity;
+    /**
+     * Initializes the controller class.
+     */
 
-    @FXML
-    private Button btn_delete;
-
-    @FXML
-    private Button btn_edit;
-
-    @FXML
-    private ComboBox<?> cb_Produit;
-
-    @FXML
-    private TextField clien;
-
-    @FXML
-    private DatePicker date;
-
-    @FXML
-    private AnchorPane left_main;
-
-    ServiceLivraison sl = new ServiceLivraison();
+    ServiceLivraison sl =new ServiceLivraison();
     int id;
     Livraison l;
-    ObservableList<Livraison> data = FXCollections.observableArrayList();
+    ObservableList<Livraison> data=FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         refreshlist();
         fillcomboProduit();
+        fillcomboClient();
         try {
             recherche_avance();
         } catch (SQLException ex) {
@@ -104,44 +90,56 @@ public class GestionLivraisonController implements Initializable {
         }
     }
 
+    public void fillcomboClient(){
+        try {
+            Connection cnx = MyDataBase.getInstance().getCnx();
+            String req = " select * from client";
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery(req);
+            while(rs.next()){
+                optionsClient.add(rs.getInt("ID_Client"));
+            }
+            cb_Client.setItems(optionsClient);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-
-    public void fillcomboProduit() {
+    public void fillcomboProduit(){
         try {
             Connection cnx = MyDataBase.getInstance().getCnx();
             String req = " select * from produits";
             PreparedStatement cs = cnx.prepareStatement(req);
             ResultSet rs = cs.executeQuery(req);
-            while (rs.next()) {
-                optionsProduit.add(rs.getInt("idP"));
+            while(rs.next()){
+                optionsProduit.add(rs.getInt("ID_Produit"));
             }
             cb_Produit.setItems(optionsProduit);
         } catch (SQLException ex) {
             Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void refreshlist() {
+    public void refreshlist(){
         data.clear();
         try {
-            data = FXCollections.observableArrayList(sl.afficher());
+            data=FXCollections.observableArrayList(sl.afficher());
         } catch (SQLException ex) {
             Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
         }
         IDLivraisonTab.setVisible(false);
         IDLivraisonTab.setCellValueFactory(new PropertyValueFactory<>("ID_Livraison"));
-        ProduitTab.setCellValueFactory(new PropertyValueFactory<>("ID_Preduit"));
-        ClientTab.setCellValueFactory(new PropertyValueFactory<>("Nom_Client"));
+        ProduitTab.setCellValueFactory(new PropertyValueFactory<>("ID_Produit"));
+        ClientTab.setCellValueFactory(new PropertyValueFactory<>("ID_Client"));
         QuantityTab.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         MontantTab.setCellValueFactory(new PropertyValueFactory<>("montant"));
         DateTab.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        AdresseTab.setCellValueFactory(new PropertyValueFactory<>("Adresse"));
-        Livraisontab.setItems(data);
+        LivraisonTab.setItems(data);
     }
 
     public void recherche_avance() throws SQLException {
 
         data = FXCollections.observableArrayList(sl.afficher());
+        //System.out.println(data);
         FilteredList<Livraison> filteredData = new FilteredList<>(data, b -> true);
         TFSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(p -> {
@@ -149,46 +147,57 @@ public class GestionLivraisonController implements Initializable {
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
-                if (String.valueOf(p.getID_Livraison()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                if (String.valueOf(p.getID_Livraison()).toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
                     return true;
                 }
-                if (String.valueOf(p.getID_Produit()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                if (String.valueOf(p.getID_Produit()).toLowerCase().indexOf(lowerCaseFilter) != -1 ){
                     return true;
-                } else if (String.valueOf(p.getNom_Client()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                }
+                else if(String.valueOf(p.getID_Client()).toLowerCase().indexOf(lowerCaseFilter) != -1 ){
                     return true;
-                } else if (String.valueOf(p.getQuantity()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                }
+                else if(String.valueOf(p.getQuantity()).toLowerCase().indexOf(lowerCaseFilter) != -1 ){
                     return true;
-                } else if (String.valueOf(p.getMontant()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                }
+                else if(String.valueOf(p.getMontant()).toLowerCase().indexOf(lowerCaseFilter) != -1 ){
                     return true;
-                } else if (String.valueOf(p.getDate()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                }
+                else if(String.valueOf(p.getDate()).toLowerCase().indexOf(lowerCaseFilter)!=-1){
                     return true;
-                } else
-                    return false;
+                }
+
+                else
+                    return false; // Does not match.
             });
 
         });
+        // 3. Wrap the FilteredList in a SortedList.
         SortedList<Livraison> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(Livraisontab.comparatorProperty());
-        Livraisontab.setItems(sortedData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        // 	  Otherwise, sorting the TableView would have no effect.
+        sortedData.comparatorProperty().bind(LivraisonTab.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        LivraisonTab.setItems(sortedData);
 
     }
 
     @FXML
     private void fillforum(MouseEvent event) {
-        Livraison livraison = Livraisontab.getSelectionModel().getSelectedItem();
-        id = livraison.getID_Livraison();
-        cb_Produit.setValue(livraison.getID_Produit());
-        clien.setText(livraison.getNom_Client());
+        Livraison livraison=LivraisonTab.getSelectionModel().getSelectedItem();
+        id=livraison.getID_Livraison();
+        cb_Produit.setValue(Livraison.getID_Produit());
+        cb_Client.setValue(livraison.getID_Client());
         TfQuantity.setText(Integer.toString(livraison.getQuantity()));
         TfMontant.setText(Float.toString(livraison.getMontant()));
         date.setValue(livraison.getDate().toLocalDate());
-        Adresse.setText(livraison.getAdresse());
     }
 
     @FXML
     private void Retour(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("gestioncommande/Gui/Menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("EH/Gui/Menu.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -200,8 +209,8 @@ public class GestionLivraisonController implements Initializable {
 
     @FXML
     private void DeleteLivraison(ActionEvent event) {
-        int Id;
-        Id = Livraisontab.getSelectionModel().getSelectedItem().getID_Livraison();
+        int id;
+        id=LivraisonTab.getSelectionModel().getSelectedItem().getID_Livraison();
         try {
             sl.supprimer(id);
             refreshlist();
@@ -212,18 +221,17 @@ public class GestionLivraisonController implements Initializable {
         refreshlist();
     }
 
-    public void updateLivraison() throws SQLException {
+    public void updateReclamation() throws SQLException{
 
-        Livraison livraison = new Livraison(cb_Produit.getValue(), NomClient(), Integer.parseInt(TfQuantity.getText()), Float.parseFloat(TfMontant.getText()), date.getValue().atStartOfDay());
-
-        sl.modifier(id, livraison);
+        Livraison livraison = new Livraison(cb_Produit.getValue(), cb_Client.getValue(), Integer.parseInt(TfQuantity.getText()), Float.parseFloat(TfMontant.getText()),
+                date.getValue().atStartOfDay());
+        sl.modifier(id, new Livraison());
         refreshlist();
     }
-
     @FXML
     private void EditLivraison(ActionEvent event) {
         try {
-            updateLivraison();
+            updateReclamation();
             refreshlist();
             recherche_avance();
         } catch (SQLException ex) {
@@ -232,3 +240,4 @@ public class GestionLivraisonController implements Initializable {
     }
 
 }
+

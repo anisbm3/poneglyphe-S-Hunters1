@@ -1,49 +1,48 @@
 package EH.models;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Objects;
 
 public class Livraison {
-  private int ID_Livraison,NumTel;
-  private String Adresse,Nom_Client;
+  private int ID_Livraison;
+  private static Integer ID_Produit;
+
+  private static Integer ID_Client;
   private LocalDateTime Date;
   private int quantity;
   private float montant;
-  private int ID_Produit;
-
-    public Livraison() {
-    }
-
-    public Livraison(int ID_Livraison, LocalDateTime Date, String Adresse,String Nom_Client, int NumTel ,int quantity,float montant,int ID_Produit) {
-      this.ID_Livraison = ID_Livraison;
-      this.Date = Date;
-      this.Adresse = Adresse;
-      this.Nom_Client = Nom_Client;
-      this.NumTel = NumTel;
-      this.quantity=quantity;
-      this.montant = montant;
-      this.ID_Produit = ID_Produit;
 
 
-    }
+  public Livraison() {
+  }
 
+  public Livraison(int ID_Livraison, Integer ID_Produit, Integer ID_Client,int quantity, float montant, LocalDateTime Date) {
+    this.ID_Livraison = ID_Livraison;
+    this.ID_Produit = ID_Produit;
+    this.ID_Client = ID_Client;
+    this.montant = montant;
+    this.quantity = quantity;
+    this.Date = Date;
+
+  }
+
+  public Livraison(Integer ID_Produit, Integer ID_Client, int quantity, float montant, LocalDateTime localDateTime) {
+  }
 
   public int getID_Livraison() {
     return ID_Livraison;
   }
 
-  public LocalDateTime getDate() {
-    return Date;
+  public static Integer getID_Produit() {
+    return ID_Produit;
   }
 
-  public String getAdresse() {
-    return Adresse;
+  public static Integer getID_Client() {
+    return ID_Client;
   }
-  public String getNom_Client() {
-    return Nom_Client;
-  }
-  public int getNumTel() {
-    return NumTel;
+
+  public LocalDateTime getDate() {
+    return Date;
   }
 
   public int getQuantity() {
@@ -54,27 +53,20 @@ public class Livraison {
     return montant;
   }
 
-  public int getID_Produit() {
-    return ID_Produit;
-  }
-
   public void setID_Livraison(int ID_Livraison) {
     this.ID_Livraison = ID_Livraison;
   }
 
+  public static void setID_Produit(Integer ID_Produit) {
+    Livraison.ID_Produit = ID_Produit;
+  }
+
+  public void setID_Client(Integer ID_Client) {
+    this.ID_Client = ID_Client;
+  }
+
   public void setDate(LocalDateTime Date) {
-    this.Date = Date;
-  }
-
-
-  public void setAdresse(String adresse) {
-    Adresse = adresse;
-  }
-  public void setNom_Client(String nom_Client) {
-    Nom_Client = nom_Client;
-  }
-  public void setNumTel(int numTel) {
-    NumTel = numTel;
+    Date = Date;
   }
 
   public void setQuantity(int quantity) {
@@ -85,22 +77,27 @@ public class Livraison {
     this.montant = montant;
   }
 
-  public void setID_Produit(int ID_Pannier) {
-    this.ID_Produit = ID_Produit;
-  }
-
   @Override
   public String toString() {
     return "Livraison{" +
             "ID_Livraison=" + ID_Livraison +
-            ", NumTel=" + NumTel +
-            ", Adresse='" + Adresse + '\'' +
-            ", Nom_Client='" + Nom_Client + '\'' +
+            ", ID_Client=" + ID_Client +
             ", Date=" + Date +
             ", quantity=" + quantity +
             ", montant=" + montant +
-            ", ID_Produit=" + ID_Produit +
             '}';
   }
-}
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Livraison livraison = (Livraison) o;
+    return ID_Client == livraison.ID_Client && quantity == livraison.quantity && Float.compare(montant, livraison.montant) == 0 && Objects.equals(ID_Livraison, livraison.ID_Livraison) && Objects.equals(Date, livraison.Date);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(ID_Livraison, ID_Client, Date, quantity, montant);
+  }
+}

@@ -15,33 +15,32 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="left_main" prefHeight="824.0" prefWidth="1330.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestioncommande.GuiController.GestionCommandeController">
+<AnchorPane id="AnchorPane" fx:id="left_main" prefHeight="824.0" prefWidth="1330.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EH.Controllers.GestionLivraisonController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="36.0" layoutX="24.0" layoutY="367.0" stroke="#1e2b3c" strokeType="OUTSIDE" strokeWidth="2.0" width="146.0" />
       <Label layoutX="37.0" layoutY="368.0" prefHeight="34.0" prefWidth="102.0" styleClass="labelform" text="Client">
          <font>
             <Font name="Gill Sans MT" size="29.0" />
          </font></Label>
-      <Button fx:id="btn_delete" layoutX="50.0" layoutY="747.0" mnemonicParsing="false" onAction="#DeletLivrauson" prefHeight="33.0" prefWidth="102.0" styleClass="search-button" stylesheets="@style.css" text="Delete">
+      <Button fx:id="btn_delete" layoutX="50.0" layoutY="730.0" mnemonicParsing="false" onAction="#DeleteLivraison" prefHeight="33.0" prefWidth="102.0" styleClass="search-button" stylesheets="@style.css" text="Delete">
          <font>
             <Font name="Times New Roman Bold" size="19.0" />
          </font>
       </Button>
-      <Button fx:id="btn_edit" layoutX="348.0" layoutY="747.0" mnemonicParsing="false" onAction="#EditLivraison" prefHeight="33.0" prefWidth="102.0" styleClass="search-button" stylesheets="@style.css" text="Edit">
+      <Button fx:id="btn_edit" layoutX="350.0" layoutY="730.0" mnemonicParsing="false" onAction="#EditLivraison" prefHeight="33.0" prefWidth="102.0" styleClass="search-button" stylesheets="@style.css" text="Edit">
          <font>
             <Font name="Times New Roman Bold" size="19.0" />
          </font>
       </Button>
-        
-      <TableView fx:id="Livraisontab" layoutX="495.0" layoutY="222.0" onMouseClicked="#fillforum" prefHeight="487.0" prefWidth="892.0">
+
+      <TableView fx:id="LivraisonTabTab" layoutX="495.0" layoutY="222.0" onMouseClicked="#fillforum" prefHeight="487.0" prefWidth="791.0">
         <columns>
-          <TableColumn fx:id="IDLivraisonTab" prefWidth="36.79998779296875" text="ID " />
-          <TableColumn fx:id="ProduitTab" prefWidth="48.79998779296875" text="Produit" />
-            <TableColumn fx:id="ClientTab" minWidth="0.0" prefWidth="65.5999755859375" text="Client" />
-            <TableColumn fx:id="QuantityTab" prefWidth="96.7999267578125" text="Quantity" />
-            <TableColumn fx:id="MontantTab" minWidth="0.0" prefWidth="0.0" text="Montant" />
-            <TableColumn fx:id="DateTab" minWidth="0.0" prefWidth="351.99993896484375" text="Date" />
-            <TableColumn fx:id="DateTab11" minWidth="0.0" prefWidth="292.0" text="Adresse" />
+          <TableColumn fx:id="IDLivraisonTabTab" prefWidth="57.60003662109375" text="ID " />
+          <TableColumn fx:id="ProduitTab" prefWidth="62.39996337890625" text="Produit" />
+            <TableColumn fx:id="ClientTab" minWidth="0.0" prefWidth="146.4000244140625" text="Client" />
+            <TableColumn fx:id="QuantityTab" prefWidth="123.20001220703125" text="Quantity" />
+            <TableColumn fx:id="MontantTab" prefWidth="201.5999755859375" text="Montant" />
+            <TableColumn fx:id="DateTab" prefWidth="201.60009765625" text="Date" />
         </columns>
       </TableView>
       <Pane layoutX="-23.0" layoutY="-7.0" prefHeight="175.0" prefWidth="1400.0" style="-fx-background-color: #1e2b3c;">
@@ -99,14 +98,7 @@
       <DatePicker fx:id="date" layoutX="196.0" layoutY="606.0" prefHeight="40.0" prefWidth="234.0" />
       <TextField fx:id="TfMontant" layoutX="200.0" layoutY="526.0" prefHeight="50.0" prefWidth="225.0" promptText="TfMontant" />
       <ComboBox fx:id="cb_Produit" layoutX="200.0" layoutY="300.0" prefHeight="40.0" prefWidth="225.0" promptText="Produit" />
-      <TextField fx:id="clien" layoutX="196.0" layoutY="360.0" prefHeight="50.0" prefWidth="225.0" promptText="NomClient" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="36.0" layoutX="24.0" layoutY="671.0" stroke="#1e2b3c" strokeType="OUTSIDE" strokeWidth="2.0" width="146.0" />
-      <Label layoutX="41.0" layoutY="672.0" prefHeight="34.0" prefWidth="115.0" styleClass="labelform" text="Adresse">
-         <font>
-            <Font name="Gill Sans MT" size="29.0" />
-         </font>
-      </Label>
-      <TextField fx:id="Adresse" layoutX="200.0" layoutY="664.0" prefHeight="50.0" prefWidth="225.0" promptText="Adresse" />
+      <ComboBox fx:id="cb_Client" layoutX="200.0" layoutY="360.0" prefHeight="50.0" prefWidth="225.0" promptText="Client" />
       
    </children>
 </AnchorPane>

@@ -41,7 +41,7 @@ public class MenuController implements Initializable {
     @FXML
     private void Livraison(ActionEvent event) {
                      try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("gestionLivraison/Gui/GestionLivraison.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("EH/Gui/GestionLivraisonController.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -54,7 +54,7 @@ public class MenuController implements Initializable {
     @FXML
     private void Facture(ActionEvent event) {
                      try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("gestionLivraison/Gui/AjouterFacture.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("EH/Gui/AjouterFacture.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);

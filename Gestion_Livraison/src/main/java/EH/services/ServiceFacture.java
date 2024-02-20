@@ -84,7 +84,7 @@ public class ServiceFacture implements IService<Facture> {
             livraison.setDate(rs.getTimestamp("Date").toLocalDateTime());
             livraison.setQuantity(rs.getInt("quantity"));
             livraison.setMontant(rs.getFloat("montant"));
-            livraison.setID_Pannier(rs.getInt("ID_Pannier"));
+            livraison.setID_Produit(rs.getInt("ID_Pannier"));
         }
         return livraison;
     }
