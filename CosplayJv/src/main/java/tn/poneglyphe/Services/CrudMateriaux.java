@@ -55,13 +55,14 @@ public class CrudMateriaux implements IService<Materiaux> {
 
     @Override
     public void update(Materiaux materiaux) {
-        String qry = " UPDATE `materiaux` SET idMa=?,`nomMa`=?,`typeMa`=?,`disponibilite`=? WHERE idMa=?";
+        String qry = " UPDATE `materiaux` SET`nomMa`=?,`typeMa`=?,`disponibilite`=? WHERE idMa=?";
         try {
 
             PreparedStatement stm = cnx.prepareStatement(qry);
             stm.setString(1, materiaux.getNomMa());
             stm.setString(2, materiaux.getTypeMa());
             stm.setString(3, materiaux.getDisponibilite());
+            stm.setInt(4,materiaux.getIdMa());
             stm.executeUpdate();
 
         } catch (SQLException e) {
