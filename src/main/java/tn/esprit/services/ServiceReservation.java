@@ -16,15 +16,16 @@ public class ServiceReservation implements IService<Reservation> {
     public ServiceReservation() {
         cnx = MyDataBase.getInstance().getCnx();
     }
+    final ServiceEvenement SE =new ServiceEvenement();
 
     @Override
     public void ajouter(Reservation reservation) throws SQLException {
-        String req = "INSERT INTO reservation (Nom_Reseervation, NB_Places, Etat, ID_Event) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO reservation (Nom_Reseervation, NB_Places, Etat, NOM_Event) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pre = cnx.prepareStatement(req)) {
             pre.setString(1, reservation.getNom_Reseervation());
             pre.setInt(2, reservation.getNB_Places());
             pre.setString(3, reservation.getEtat());
-            pre.setInt(4, reservation.getID_Event());
+            pre.setString(4, reservation.getNOM_Event());
 
             pre.executeUpdate();
         } catch (SQLException e) {
@@ -57,9 +58,7 @@ public class ServiceReservation implements IService<Reservation> {
 
     @Override
     public List<Reservation> afficher() throws SQLException {
-        String req = "SELECT reservation.*, evenement.ID_Event " +
-                "FROM reservation " +
-                " INNER JOIN evenement  ON reservation.ID_Event = evenement.ID_Event ";
+        String req = "SELECT * FROM reservation ";
         try (Statement ste = cnx.createStatement(); ResultSet res = ste.executeQuery(req)) {
             List<Reservation> list = new ArrayList<>();
             while (res.next()) {
@@ -68,7 +67,8 @@ public class ServiceReservation implements IService<Reservation> {
                 reservation.setNom_Reseervation(res.getString("Nom_Reseervation"));
                 reservation.setNB_Places(res.getInt("NB_Places"));
                 reservation.setEtat(res.getString("Etat"));
-                reservation.setID_Event(res.getInt("ID_Event"));
+                reservation.setNOM_Event(res.getString("NOM_Event"));
+                //reservation.setID_Event(res.getInt("ID_Event"));
                 //reservation.setID_User(res.getInt("ID_User")); // Assuming you have a setter for Username in Reservation class
                 //System.out.println("ID d'utilisateur: " + reservation.getId_USER());
 

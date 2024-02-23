@@ -6,6 +6,7 @@ import tn.esprit.utils.MyDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ServiceEvenement implements IService<Evenement> {
@@ -77,4 +78,53 @@ public class ServiceEvenement implements IService<Evenement> {
         }
         return list;
     }
+
+    public List<Evenement> afficherbyNOM() {
+        String req = "SELECT * FROM evenement order by Nom_Event ASC";
+        List<Evenement> list = new ArrayList<>();
+        try (Statement ste = cnx.createStatement(); ResultSet res = ste.executeQuery(req)) {
+            while (res.next()) {
+                Evenement evenement = new Evenement();
+                evenement.setID_Event(res.getInt(1));
+                evenement.setNom_Event(res.getString(2));
+                evenement.setDescription_Event(res.getString(3));
+                evenement.setLieu_Event(res.getString(4));
+                evenement.setDate_Event(res.getTimestamp(5).toLocalDateTime());
+
+                list.add(evenement);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving events: " + e.getMessage());
+        }
+        return list;
+    }
+    public List<String> listevenement() {
+        String req = "SELECT Nom_Event FROM evenement";
+        List<String> list = new ArrayList<>();
+        try (Statement ste = cnx.createStatement(); ResultSet res = ste.executeQuery(req)) {
+            while (res.next()) {
+                String nom = res.getString(1); // Use index 1 to get the value of the first (and only) column
+                list.add(nom);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving events: " + e.getMessage());
+        }
+        return list;
+    }
+    public int getIdByNomEvent(String nomEvent) {
+        String req = "SELECT ID_Event FROM evenement WHERE Nom_Event = ?";
+        try (PreparedStatement pre = cnx.prepareStatement(req)) {
+            pre.setString(1, nomEvent);
+            try (ResultSet res = pre.executeQuery()) {
+                if (res.next()) {
+                    return res.getInt("ID_Event");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting ID by nom-event: " + e.getMessage());
+        }
+        return -1;
+    }
+
+
 }

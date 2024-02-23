@@ -2,19 +2,27 @@ package tn.esprit.models;
 
 public class Reservation {
 
-    public int ID_Reservation,NB_Places,ID_Event;
-    public String Nom_Reseervation,Etat;
+    public int ID_Reservation,NB_Places;
+    public String Nom_Reseervation,Etat,NOM_Event;
 
     public Reservation(){
 
     }
 
-    public Reservation(int ID_Reservation, String Nom_Reseervation,int NB_Places,String Etat,int ID_Event){
+    public Reservation(int ID_Reservation, String Nom_Reseervation,int NB_Places,String Etat,String NOM_Event){
         this.ID_Reservation=ID_Reservation;
         this.Nom_Reseervation=Nom_Reseervation;
         this.NB_Places=NB_Places;
         this.Etat=Etat;
-        this.ID_Event=ID_Event;
+        this.NOM_Event=NOM_Event;
+        // this.ID_User=ID_User;
+    }
+
+    public Reservation(String Nom_Reseervation,int NB_Places,String Etat,String NOM_Event){
+        this.Nom_Reseervation=Nom_Reseervation;
+        this.NB_Places=NB_Places;
+        this.Etat=Etat;
+        this.NOM_Event=NOM_Event;
         // this.ID_User=ID_User;
     }
 
@@ -46,12 +54,12 @@ public class Reservation {
         this.Etat=Etat;
     }
 
-    public int getID_Event() {
-        return ID_Event;
+    public String getNOM_Event() {
+        return NOM_Event;
     }
 
-    public void setID_Event(int ID_Event) {
-        this.ID_Event = ID_Event;
+    public void setNOM_Event(String NOM_Event) {
+        this.NOM_Event = NOM_Event;
     }
 
     @Override
@@ -61,7 +69,7 @@ public class Reservation {
                 " + Nom_Reseervation= " + Nom_Reseervation +
                 " + NB_Places= " + NB_Places + '\''+
                 " + Etat= " + Etat + '\'' +
-                " + ID_Event= " + ID_Event + '\'' +
+                " + NOM_Event= " + NOM_Event + '\'' +
                 "}\n";
 
     }

@@ -18,6 +18,8 @@ import tn.esprit.services.ServiceEvenement;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -25,17 +27,36 @@ public class EventAfficherController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
 
+    @FXML
+    private Button triBtn;
+
+
+
     private final ServiceEvenement SE = new ServiceEvenement();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         refreshEvents();
+        triBtn.setOnAction(this::OnClickedTri);
     }
 
+
+    @FXML
+    void OnClickedTri(ActionEvent event) {
+
+        // Trier les événements par nom
+        List<Evenement> sortedEvents = SE.afficherbyNOM();
+
+        // Rafraîchir l'affichage des événements triés
+        refreshEvents();
+    }
     // Method to refresh the events displayed in the ScrollPane
+
     private void refreshEvents() {
         // Retrieve data from the database
         List<Evenement> events = SE.afficher();
+        System.out.println();
+
 
         // Create a VBox to hold all the event VBoxes
         VBox eventVBox = new VBox();
@@ -118,9 +139,15 @@ public class EventAfficherController implements Initializable {
         scrollPane.setContent(eventVBox);
     }
 
+
+
     // Method to handle refresh button action
     @FXML
     private void handleRefreshButtonAction(ActionEvent event) {
         refreshEvents();
     }
+
+
+
 }
+
