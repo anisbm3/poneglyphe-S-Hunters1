@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,6 +25,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static java.io.File.separator;
+
 public class EventAfficherController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
@@ -30,7 +34,11 @@ public class EventAfficherController implements Initializable {
     @FXML
     private Button triBtn;
 
+    @FXML
+    private Button reserverBtn;
 
+    private String tri="ASC";
+    private int i = 0;
 
     private final ServiceEvenement SE = new ServiceEvenement();
 
@@ -43,10 +51,13 @@ public class EventAfficherController implements Initializable {
 
     @FXML
     void OnClickedTri(ActionEvent event) {
+if(i % 2 == 0){
+    tri = "ASC";
+}else{
+    tri = "DESC";
 
-        // Trier les événements par nom
-        List<Evenement> sortedEvents = SE.afficherbyNOM();
-
+}
+        i++;
         // Rafraîchir l'affichage des événements triés
         refreshEvents();
     }
@@ -54,13 +65,14 @@ public class EventAfficherController implements Initializable {
 
     private void refreshEvents() {
         // Retrieve data from the database
-        List<Evenement> events = SE.afficher();
+        List<Evenement> events = SE.afficherbyNOM(tri);
         System.out.println();
 
 
         // Create a VBox to hold all the event VBoxes
         VBox eventVBox = new VBox();
-        eventVBox.setSpacing(10); // Add spacing between items
+        eventVBox.setStyle("-fx-background-image: url('/tn/esprit/1.jpg'); -fx-background-size: cover;");
+        eventVBox.setSpacing(10); // Add spacing between items C:\Users\Lenovo\Desktop
 
         // Iterate over the list of events
         for (Evenement event : events) {
@@ -75,13 +87,16 @@ public class EventAfficherController implements Initializable {
             Label dateLabel = new Label(event.getDate_Event().toString());
 
             // Apply styling to the Labels
-            nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-            presenterLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 12));
-            descriptionLabel.setFont(Font.font("Arial", 12));
-            dateLabel.setFont(Font.font("Arial", 12));
+            nameLabel.setFont(Font.font("Cooper black", FontWeight.BOLD, 20));
+            presenterLabel.setFont(Font.font("Kdam Thmor Pro", FontWeight.NORMAL, 15));
+            descriptionLabel.setFont(Font.font("Kdam Thmor Pro", 15));
+            dateLabel.setFont(Font.font("Kdam Thmor Pro", 15));
 
             // Create a button for deletion
+            //Button deleteButton = new Button("Supprimer");
             Button deleteButton = new Button("Supprimer");
+          deleteButton.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-family: 'Kdam Thmor Pro';  -fx-alignment: center;");
+
             deleteButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -93,7 +108,10 @@ public class EventAfficherController implements Initializable {
             });
 
             // Create a button for modification
+            //Button modifyButton = new Button("Modifier");
             Button modifyButton = new Button("Modifier");
+           modifyButton.setStyle("-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-family: 'Kdam Thmor Pro';");
+
             modifyButton.setOnAction((ActionEvent actionEvent) -> {
                 Evenement selectedEvent = event; // Récupérer l'Evenement associé au bouton "Modifier"
                 // Load the modification scene
@@ -131,6 +149,11 @@ public class EventAfficherController implements Initializable {
             // Add Labels and buttons to the VBox
             lineVBox.getChildren().addAll(nameLabel, presenterLabel, dateLabel, descriptionLabel, deleteButton, modifyButton);
 
+
+            Separator separator = new Separator(Orientation.HORIZONTAL);
+            separator.setStyle("-fx-background-color: #000000; -fx-margin: 2 0; -fx-max-width: 1000px;"); // Ajouter le style ici
+            eventVBox.getChildren().addAll(separator);
+
             // Add the VBox to the main VBox
             eventVBox.getChildren().add(lineVBox);
         }
@@ -147,6 +170,25 @@ public class EventAfficherController implements Initializable {
         refreshEvents();
     }
 
+
+    @FXML
+    void onReserverClicked(ActionEvent event) {
+     try{   FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/ajouterResevation.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(loader.load());
+        // Show the ajout scene
+        stage.setScene(scene);
+        stage.showAndWait();
+
+        // Refresh the events after ajouter
+        refreshEvents();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+
+    }
 
 
 }

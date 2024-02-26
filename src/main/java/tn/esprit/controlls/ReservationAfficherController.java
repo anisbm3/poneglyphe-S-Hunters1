@@ -1,15 +1,14 @@
 package tn.esprit.controlls;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import tn.esprit.models.Evenement;
 import tn.esprit.models.Reservation;
+import tn.esprit.services.ServiceEvenement;
 import tn.esprit.services.ServiceReservation;
 
 import java.net.URL;
@@ -22,44 +21,139 @@ public class ReservationAfficherController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
 
+    @FXML
+    private TextField nomField;
+
+    @FXML
+    private TextField placesField;
+
+    @FXML
+    private TextField etatField;
+
+    @FXML
+    private ChoiceBox<String> nomRES;
+
+    @FXML
+    private HBox EventHBox;
+
+
+    @FXML
+    private Button SuppBtn;
+
+    @FXML
+    private TextField searchBar;
+
+    // Service for managing reservations
     private final ServiceReservation serviceReservation = new ServiceReservation();
+
+    // Service for managing events
+    private final ServiceEvenement serviceEvent = new ServiceEvenement();
+
+    // To store the selected reservation
+    private Reservation selectedReservation;
+
+
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             refreshReservations();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Handle the exception appropriately, e.g., show error message
         }
+
     }
 
+    // Method to refresh the list of reservations displayed
     private void refreshReservations() throws SQLException {
-        // Récupérer les réservations depuis le service
         List<Reservation> reservations = serviceReservation.afficher();
-
-        // Créer un conteneur pour afficher les réservations
         VBox reservationsContainer = new VBox();
-        reservationsContainer.setSpacing(10); // Ajout d'un espacement vertical entre chaque label
+        reservationsContainer.setSpacing(10);
 
-        // Parcourir la liste des réservations et créer des labels pour chaque réservation
+        // Populate the list of reservations
         for (Reservation reservation : reservations) {
-            // Créer un label pour afficher les détails de la réservation
             Label reservationLabel = new Label("Nom: " + reservation.getNom_Reseervation() +
                     ", Places: " + reservation.getNB_Places() +
                     ", État: " + reservation.getEtat() +
                     ", Événement: " + reservation.getNOM_Event());
 
-            // Appliquer le style directement au label
-            reservationLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 12)); // Style de la police
-            reservationLabel.setTextFill(Color.web("#333333")); // Couleur du texte
-            reservationLabel.setPadding(new Insets(10)); // Ajout d'un padding au label
-            reservationLabel.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-border-radius: 5px;"); // Style CSS pour le fond et la bordure
+            // Handle mouse click on a reservation label
+            reservationLabel.setOnMouseClicked(event -> {
+                selectedReservation = reservation; // Update the selected reservation
+                // Display the details of the selected reservation in the text fields
+                nomField.setText(selectedReservation.getNom_Reseervation());
+                placesField.setText(String.valueOf(selectedReservation.getNB_Places()));
+                etatField.setText(selectedReservation.getEtat());
+                nomRES.setValue(selectedReservation.getNOM_Event());
+            });
 
-            // Ajouter le label au conteneur
             reservationsContainer.getChildren().add(reservationLabel);
         }
 
-        // Ajouter le conteneur au ScrollPane
         scrollPane.setContent(reservationsContainer);
+
+        // Populate the ChoiceBox with event options
+        nomRES.getItems().clear();
+        for (Reservation reservation : reservations) {
+            nomRES.getItems().add(reservation.getNOM_Event());
+        }
+
+        // Define a listener for the ChoiceBox selection
+        nomRES.setOnAction(event -> {
+            if (selectedReservation != null) {
+                selectedReservation.setNOM_Event(nomRES.getValue());
+            }
+        });
+    }
+
+    @FXML
+    void onSupprimerClicked(ActionEvent event) {
+
+        if (selectedReservation != null) {
+            try {
+                // Call the service method to delete the selected reservation
+                int res = selectedReservation.getID_Reservation();
+                serviceReservation.supprimer(new Reservation(res,nomField.getText(), Integer.parseInt(placesField.getText()),etatField.getText(),nomRES.getValue()));
+
+                // Refresh the list of reservations after deletion
+                refreshReservations();
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle the exception appropriately, e.g., show error message
+            }
+        }
+
+    }
+    // Method invoked when the "Modifier" button is clicked
+    @FXML
+    void onModifierClicked() {
+        if (selectedReservation != null) {
+            try {
+                // Update reservation details with values from text fields and ChoiceBox
+                selectedReservation.setNom_Reseervation(nomField.getText());
+                selectedReservation.setNB_Places(Integer.parseInt(placesField.getText()));
+                selectedReservation.setEtat(etatField.getText());
+
+                // Check if an event is selected in the ChoiceBox
+                String selectedEvent = nomRES.getValue();
+                if (selectedEvent != null) {
+                    // Set the name of the event to the reservation
+                    selectedReservation.setNOM_Event(selectedEvent);
+                } else {
+                    // Handle the case when no event is selected
+                    // You may display an error message or take appropriate action
+                }
+
+                // Modify the reservation in the database
+                serviceReservation.modifier(selectedReservation);
+
+                // Refresh the list of reservations after modification
+                refreshReservations();
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle the exception appropriately, e.g., show error message
+            }
+        }
     }
 }

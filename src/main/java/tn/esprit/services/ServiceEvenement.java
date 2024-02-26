@@ -7,6 +7,7 @@ import tn.esprit.utils.MyDataBase;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ServiceEvenement implements IService<Evenement> {
@@ -79,8 +80,8 @@ public class ServiceEvenement implements IService<Evenement> {
         return list;
     }
 
-    public List<Evenement> afficherbyNOM() {
-        String req = "SELECT * FROM evenement order by Nom_Event ASC";
+    public List<Evenement> afficherbyNOM(String tri) {
+        String req = "SELECT * FROM evenement";
         List<Evenement> list = new ArrayList<>();
         try (Statement ste = cnx.createStatement(); ResultSet res = ste.executeQuery(req)) {
             while (res.next()) {
@@ -95,6 +96,12 @@ public class ServiceEvenement implements IService<Evenement> {
             }
         } catch (SQLException e) {
             System.err.println("Error retrieving events: " + e.getMessage());
+        }
+        if (tri.equals("ASC"))
+        {
+        Collections.sort(list, Comparator.comparing(Evenement::getNom_Event));}
+        else {
+            Collections.sort(list, Comparator.comparing(Evenement::getNom_Event).reversed());
         }
         return list;
     }
