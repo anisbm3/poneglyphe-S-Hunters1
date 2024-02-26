@@ -78,7 +78,8 @@ public class ReservationAfficherController implements Initializable {
             Label reservationLabel = new Label("Nom: " + reservation.getNom_Reseervation() +
                     ", Places: " + reservation.getNB_Places() +
                     ", État: " + reservation.getEtat() +
-                    ", Événement: " + reservation.getNOM_Event());
+                    ", Événement: " + reservation.getNOM_Event()+
+                      ", res: " + reservation.getResDate());
 
             // Handle mouse click on a reservation label
             reservationLabel.setOnMouseClicked(event -> {

@@ -81,6 +81,7 @@ public class ServiceReservation implements IService<Reservation> {
                 reservation.setNB_Places(res.getInt("NB_Places"));
                 reservation.setEtat(res.getString("Etat"));
                 reservation.setNOM_Event(res.getString("NOM_Event"));
+                reservation.setResDate(res.getTimestamp("ResDate").toLocalDateTime());
 
 
                 list.add(reservation);

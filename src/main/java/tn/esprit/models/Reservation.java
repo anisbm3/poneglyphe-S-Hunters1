@@ -1,9 +1,12 @@
 package tn.esprit.models;
 
+import java.time.LocalDateTime;
+
 public class Reservation {
 
     public int ID_Reservation,NB_Places;
     public String Nom_Reseervation,Etat,NOM_Event;
+    public LocalDateTime resDate;
 
     public Reservation(){
 
@@ -62,7 +65,7 @@ public class Reservation {
         this.NOM_Event = NOM_Event;
     }
 
-    @Override
+   /* @Override
     public String toString(){
         return "Reservation{" +
                 "ID_Reservation=" + ID_Reservation +
@@ -72,10 +75,30 @@ public class Reservation {
                 " + NOM_Event= " + NOM_Event + '\'' +
                 "}\n";
 
+    }*/
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "ID_Reservation=" + ID_Reservation +
+                ", NB_Places=" + NB_Places +
+                ", Nom_Reseervation='" + Nom_Reseervation + '\'' +
+                ", Etat='" + Etat + '\'' +
+                ", NOM_Event='" + NOM_Event + '\'' +
+                ", resDate=" + resDate +
+                '}';
+    }
+
+    public LocalDateTime getResDate() {
+        return resDate;
+    }
+
+    public void setResDate(LocalDateTime resDate) {
+        this.resDate = resDate;
     }
 
 
-  /*  public void setID_User(int ID_User) {
+/*  public void setID_User(int ID_User) {
     }
     public int getId_USER( ){return ID_User;}*/
 }
