@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterDebatController">
+   <children>
+      <TextField fx:id="SUJETDEBAT" layoutX="171.0" layoutY="148.0" />
+      <TextField fx:id="DESCDEBAT" layoutX="171.0" layoutY="187.0" />
+      <TextField fx:id="NOMANIME" layoutX="171.0" layoutY="225.0" />
+      <Button fx:id="ajouterbtn" layoutX="231.0" layoutY="274.0" mnemonicParsing="false" onAction="#onClickedAjouter" text="ajouter" />
+      <Button fx:id="ajouterbtn1" layoutX="377.0" layoutY="274.0" mnemonicParsing="false" onAction="#onClickedAfficher" text="suivant --&gt;" />
+   </children>
+</AnchorPane>
