@@ -29,10 +29,10 @@ class Main {
         }
 
         // Modifier une livraison
-        Livraison livraisonModifiee = new Livraison(87,2,3,300,452.0f,LocalDateTime.now());
+        Livraison livraisonModifiee = new Livraison(90,2,3,300,452.0f,LocalDateTime.now());
         System.out.println("Modification de la livraison...");
         try {
-            serviceLivraison.modifier(87, livraisonModifiee);
+            serviceLivraison.modifier(90, livraisonModifiee);
             System.out.println("Livraison modifiée avec succès.");
         } catch (SQLException e) {
             System.out.println("Erreur lors de la modification d'une livraison : " + e.getMessage());
@@ -41,7 +41,7 @@ class Main {
         // Supprimer une livraison
         System.out.println("Suppression de la livraison...");
         try {
-            serviceLivraison.supprimer(88);
+            serviceLivraison.supprimer(89);
             System.out.println("Livraison supprimée avec succès.");
         } catch (SQLException e) {
             System.out.println("Erreur lors de la suppression d'une livraison : " + e.getMessage());

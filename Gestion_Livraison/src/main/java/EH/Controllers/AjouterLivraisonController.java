@@ -59,7 +59,7 @@ public class AjouterLivraisonController implements Initializable {
     Livraison l;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
         fillcomboProduit();
         fillcomboClient();
     }

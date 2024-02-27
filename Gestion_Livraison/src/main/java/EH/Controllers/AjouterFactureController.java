@@ -51,8 +51,6 @@ public class AjouterFactureController implements Initializable {
     @FXML
     private TableColumn<Livraison, LocalDateTime> DateTab;
     @FXML
-    private Button Statistique1;
-    @FXML
     private DatePicker date;
     @FXML
     private TextField TfRemise;

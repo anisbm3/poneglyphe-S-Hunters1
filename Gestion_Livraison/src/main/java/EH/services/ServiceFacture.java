@@ -29,7 +29,7 @@ public class ServiceFacture implements IService<Facture> {
         ResultSet rs = stm.executeQuery(query);
         while (rs.next()) {
             Facture facture = new Facture();
-            facture.setIdFacture(rs.getInt("idFacture"));
+          /*  facture.setIdFacture(rs.getInt("idFacture"));*/
             facture.setID_Livraison(rs.getInt("ID_Livraison"));
             facture.setDatefacture(rs.getTimestamp("datefacture").toLocalDateTime());
             facture.setRemise(rs.getInt("remise"));
@@ -40,15 +40,17 @@ public class ServiceFacture implements IService<Facture> {
     }
 
     @Override
-    public void supprimer(int idFacture) throws SQLException {
+    public boolean supprimer(int idFacture) throws SQLException {
         String query = "DELETE FROM facture WHERE idFacture = ?";
         try (PreparedStatement stm = cnx.prepareStatement(query)) {
             stm.setInt(1, idFacture);
             int rowsAffected = stm.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Facture supprimée avec succès.");
+                return true; // Retourner true si la suppression a réussi
             } else {
                 System.out.println("Aucune facture trouvée avec l'ID : " + idFacture);
+                return false;
             }
         }
     }
@@ -85,13 +87,7 @@ public class ServiceFacture implements IService<Facture> {
         return facture;
     }
 
-    public void modifier(int idFactureModifier, int ID_Livraison, Facture facture) throws SQLException {
-        Statement stm = cnx.createStatement();
-        Facture f = SearchById(idFactureModifier);
-        Livraison l = SearchLivraisonById(f.getID_Livraison());
-        String query = "UPDATE facture SET ID_Livraison = '" + facture.getID_Livraison() + "', datefacture = '" + facture.getDatefacture() + "', remise = '" + facture.getRemise() + "', montant = '" + (l.getMontant() * facture.getRemise()) + "' WHERE idFacture =" + f.getIdFacture();
-        stm.executeUpdate(query);
-    }
+
 
     public Livraison SearchLivraisonById(long ID_Livraison) throws SQLException {
         Statement stm = cnx.createStatement();
@@ -103,9 +99,26 @@ public class ServiceFacture implements IService<Facture> {
             livraison.setDate(rs.getTimestamp("Date").toLocalDateTime());
             livraison.setQuantity(rs.getInt("quantity"));
             livraison.setMontant(rs.getFloat("montant"));
-            livraison.setID_Produit(rs.getInt("ID_Pannier"));
+            livraison.setID_Pannier(rs.getInt("ID_Pannier"));
         }
         return livraison;
+    }
+    @Override
+    public boolean deleteAll() {
+        String qry = "DELETE FROM facture";
+        try (PreparedStatement stm = cnx.prepareStatement(qry)) {
+            int rowsAffected = stm.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Toutes les facture ont été supprimées avec succès.");
+                return true;
+            } else {
+                System.out.println("Aucune facture trouvée.");
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erreur lors de la suppression de toutes les facture : " + ex.getMessage());
+            return false;
+        }
     }
 
     public void AjouterFacture(int ID_Livraison, Facture facture) throws SQLException {

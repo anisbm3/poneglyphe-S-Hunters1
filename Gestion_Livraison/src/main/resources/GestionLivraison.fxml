@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="left_main" prefHeight="824.0" prefWidth="1330.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EH.Controllers.GestionLivraisonController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="36.0" layoutX="24.0" layoutY="367.0" stroke="#1e2b3c" strokeType="OUTSIDE" strokeWidth="2.0" width="146.0" />
+        <Label layoutX="37.0" layoutY="368.0" prefHeight="34.0" prefWidth="102.0" styleClass="labelform" text="Client">
+            <font>
+                <Font name="Gill Sans MT" size="29.0" />
+            </font></Label>
+        <Button fx:id="btn_delete2" layoutX="278.0" layoutY="730.0" mnemonicParsing="false" onAction="#DeleteAllLivraison" prefHeight="34.0" prefWidth="128.0" styleClass="search-button" stylesheets="@style.css" text="Delete All">
+            <font>
+                <Font name="Times New Roman Bold" size="19.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn_edit" layoutX="14.0" layoutY="730.0" mnemonicParsing="false" onAction="#EditLivraison" prefHeight="33.0" prefWidth="102.0" styleClass="search-button" stylesheets="@style.css" text="Edit">
+            <font>
+                <Font name="Times New Roman Bold" size="19.0" />
+            </font>
+        </Button>
+
+        <ScrollPane fx:id="scroll" layoutX="495.0" layoutY="222.0" onMouseClicked="#fillforum" prefHeight="487.0" prefWidth="791.0">
+            <content>
+                <VBox prefWidth="950.0" spacing="10">
+                    <!-- Exemple de CardView -->
+                    <HBox fx:id="LivraisonCard" alignment="CENTER" prefHeight="110.0" prefWidth="200.0" styleClass="shadow" stylesheets="@style.css">
+                        <children>
+                            <VBox fx:id="cardLivraison" prefWidth="269.0" spacing="5">
+                                <Label fx:id="id_pannier" text="ID_Pannier:" />
+                                <Label fx:id="Iid__client" text="ID_Client:" />
+                                <Label fx:id="quantity" prefHeight="18.0" prefWidth="279.0" text="Quantity:" />
+                                <Label fx:id="montant" text="Montant:" />
+                                <Label fx:id="date" text="Date:" />
+                            </VBox>
+                        </children>
+                    </HBox>
+                    <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0" styleClass="shadow" stylesheets="@style.css">
+                        <children>
+                            <VBox spacing="5">
+                                <Label text="ID_Pannier:" />
+                                <Label text="ID_Client:" />
+                                <Label text="Quantity:" />
+                                <Label fx:id="cardLivraison" text="Montant:" />
+                                <Label text="Date:" />
+                            </VBox>
+                        </children>
+                    </HBox>
+                    <!-- Ajoutez d'autres CardViews pour chaque élément à afficher -->
+                </VBox>
+            </content>
+        </ScrollPane>
+
+        <Pane layoutX="-23.0" layoutY="-7.0" prefHeight="175.0" prefWidth="1400.0" style="-fx-background-color: #1e2b3c;">
+            <children>
+                <HBox alignment="CENTER" layoutX="1077.0" layoutY="51.0" prefHeight="52.0" prefWidth="310.0" styleClass="search-box" stylesheets="@style.css">
+                    <children>
+                        <TextField fx:id="TFSearch" prefHeight="50.0" prefWidth="180.0" promptText="Type here to search" styleClass="transparent" stylesheets="@style.css">
+                            <HBox.margin>
+                                <Insets left="20.0" />
+                            </HBox.margin>
+                        </TextField>
+                    </children>
+                </HBox>
+                <Button fx:id="Statistique1" layoutX="907.0" layoutY="35.0" mnemonicParsing="false" onAction="#Retour" prefHeight="34.0" prefWidth="114.0" styleClass="search-button" stylesheets="@style.css" text="Retour">
+                    <font>
+                        <Font name="Times New Roman Bold" size="19.0" />
+                    </font>
+                </Button>
+            </children>
+            <effect>
+                <DropShadow />
+            </effect>
+        </Pane>
+
+        <!-- Les autres éléments comme les TextField et les ComboBox restent inchangés -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="36.0" layoutX="28.0" layoutY="448.0" stroke="#1e2b3c" strokeType="OUTSIDE" strokeWidth="2.0" width="146.0" />
+        <Label layoutX="44.0" layoutY="448.0" prefHeight="34.0" prefWidth="114.0" styleClass="labelform" text="Quantity">
+            <font>
+                <Font name="Gill Sans MT" size="29.0" />
+            </font>
+        </Label>
+        <TextField fx:id="TfQuantity" layoutX="200.0" layoutY="441.0" prefHeight="50.0" prefWidth="225.0" promptText="TfQuantity" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="36.0" layoutX="24.0" layoutY="534.0" stroke="#1e2b3c" strokeType="OUTSIDE" strokeWidth="2.0" width="146.0" />
+        <Label layoutX="33.0" layoutY="534.0" prefHeight="34.0" prefWidth="102.0" styleClass="labelform" text="Montant">
+            <font>
+                <Font name="Gill Sans MT" size="25.0" />
+            </font>
+        </Label>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="36.0" layoutX="24.0" layoutY="608.0" stroke="#1e2b3c" strokeType="OUTSIDE" strokeWidth="2.0" width="146.0" />
+        <Label layoutX="46.0" layoutY="608.0" prefHeight="34.0" prefWidth="102.0" styleClass="labelform" text="Date">
+            <font>
+                <Font name="Gill Sans MT" size="29.0" />
+            </font>
+        </Label>
+        <DatePicker fx:id="date" layoutX="196.0" layoutY="606.0" prefHeight="40.0" prefWidth="234.0" />
+        <TextField fx:id="TfMontant" layoutX="200.0" layoutY="526.0" prefHeight="50.0" prefWidth="225.0" promptText="TfMontant" />
+        <ComboBox fx:id="cb_Produit" layoutX="200.0" layoutY="300.0" prefHeight="40.0" prefWidth="225.0" promptText="Produit" />
+        <ComboBox fx:id="cb_Client" layoutX="200.0" layoutY="360.0" prefHeight="50.0" prefWidth="225.0" promptText="Client" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="36.0" layoutX="24.0" layoutY="310.0" stroke="#1e2b3c" strokeType="OUTSIDE" strokeWidth="2.0" width="146.0" />
+      <Label layoutX="50.0" layoutY="311.0" prefHeight="34.0" prefWidth="102.0" styleClass="labelform" text="Produit">
+         <font>
+            <Font name="Gill Sans MT" size="29.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_delete1" layoutX="125.0" layoutY="730.0" mnemonicParsing="false" onAction="#DeleteSelectedLivraison" prefHeight="34.0" prefWidth="150.0" styleClass="search-button" stylesheets="@style.css" text="Delete Selected">
+         <font>
+            <Font name="Times New Roman Bold" size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn_refresh" layoutX="415.0" layoutY="730.0" mnemonicParsing="false" onAction="#RefreshLivraison" prefHeight="33.0" prefWidth="102.0" styleClass="search-button" stylesheets="@style.css" text="Refresh">
+         <font>
+            <Font name="Times New Roman Bold" size="19.0" />
+         </font>
+      </Button>
+
+    </children>
+</AnchorPane>

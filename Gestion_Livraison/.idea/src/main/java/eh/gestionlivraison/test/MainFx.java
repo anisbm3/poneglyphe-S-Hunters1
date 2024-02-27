@@ -1,4 +1,4 @@
-package EH.test;
+package eh.gestionlivraison.test;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,9 @@ public class MainFx extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/GestionLivraison.fxml"));
+
+          //  URL url = new File("src/main/resources/AjouterFacture.fxml").toURI().toURL();
+            Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

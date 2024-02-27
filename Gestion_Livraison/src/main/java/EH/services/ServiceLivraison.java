@@ -6,20 +6,21 @@ import EH.utils.MyDataBase;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDateTime;
 
 public class ServiceLivraison implements IService<Livraison> {
-    private Connection cnx;
+    private static Connection cnx;
 
     public ServiceLivraison() {
         cnx = MyDataBase.getInstance().getCnx();
     }
 
+
+
     @Override
     public void ajouter(Livraison livraison) {
-        String query = "INSERT INTO `livraison`(`ID_Produit`, `ID_Client`, `quantity`, `montant`, `date`) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO `livraison`(`ID_Pannier`, `ID_Client`, `quantity`, `montant`, `date`) VALUES (?,?,?,?,?)";
         try (PreparedStatement stm = cnx.prepareStatement(query)) {
-            stm.setInt(1, livraison.getID_Produit());
+            stm.setInt(1, livraison.getID_Pannier());
             stm.setInt(2, livraison.getID_Client());
             stm.setInt(3, livraison.getQuantity());
             stm.setFloat(4, livraison.getMontant());
@@ -39,7 +40,7 @@ public class ServiceLivraison implements IService<Livraison> {
             while (rs.next()) {
                 Livraison livraison = new Livraison();
                 livraison.setID_Livraison(rs.getInt("ID_Livraison"));
-                livraison.setID_Produit(rs.getInt("ID_Produit"));
+                livraison.setID_Pannier(rs.getInt("ID_Pannier"));
                 livraison.setID_Client(rs.getInt("ID_Client"));
                 livraison.setQuantity(rs.getInt("quantity"));
                 livraison.setMontant(rs.getFloat("montant"));
@@ -57,18 +58,39 @@ public class ServiceLivraison implements IService<Livraison> {
 
 
     @Override
-    public void supprimer(int ID_Livraison) throws SQLException {
+    public boolean supprimer(int ID_Livraison) throws SQLException {
         String query = "DELETE FROM livraison WHERE ID_Livraison = ?";
         try (PreparedStatement stm = cnx.prepareStatement(query)) {
             stm.setInt(1, ID_Livraison);
             int rowsAffected = stm.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Livraison supprimée avec succès.");
+                return true;
             } else {
                 System.out.println("Aucune livraison trouvée avec l'ID : " + ID_Livraison);
+                return false;
             }
         }
     }
+
+    @Override
+    public boolean deleteAll() {
+        String query = "DELETE FROM livraison";
+        try (PreparedStatement stm = cnx.prepareStatement(query)) {
+            int rowsAffected = stm.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Toutes les livraisons ont été supprimées avec succès.");
+                return true;
+            } else {
+                System.out.println("Aucune livraison trouvée.");
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erreur lors de la suppression de toutes les livraisons : " + ex.getMessage());
+            return false;
+        }
+    }
+
 
 
     public Livraison SearchById(long ID_Livraison) throws SQLException{
@@ -78,7 +100,7 @@ public class ServiceLivraison implements IService<Livraison> {
         ResultSet rs= stm.executeQuery(query);
         while (rs.next()){
             livraison.setID_Livraison(rs.getInt("ID_Livraison"));
-            livraison.setID_Produit(rs.getInt("ID_Produit"));
+            livraison.setID_Pannier(rs.getInt("ID_Pannier"));
             livraison.setID_Client(rs.getInt("ID_Client"));
             livraison.setQuantity(rs.getInt("quantity"));
             livraison.setMontant(rs.getFloat("montant"));
@@ -87,9 +109,9 @@ public class ServiceLivraison implements IService<Livraison> {
     }
     @Override
     public void modifier(int ID_LivraisonModifier, Livraison livraison) throws SQLException {
-        String query = "UPDATE `livraison` SET `ID_Produit`=?, `ID_Client`=?, `quantity`=?, `montant`=?, `date`=? WHERE ID_Livraison=?";
+        String query = "UPDATE `livraison` SET `ID_Pannier`=?, `ID_Client`=?, `quantity`=?, `montant`=?, `date`=? WHERE ID_Livraison=?";
         try (PreparedStatement stm = cnx.prepareStatement(query)) {
-            stm.setInt(1, livraison.getID_Produit());
+            stm.setInt(1, livraison.getID_Pannier());
             stm.setInt(2, livraison.getID_Client());
             stm.setInt(3, livraison.getQuantity());
             stm.setFloat(4, livraison.getMontant());
@@ -101,4 +123,7 @@ public class ServiceLivraison implements IService<Livraison> {
         }
     }
 
+    public Livraison getLivraisons() {
+        return null;
+    }
 }
