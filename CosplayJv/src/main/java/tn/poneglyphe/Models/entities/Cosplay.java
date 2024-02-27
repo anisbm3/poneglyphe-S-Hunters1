@@ -25,6 +25,15 @@ public class Cosplay {
         this.idmateriaux = idmateriaux;
     }
 
+    public Cosplay( String nomCp, String descriptionCp, String personnage, String imageCp, Date dateCreation) {
+
+        this.nomCp = nomCp;
+        this.descriptionCp = descriptionCp;
+        this.personnage = personnage;
+        this.imageCp = imageCp;
+        this.dateCreation = dateCreation;
+    }
+
     public int getIdCp() {
         return idCp;
     }

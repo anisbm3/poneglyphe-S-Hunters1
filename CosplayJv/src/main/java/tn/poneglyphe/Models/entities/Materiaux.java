@@ -16,6 +16,12 @@ private String disponibilite;
         this.disponibilite = disponibilite;
     }
 
+    public Materiaux(String nomMa, String typeMa, String disponibilite) {
+        this.nomMa = nomMa;
+        this.typeMa = typeMa;
+        this.disponibilite = disponibilite;
+    }
+
     public int getIdMa() {
         return idMa;
     }

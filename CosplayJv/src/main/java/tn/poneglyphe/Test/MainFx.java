@@ -16,7 +16,8 @@ public class MainFx extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/AjouterCosplay.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterCosplay.fxml"));
+
         try {
             Parent root = loader.load();
 
@@ -24,6 +25,7 @@ public class MainFx extends Application {
             primaryStage.setTitle("Crud");
             primaryStage.setScene(sc);
             primaryStage.show();
+            sc.getStylesheets().add("C:\\Users\\sabri\\OneDrive\\Bureau\\poneglyphe-S-Hunters1\\CosplayJv\\src\\main\\java\\tn\\poneglyphe\\assets\\style.css");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

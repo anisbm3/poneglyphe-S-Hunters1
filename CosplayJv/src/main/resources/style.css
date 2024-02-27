@@ -1,0 +1,53 @@
+.primary_color{
+    -fx-background-color: #181818;
+}
+
+.secondary-color{
+    -fx-background-color: #121212;
+}
+.search-container{
+    -fx-background-color: #fff;
+    -fx-background-radius: 100;
+}
+.upgrade-button{
+     -fx-background-color: rgba(0,0,0,0);
+     -fx-border-color: #fff;
+     -fx-border-radius: 50;
+ }
+. post-background{
+        -fx-background-color: #464343;
+-fx-background-radius: 15;
+-fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.1), 5.0,0.8,0.0,0.5);
+
+}
+. reactions-container{
+    -fx-background-color: #fff;
+    -fx-background-radius:50;
+    -fx-effect:  dropShadow(three-pass-box, rgba(0,0,0,0.1),5.0,0.0,0.0,5.0);
+    -fx-border-width: 1 ;
+}
+
+    . top-border{
+    -fx-border-width :1 0 0 0;
+    -fx-border-color:#606266;
+    }
+    . round-button{
+    -fx-background-color:#F0F2F5;
+    -fx-background-radius:50;
+    }
+    . white-background{
+        -fx-background-color:#fff
+    }
+
+
+    . body-background {
+        -fx-background-color:#121212;
+    }
+.text-field {
+    -fx-background-color:#F0F2F5;
+    -fx-background-radius:50;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
