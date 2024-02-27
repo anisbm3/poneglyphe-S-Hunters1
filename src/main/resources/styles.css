@@ -1,0 +1,103 @@
+/* Styles pour la carte */
+#Card {
+    -fx-background-color: #ffffff; /* Blanc */
+}
+
+/* Styles pour les textes */
+Text {
+    -fx-fill: #000000; /* Noir */
+    -fx-font-size: 14px;
+}
+
+/* Styles pour les labels */
+Label {
+    -fx-text-fill: #000000; /* Noir */
+    -fx-font-size: 14px;
+}
+
+/* Styles pour les labels ayant un fond transparent */
+Label[style*="transparante"] {
+    -fx-background-color: transparent;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+/* Style pour le label de pseudo */
+#pseudoSignup {
+    -fx-background-color: transparent;
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+/* Style pour le label de rôle */
+#RoleSignup {
+    -fx-background-color: #ffffff; /* Blanc */
+    -fx-text-fill: #0000ff; /* Bleu ciel */
+}
+
+/* Styles pour les images */
+ImageView {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);
+}
+
+/* Styles pour les textes spécifiques */
+Text[text="Nom :"],
+Text[text="Prénom :"],
+Text[text="Pseudo :"],
+Text[text="CIN :"],
+Text[text="Num_Tel :"],
+Text[text="Email :"],
+Text[text="Age :"],
+Text[text="MDP :"],
+Text[text="Role :"] {
+    -fx-fill: #000000; /* Noir */
+    -fx-font-weight: bold;
+}
+
+/* Style pour le fond des labels */
+.label-background {
+    -fx-background-color: #f0f0f0; /* Gris clair */
+    -fx-padding: 5px;
+}
+
+/* Style pour les labels spécifiques */
+#cinSignup,
+#ageSignup,
+#emailSignup,
+#num_telSignup,
+#mdpSignup {
+    -fx-background-color: #f0f0f0; /* Gris clair */
+    -fx-border-width: 0px 0px 2px 0px;
+}
+
+/* Style pour les labels des informations utilisateur */
+.user-info-label {
+    -fx-font-weight: bold;
+    -fx-padding: 5px;
+}
+
+/* Style pour les images de profil */
+.profile-image {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 0);
+}
+
+/* Style pour les liens */
+.hyperlink {
+    -fx-text-fill: #0000ff; /* Bleu ciel */
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+/* Style pour les boutons */
+.button {
+    -fx-background-color: #0000ff; /* Bleu ciel */
+    -fx-text-fill: #ffffff; /* Blanc */
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+/* Style pour les boutons au survol */
+.button:hover {
+    -fx-background-color: #000080; /* Bleu foncé */
+}

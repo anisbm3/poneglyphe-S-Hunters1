@@ -11,7 +11,7 @@ public class user {
     private String mdp;
     private String role;
 
-    public user(String pseudo, int cin, String prenom, String nom, int age, int numTel, String email, String mdp, String role) {
+    public user(String pseudo, int cin, String nom, String prenom, int age, int numTel, String email, String mdp, String role) {
         this.pseudo = pseudo;
         this.cin = cin;
         this.prenom = prenom;

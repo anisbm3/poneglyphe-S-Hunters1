@@ -14,15 +14,14 @@ import java.util.List;
 
 import entities.*;
 
-public class personneService implements IService<user>{
+public class userService implements IService<user>{
     private Connection cnx;
     private Statement statement;
     private PreparedStatement ste;
 
-    public personneService() {
+    public userService() {
         this.cnx = datasource.getInstance().getCnx();
     }
-
 
     @Override
     public void add(user user) throws SQLException {
@@ -48,10 +47,6 @@ public class personneService implements IService<user>{
         ps.executeUpdate();
         System.out.println("Personne Supprimée");
     }
-
-
-
-
     @Override
     public void update(user user) throws SQLException {
         String req="UPDATE `user` SET `cin`=?,`nom`=?,`prenom`=?,`age`=?,`numTel`=?,`email`=?,`mdp`=? WHERE `pseudo`=?";
@@ -66,12 +61,10 @@ public class personneService implements IService<user>{
         ps.setString(8, user.getPseudo());
         ps.executeUpdate();
         System.out.println("Personne modifie");
-
     }
-
     @Override
     public List<user> Readall()  throws SQLException {
-        List<user> utilisateurs= new ArrayList<>();
+        List<user> users= new ArrayList<>();
         String req="SELECT * FROM `user`";
         Statement st  = cnx.createStatement();
         ResultSet rs = st.executeQuery(req);
@@ -86,12 +79,11 @@ public class personneService implements IService<user>{
             u.setEmail(rs.getString("EMAIL"));
             u.setMdp(rs.getString("MDP"));
             u.setRole(rs.getString("ROLE"));
-            utilisateurs.add(u);
+            users.add(u);
         }
-        return utilisateurs;
+        return users;
     }
-
-    public boolean utilisateurLoggedIn(String pseudo, String mdp) throws SQLException {
+    public boolean userLoggedIn(String pseudo, String mdp) throws SQLException {
         String req = "SELECT * FROM `user` WHERE pseudo=? AND mdp=?";
         PreparedStatement ps = cnx.prepareStatement(req);
         ps.setString(1, pseudo);
@@ -117,7 +109,6 @@ public class personneService implements IService<user>{
         ResultSet rs = ps.executeQuery();
         return rs.next();
     }
-
     public void changeScreen(ActionEvent event, String fxmlFile, String title){
         try {
             FXMLLoader loader = new FXMLLoader(login_controller.class.getResource(fxmlFile));
@@ -129,5 +120,70 @@ public class personneService implements IService<user>{
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+    public List<user> afficherParRole(String role){
+        List<user> users = new ArrayList<>() ; // Initialize the ObservableList
+        String req = "SELECT * FROM `user` WHERE `role`=?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1, role);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                user u = new user();
+                u.setPseudo(rs.getString("PSEUDO"));
+                u.setCin(rs.getInt("CIN"));
+                u.setNom(rs.getString("NOM"));
+                u.setPrenom(rs.getString("PRENOM"));
+                u.setAge(rs.getInt("AGE"));
+                u.setNumTel(rs.getInt("NUMTEL"));
+                u.setEmail(rs.getString("EMAIL"));
+                u.setMdp(rs.getString("MDP"));
+                u.setRole(rs.getString("ROLE"));
+                users.add(u);
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return users;
+    }
+    public List<user> recherche(String data){
+        List<user> users = new ArrayList<>() ; // Initialize the ObservableList
+        String req = "SELECT * FROM `user` WHERE pseudo=? OR cin =? OR nom =? OR prenom =? OR age =? OR numTel =? OR email =?";
+        try {
+            PreparedStatement ps= cnx.prepareStatement(req);
+            ps.setString(1, data);
+            ps.setString(2, data);
+            ps.setString(3, data);
+            ps.setString(4, data);
+            ps.setString(5, data);
+            ps.setString(6, data);
+            ps.setString(7, data);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                user u = new user();
+                u.setPseudo(rs.getString("PSEUDO"));
+                u.setCin(rs.getInt("CIN"));
+                u.setNom(rs.getString("NOM"));
+                u.setPrenom(rs.getString("PRENOM"));
+                u.setAge(rs.getInt("AGE"));
+                u.setNumTel(rs.getInt("NUMTEL"));
+                u.setEmail(rs.getString("EMAIL"));
+                u.setMdp(rs.getString("MDP"));
+                u.setRole(rs.getString("ROLE"));
+                users.add(u);
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return users;
+    }
+
+    public void modifierMdp(user user, String mdp) throws SQLException {
+        String req="UPDATE `user` SET `mdp`=? WHERE pseudo=?";
+        PreparedStatement ps= cnx.prepareStatement(req);
+        ps.setString(1, mdp);
+        ps.setString(2, user.getPseudo());
+        ps.executeUpdate();
+        System.out.println("Personne modifie");
     }
 }
