@@ -25,6 +25,10 @@ public class MenuController {
     @FXML
     private Button AjoutBTN;
 
+
+    @FXML
+    private Button AjoutEvent;
+
     @FXML
     void OnClickedEvent(ActionEvent event) {
         try {
@@ -39,7 +43,6 @@ public class MenuController {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     void onClickedRes(ActionEvent event) {
@@ -57,13 +60,27 @@ public class MenuController {
         }
 
     }
-
-
     @FXML
     void OnClickedAjout(ActionEvent event) {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/AjouterResevation.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(loader.load());
+            // Show the ajout scene
+            stage.setScene(scene);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    @FXML
+    void OnClickedAjoutEvent(ActionEvent event) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/ajouterEvent.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(loader.load());
             // Show the ajout scene

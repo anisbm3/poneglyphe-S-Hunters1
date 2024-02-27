@@ -10,16 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import tn.esprit.models.Evenement;
 import tn.esprit.models.Reservation;
 import tn.esprit.services.ServiceEvenement;
 import tn.esprit.services.ServiceReservation;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class AjouterResevationController {
 
@@ -42,6 +39,11 @@ public class AjouterResevationController {
 
     @FXML
     private TextField nomRES;
+
+    @FXML
+    private Button quitBtn;
+
+
 
     private final ServiceReservation SR = new ServiceReservation();
     private final ServiceEvenement SE = new ServiceEvenement();
@@ -121,6 +123,43 @@ public class AjouterResevationController {
     }
 
     private void refreshEvents() {
+    }
+
+    @FXML
+    void OnClickedEvent(ActionEvent event) {
+
+        try{   FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/ajouterEvent.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(loader.load());
+            // Show the ajout scene
+            stage.setScene(scene);
+            stage.showAndWait();
+
+            // Refresh the events after ajouter
+            refreshEvents();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    @FXML
+    void onQuitClicked(ActionEvent event) {
+
+        try{   FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/Menu.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(loader.load());
+            // Show the ajout scene
+            stage.setScene(scene);
+            stage.showAndWait();
+
+            // Refresh the events after ajouter
+            refreshEvents();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

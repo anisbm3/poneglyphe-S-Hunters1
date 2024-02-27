@@ -6,17 +6,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.AjouterResevationController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="Home_btn" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.AjouterResevationController">
    <children>
-      <Button fx:id="ajouterbtn" layoutX="324.0" layoutY="104.0" mnemonicParsing="false" onAction="#onClickedAjouter" prefHeight="26.0" prefWidth="100.0" text="Ajouter" />
-      <Label layoutX="22.0" layoutY="104.0" text="Nom_Reseervation" />
-      <Label layoutX="44.0" layoutY="130.0" text="NB_Places" />
+      <Button fx:id="ajouterbtn" layoutX="374.0" layoutY="100.0" mnemonicParsing="false" onAction="#onClickedAjouter" prefHeight="26.0" prefWidth="100.0" text="Ajouter" />
+      <Label layoutX="6.0" layoutY="104.0" text="Nom_Reseervation" />
+      <Label layoutX="37.0" layoutY="139.0" text="NB_Places" />
       <Label layoutX="44.0" layoutY="171.0" prefHeight="18.0" prefWidth="61.0" text="Etat" />
-      <TextField fx:id="nomRES" layoutX="143.0" layoutY="100.0" />
-      <TextField fx:id="nbPlace" layoutX="143.0" layoutY="135.0" />
-      <TextField fx:id="etatRes" layoutX="143.0" layoutY="176.0" />
+      <TextField fx:id="nomRES" layoutX="169.0" layoutY="99.0" />
+      <TextField fx:id="nbPlace" layoutX="169.0" layoutY="135.0" />
+      <TextField fx:id="etatRes" layoutX="169.0" layoutY="176.0" />
       <Label layoutX="12.0" layoutY="215.0" prefHeight="18.0" prefWidth="94.0" text="NOM_Event" />
-      <ChoiceBox fx:id="nomEvent" layoutX="142.0" layoutY="211.0" prefWidth="150.0" />
-      <Button fx:id="afficherBtn" layoutX="324.0" layoutY="148.0" mnemonicParsing="false" onAction="#onAfficherClicked" prefHeight="26.0" prefWidth="100.0" text="afficher" />
+      <ChoiceBox fx:id="nomEvent" layoutX="169.0" layoutY="220.0" prefWidth="150.0" />
+      <Button fx:id="afficherBtn" layoutX="380.0" layoutY="149.0" mnemonicParsing="false" onAction="#onAfficherClicked" prefHeight="26.0" prefWidth="100.0" text="afficher" />
+      <Button fx:id="quitBtn" layoutX="379.0" layoutY="202.0" mnemonicParsing="false" onAction="#onQuitClicked" prefHeight="30.0" prefWidth="166.0" text="go to menu" />
    </children>
 </AnchorPane>

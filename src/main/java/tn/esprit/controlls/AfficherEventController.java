@@ -50,11 +50,9 @@ public class AfficherEventController implements Initializable {
     void onsupprimerclicked(ActionEvent event) {
         Evenement selectedEvent = eventtable.getSelectionModel().getSelectedItem();
         ES1.supprimer(selectedEvent);
-        // Clear the existing items in the ObservableList
+
         events.clear();
-        // Retrieve the updated list of events from the database
         events.addAll(ES1.afficher());
-        // Set the updated list of events to the TableView
         eventtable.setItems(events);
 
     }

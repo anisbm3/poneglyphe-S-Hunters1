@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="430.0" prefWidth="640.0" style="-fx-background-color: linear-gradient(to right, #da9a09, #000000);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.EventAfficherController">
+<AnchorPane prefHeight="430.0" prefWidth="640.0" styleClass="choice-box" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.EventAfficherController">
    <children>
-      <HBox fx:id="EventHBox" layoutX="56.0" layoutY="36.0" prefHeight="348.0" prefWidth="558.0" style="-fx-background-color: linear-gradient(to right, #da9a09, #000000);">
+      <ImageView fitHeight="92.0" fitWidth="80.0" layoutX="546.0" layoutY="-5.0" pickOnBounds="true">
+         <image>
+            <Image url="@3.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="triBtn" layoutX="35.0" layoutY="16.0" mnemonicParsing="false" onAction="#OnClickedTri" style="-fx-background-color: #395731;" styleClass="pane_Body1" text="TRIER" textFill="#fffbfb" />
+      <Button fx:id="reserverBtn" layoutX="314.0" layoutY="32.0" mnemonicParsing="false" onAction="#onReserverClicked" styleClass="normalBtn" stylesheets="@style.css" text="Reserver" />
+      <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="62.0" prefHeight="348.0" prefWidth="250.0" style="-fx-background-color: #000000;">
+         <content>
+            <VBox fx:id="EventVBox" prefHeight="330.0" prefWidth="250.0" styleClass="pane_top" stylesheets="@style.css" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="423.0" layoutY="28.0" prefHeight="18.0" prefWidth="146.0" text="LAUGH-TALE" textFill="#ffe96e">
+         <font>
+            <Font name="Castellar" size="12.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="298.0" layoutY="115.0" prefHeight="251.0" prefWidth="271.0">
          <children>
-            <ScrollPane fx:id="scrollPane" prefHeight="348.0" prefWidth="250.0" style="-fx-background-color: #000000;" />
-            <ImageView fitHeight="208.0" fitWidth="194.0" pickOnBounds="true">
-               <image>
-                  <Image url="@3.png" />
-               </image>
-               <HBox.margin>
-                  <Insets top="150.0" />
-               </HBox.margin>
-            </ImageView>
-            <Label prefHeight="18.0" prefWidth="146.0" text="LAUGH-TALE" textFill="#ffe96e">
-               <font>
-                  <Font name="Castellar" size="12.0" />
-               </font>
-            </Label>
+            <Button fx:id="modfierbtn" layoutX="34.0" layoutY="211.0" mnemonicParsing="false" onAction="#onClickedModifier" prefHeight="23.0" prefWidth="90.0" styleClass="Home_btn" stylesheets="@style.css" text="modifier " />
+            <Button fx:id="suppbtn" layoutX="145.0" layoutY="211.0" mnemonicParsing="false" onAction="#onClicekdSupp" prefHeight="23.0" prefWidth="104.0" styleClass="Home_btn" stylesheets="@style.css" text="supprimer" />
+            <TextField fx:id="lieufield" layoutX="102.0" layoutY="126.0" styleClass="bodyy" />
+            <TextField fx:id="Descfield" layoutX="102.0" layoutY="84.0" styleClass="bodyy" />
+            <TextField fx:id="nomfield" layoutX="102.0" layoutY="42.0" styleClass="bodyy" />
+            <DatePicker fx:id="dateField" layoutX="92.0" layoutY="166.0" />
          </children>
-      </HBox>
-      <Button fx:id="triBtn" layoutX="27.0" layoutY="2.0" mnemonicParsing="false" onAction="#OnClickedTri" style="-fx-background-color: #395731;" text="TRIER" textFill="#fffbfb" />
-      <Button fx:id="reserverBtn" layoutX="91.0" layoutY="2.0" mnemonicParsing="false" onAction="#onReserverClicked" text="Reserver" />
+      </AnchorPane>
 
    </children>
 </AnchorPane>
