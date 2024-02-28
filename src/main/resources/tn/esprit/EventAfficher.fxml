@@ -20,9 +20,9 @@
       </ImageView>
       <Button fx:id="triBtn" layoutX="35.0" layoutY="16.0" mnemonicParsing="false" onAction="#OnClickedTri" style="-fx-background-color: #395731;" styleClass="pane_Body1" text="TRIER" textFill="#fffbfb" />
       <Button fx:id="reserverBtn" layoutX="314.0" layoutY="32.0" mnemonicParsing="false" onAction="#onReserverClicked" styleClass="normalBtn" stylesheets="@style.css" text="Reserver" />
-      <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="62.0" prefHeight="348.0" prefWidth="250.0" style="-fx-background-color: #000000;">
+      <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="62.0" prefHeight="348.0" prefWidth="392.0" style="-fx-background-color: #000000;">
          <content>
-            <VBox fx:id="EventVBox" prefHeight="330.0" prefWidth="250.0" styleClass="pane_top" stylesheets="@style.css" />
+            <VBox fx:id="EventVBox" prefHeight="472.0" prefWidth="633.0" styleClass="pane_top" stylesheets="@style.css" />
          </content>
       </ScrollPane>
       <Label layoutX="423.0" layoutY="28.0" prefHeight="18.0" prefWidth="146.0" text="LAUGH-TALE" textFill="#ffe96e">
@@ -30,7 +30,7 @@
             <Font name="Castellar" size="12.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="298.0" layoutY="115.0" prefHeight="251.0" prefWidth="271.0">
+      <AnchorPane layoutX="382.0" layoutY="110.0" prefHeight="251.0" prefWidth="271.0">
          <children>
             <Button fx:id="modfierbtn" layoutX="34.0" layoutY="211.0" mnemonicParsing="false" onAction="#onClickedModifier" prefHeight="23.0" prefWidth="90.0" styleClass="Home_btn" stylesheets="@style.css" text="modifier " />
             <Button fx:id="suppbtn" layoutX="145.0" layoutY="211.0" mnemonicParsing="false" onAction="#onClicekdSupp" prefHeight="23.0" prefWidth="104.0" styleClass="Home_btn" stylesheets="@style.css" text="supprimer" />

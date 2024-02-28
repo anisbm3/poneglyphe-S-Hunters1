@@ -30,7 +30,6 @@ public class ModifierEventController {
     @FXML
     private TextField nomEvent;
 
-   // ServiceProduit sp = new ServiceProduit();
     private final ServiceEvenement SE = new ServiceEvenement();
     @FXML
     void onModifierClicked(ActionEvent event) {

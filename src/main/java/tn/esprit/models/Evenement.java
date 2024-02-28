@@ -81,11 +81,6 @@ public class Evenement {
         this.Date_Event = LocalDate.parse(date_Event); // Assuming date_Event is of format 'YYYY-MM-DD'
     }*/
 
-
-
-
-    // Other attributes and methods
-
     public void setDate_Event(LocalDateTime Date_Event) {
         this.Date_Event = Date_Event;
     }

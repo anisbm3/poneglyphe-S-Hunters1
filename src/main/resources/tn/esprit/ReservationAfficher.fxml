@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.ReservationAfficherController">
+<AnchorPane prefHeight="400.0" prefWidth="683.0" styleClass="choice-box" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.ReservationAfficherController">
    <children>
-      <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="66.0" prefHeight="320.0" prefWidth="334.0" styleClass="pane_back_body" stylesheets="@style.css">
+      <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="66.0" prefHeight="320.0" prefWidth="425.0" styleClass="pane_back_body" stylesheets="@style.css">
          <content>
-            <VBox fx:id="EventVBox" prefHeight="305.0" prefWidth="322.0" />
+            <VBox fx:id="EventVBox" prefHeight="423.0" prefWidth="666.0" styleClass="pane_top" stylesheets="@style.css" />
          </content>
       </ScrollPane>
       <Pane layoutX="4.0" layoutY="3.0" prefHeight="54.0" prefWidth="698.0" styleClass="pane_top" stylesheets="@style.css">
@@ -21,7 +21,7 @@
             <!--<TextField fx:id="searchBar" layoutX="229.0" layoutY="13.0" prefHeight="30.0" prefWidth="250.0" styleClass="pane_navBar" stylesheets="@style.css" />-->
          </children>
       </Pane>
-      <AnchorPane layoutX="343.0" layoutY="57.0" prefHeight="320.0" prefWidth="250.0" styleClass="pane_back_body" stylesheets="@style.css">
+      <AnchorPane layoutX="451.0" layoutY="66.0" prefHeight="320.0" prefWidth="250.0" styleClass="pane_back_body" stylesheets="@style.css">
          <children>
             <VBox fx:id="reservationsContainer" spacing="10" />
 

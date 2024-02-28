@@ -34,11 +34,10 @@ public class ModificationSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Set event handler for the save button
+
         saveButton.setOnAction(event -> {
-            // Implement logic to save modifications to the database
-            // For example:
-            if (this.event != null) { // Use "this.event" to refer to the instance variable
+
+            if (this.event != null) {
                 this.event.setNom_Event(nomField.getText());
                 this.event.setDescription_Event(descriptionField.getText());
                 this.event.setLieu_Event(lieuField.getText());
@@ -50,11 +49,11 @@ public class ModificationSceneController implements Initializable {
         });
     }
 
-    // Method to initialize data of the event to be modified
+
     public void initData(Evenement event) {
         this.event = event;
 
-        // Initialize modification scene with event data
+
         if (event != null) {
             nomField.setText(event.getNom_Event());
             descriptionField.setText(event.getDescription_Event());

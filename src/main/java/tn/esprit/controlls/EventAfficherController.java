@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tn.esprit.models.Evenement;
@@ -52,7 +51,6 @@ public class EventAfficherController implements Initializable {
         void onClicekdSupp(ActionEvent event) {
             if (selectedEvenement != null) {
                 int res = selectedEvenement.getID_Event();
-                //SE.supprimer(selectedEvenement.getID_Event());
                 SE.supprimer(new Evenement(res, nomfield.getText(),Descfield.getText(), lieufield.getText() , dateField.getValue().atStartOfDay()));
                 refreshEvents();
             }
@@ -104,52 +102,14 @@ if(i % 2 == 0){
         refreshEvents();
     }
 
-   /* private void refreshEvents() {
-        // Retrieve data from the database
-        List<Evenement> events = SE.afficherbyNOM(tri);
 
-        // Clear the existing content of EventHBox
-        EventVBox.getChildren().clear();
-
-        // Iterate over the list of events
-        for (Evenement event : events) {
-            // Create Labels to represent each data element
-        Label EVENTLabel = new Label( "nom"  +event.getNom_Event()+
-            "Description"+ event.getDescription_Event()+
-           "LIEU"+ event.getLieu_Event()+
-           "Date" +event.getDate_Event().toString()) ;
-
-
-            EVENTLabel.setOnMouseClicked(event -> {
-                selectedEvenement = event;
-
-            });
-
-
-
-
-            // Create a separator between events
-            Separator separator = new Separator(Orientation.HORIZONTAL);
-
-            // Add Labels and buttons to the EventHBox
-
-        }
-
-        // Set the EventHBox as the content of the ScrollPane
-        scrollPane.setContent(EventVBox);
-    }*/
 
 
     private void refreshEvents() {
-        // Retrieve data from the database or service
         List<Evenement> events = SE.afficherbyNOM(tri);
-
-        // Clear the existing content of EventVBox
         EventVBox.getChildren().clear();
-
-        // Iterate over the list of events
         for (Evenement evenement : events) {
-            // Create Labels to represent each event
+
             Label eventLabel = new Label(
                     "Nom: " + evenement.getNom_Event() +
                             ", Description: " + evenement.getDescription_Event() +
@@ -157,27 +117,23 @@ if(i % 2 == 0){
                             ", Date: " + evenement.getDate_Event().toString()
             );
 
-            // Apply styling to the Labels
 
-            // Set action for the label to select the event
+
             eventLabel.setOnMouseClicked(event -> {
-                selectedEvenement = evenement; // Assuming selectedEvent is a class-level variable
+                selectedEvenement = evenement;
                nomfield.setText(selectedEvenement.getNom_Event());
                 Descfield.setText(selectedEvenement.getDescription_Event());
                lieufield.setText(selectedEvenement.getLieu_Event());
                dateField.setValue(selectedEvenement.getDate_Event().toLocalDate());
             });
 
-            // Create a separator between events
             Separator separator = new Separator(Orientation.HORIZONTAL);
 
-            // Add Labels and separator to the EventVBox
             EventVBox.getChildren().addAll(eventLabel, separator);
         }
     }
 
 
-    // Method to handle refresh button action
     @FXML
     private void handleRefreshButtonAction(ActionEvent event) {
         refreshEvents();
@@ -189,11 +145,9 @@ if(i % 2 == 0){
         try{   FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/ajouterResevation.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(loader.load());
-            // Show the ajout scene
             stage.setScene(scene);
             stage.showAndWait();
 
-            // Refresh the events after ajouter
             refreshEvents();
 
         } catch (IOException e) {

@@ -65,17 +65,6 @@ public class Reservation {
         this.NOM_Event = NOM_Event;
     }
 
-   /* @Override
-    public String toString(){
-        return "Reservation{" +
-                "ID_Reservation=" + ID_Reservation +
-                " + Nom_Reseervation= " + Nom_Reseervation +
-                " + NB_Places= " + NB_Places + '\''+
-                " + Etat= " + Etat + '\'' +
-                " + NOM_Event= " + NOM_Event + '\'' +
-                "}\n";
-
-    }*/
 
     @Override
     public String toString() {

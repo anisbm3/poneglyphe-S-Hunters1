@@ -1,6 +1,5 @@
 package tn.esprit.controlls;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,30 +60,27 @@ public class AjouterResevationController {
             // Vérifier si les champs sont vides
             if (nomRES.getText().isEmpty() || nbPlace.getText().isEmpty() || etatRes.getText().isEmpty() || nomEvent.getValue() == null) {
                 afficherNotification("Erreur de saisie", "Veuillez remplir tous les champs.");
-                return; // Sortir de la méthode si les champs ne sont pas remplis
+                return;
             }
 
-            // Vérifier si le champ nbPlace contient un entier valide
             int nombrePlaces;
             try {
                 nombrePlaces = Integer.parseInt(nbPlace.getText());
             } catch (NumberFormatException e) {
                 afficherNotification("Erreur de saisie", "Le nombre de places doit être un entier.");
-                return; // Sortir de la méthode si le nombre de places n'est pas un entier
+                return;
             }
 
-            // Vérifier si le nombre de places est positif
+
             if (nombrePlaces <= 0) {
                 afficherNotification("Erreur de saisie", "Le nombre de places doit être supérieur à zéro.");
-                return; // Sortir de la méthode si le nombre de places est invalide
+                return;
             }
 
-            // Créer la réservation si toutes les conditions sont remplies
             Reservation reservation = new Reservation(nomRES.getText(), nombrePlaces, etatRes.getText(), nomEvent.getValue());
             System.out.println(reservation);
             SR.ajouter(reservation);
 
-            // Afficher une notification de succès
             afficherNotification("Ajout avec succès", "La réservation a été ajoutée avec succès.");
 
         } catch (SQLException e) {
@@ -108,11 +104,8 @@ public class AjouterResevationController {
         try{   FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/ReservationAfficher.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(loader.load());
-            // Show the ajout scene
             stage.setScene(scene);
             stage.showAndWait();
-
-            // Refresh the events after ajouter
             refreshEvents();
 
         } catch (IOException e) {
@@ -131,11 +124,8 @@ public class AjouterResevationController {
         try{   FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/ajouterEvent.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(loader.load());
-            // Show the ajout scene
             stage.setScene(scene);
             stage.showAndWait();
-
-            // Refresh the events after ajouter
             refreshEvents();
 
         } catch (IOException e) {
@@ -150,11 +140,9 @@ public class AjouterResevationController {
         try{   FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/Menu.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(loader.load());
-            // Show the ajout scene
             stage.setScene(scene);
             stage.showAndWait();
 
-            // Refresh the events after ajouter
             refreshEvents();
 
         } catch (IOException e) {
