@@ -43,7 +43,7 @@ public class CardController {
 
     public void displayProduitDetails(Produit produit) {
         produits = produit;
-        id.setText("Id: " + produit.getID());
+        id.setText("Stock: " + produit.getStock());
         category.setText("category:" + produit.getCategory());
         nom.setText("nom:" + produit.getNom());
         prix.setText("prix: " + produit.getPrix());
@@ -59,7 +59,7 @@ public class CardController {
             editTicketController.setData(produits);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Edit Ticket");
+            stage.setTitle("Edit ");
             stage.show();
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement de la vue de modification : " + e.getMessage());

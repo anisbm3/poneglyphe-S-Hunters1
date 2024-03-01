@@ -13,7 +13,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ModifierProduitController {
-
+    @FXML
+    private TextField IDStock;
     @FXML
     private TextField IDID;
 
@@ -37,7 +38,7 @@ public class ModifierProduitController {
     void ModifierBtn(ActionEvent event) {
         try {
             int id = Integer.parseInt(IDID.getText());
-            Produit produit = new Produit(id, IDCategory.getText(), IDNom.getText(), Integer.parseInt(IDPrix.getText()), IDDescription.getText());
+            Produit produit = new Produit(id,Integer.parseInt(IDStock.getText()),IDCategory.getText(), IDNom.getText(), Integer.parseInt(IDPrix.getText()), IDDescription.getText());
             sp.modifier(produit);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -50,5 +51,6 @@ public class ModifierProduitController {
         IDDescription.setText(produit.getDescription());
         IDNom.setText(produit.getNom());
         IDPrix.setText(String.valueOf(produit.getPrix()));
+        IDStock.setText(String.valueOf(produit.getStock()));
     }
 }

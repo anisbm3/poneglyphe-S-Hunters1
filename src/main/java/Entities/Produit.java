@@ -2,15 +2,22 @@ package Entities;
 
 public class Produit {
 
-    int ID_Produit ,Prix;
+    int ID_Produit ,Prix,Stock,Quantity;
     String Category , Nom, Description;
 
-    public Produit() {
 
+
+
+
+
+
+    public int getStock() {
+        return Stock;
     }
 
-
-
+    public void setStock(int stock) {
+        Stock = stock;
+    }
 
     public int getID() {
         return ID_Produit;
@@ -62,19 +69,22 @@ public class Produit {
                 '}';
     }
 
-    public Produit(int id, String nom, String category, String description, double prix) {
+    public Produit(int id, int Stock,String nom, String category, String description, double prix) {
     }
 
-    public Produit(int ID_Produit, String Category, String Nom, int Prix,String Description) {
+    public Produit(int ID_Produit,int Stock, String Category, String Nom, int Prix,String Description) {
         this.ID_Produit = ID_Produit;
         this.Category = Category;
         this.Nom = Nom;
         this.Prix = Prix;
         this.Description = Description;
+        this.Stock=Stock;
+
 
     }
 
-    public Produit(int Prix, String Nom,String Category, String Description) {
+    public Produit(int Stock,int Prix, String Nom,String Category, String Description) {
+        this.Stock=Stock;
         this.Prix = Prix;
         this.Nom = Nom;
         this.Category = Category;

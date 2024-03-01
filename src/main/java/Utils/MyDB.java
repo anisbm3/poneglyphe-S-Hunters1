@@ -34,8 +34,9 @@ public class MyDB {
     }
 
     public static Connection getConnection() {
+        if (connection == null) {
+            new MyDB(); // Créer l'instance si elle n'existe pas encore
+        }
         return connection;
     }
-
-
 }

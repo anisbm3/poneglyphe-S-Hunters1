@@ -12,6 +12,8 @@ public class AddProduitController {
     @FXML
     private TextField IDPrix;
     @FXML
+    private TextField IDStock;
+    @FXML
     private TextField IDNom;
     @FXML
     private TextField IDCategory;
@@ -33,6 +35,7 @@ public class AddProduitController {
             String nomText = IDNom.getText();
             String categoryText = IDCategory.getText();
             String descriptionText = IDDescription.getText();
+            String stocktext = IDStock.getText();
 
             // Vérifier que les champs ne sont pas vides
             if (prixText.isEmpty() || nomText.isEmpty() || categoryText.isEmpty() || descriptionText.isEmpty()) {
@@ -40,9 +43,10 @@ public class AddProduitController {
             } else {
                 // Convertir le texte du champ prix en entier
                 int prix = Integer.parseInt(prixText);
+                int stock = Integer.parseInt(stocktext);
 
                 // Utiliser les valeurs récupérées comme nécessaire
-                sp.ajouter(new Produit(prix, nomText, categoryText, descriptionText));
+                sp.ajouter(new Produit(stock,prix, nomText, categoryText, descriptionText));
             }
         } catch (NumberFormatException e) {
             System.out.println("Erreur de conversion du prix en entier : " + e.getMessage());

@@ -19,7 +19,7 @@
             <Image url="@jordan-duca-aOqEXM_zI_4-unsplash.jpg" />
          </image></ImageView>
       <VBox layoutX="274.0" layoutY="-2.0" prefHeight="416.0" prefWidth="330.0" style="-fx-background-color: linear-gradient(to right, #000000, #da9a09);" />
-      <Label layoutX="440.0" layoutY="108.0" text="Category">
+      <Label layoutX="445.0" layoutY="66.0" text="Stock">
          <textFill>
             <RadialGradient centerX="0.5" centerY="0.5" focusAngle="162.47" radius="0.5">
                <stops>
@@ -44,5 +44,24 @@
       <TextField fx:id="IDNom" layoutX="272.0" layoutY="169.0" />
       <TextField fx:id="IDDescription" layoutX="273.0" layoutY="234.0" />
       <TextField fx:id="IDPrix" layoutX="272.0" layoutY="325.0" />
+      <TextField fx:id="IDCategory1" layoutX="276.0" layoutY="48.0" onAction="#IDStock" />
+      <Label layoutX="450.0" layoutY="118.0" text="Category">
+         <textFill>
+            <RadialGradient centerX="0.5" centerY="0.5" focusAngle="162.47" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color opacity="0.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill>
+      </Label>
    </children>
 </AnchorPane>

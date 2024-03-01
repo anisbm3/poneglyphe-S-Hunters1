@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="443.0" prefWidth="654.0" styleClass="choice-box" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.EventAfficherController">
+    <children>
+
+        <Button fx:id="triBtn" layoutX="35.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: #395731;" styleClass="pane_Body1" text="TRIER" textFill="#fffbfb" />
+        <Button fx:id="reserverBtn" layoutX="314.0" layoutY="32.0" mnemonicParsing="false" styleClass="normalBtn" stylesheets="@style.css" text="Reserver" />
+        <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="62.0" prefHeight="348.0" prefWidth="392.0" style="-fx-background-color: #000000;">
+            <content>
+                <VBox fx:id="EventVBox" prefHeight="472.0" prefWidth="633.0" styleClass="pane_top" stylesheets="@style.css" />
+            </content>
+        </ScrollPane>
+        <Label layoutX="423.0" layoutY="28.0" prefHeight="18.0" prefWidth="146.0" text="LAUGH-TALE" textFill="#ffe96e">
+            <font>
+                <Font name="Castellar" size="12.0" />
+            </font>
+        </Label>
+        <AnchorPane layoutX="382.0" layoutY="110.0" prefHeight="251.0" prefWidth="271.0">
+            <children>
+                <Button fx:id="modfierbtn" layoutX="34.0" layoutY="211.0" mnemonicParsing="false"  prefHeight="23.0" prefWidth="90.0" styleClass="Home_btn" stylesheets="@style.css" text="modifier " />
+                <Button fx:id="suppbtn" layoutX="145.0" layoutY="211.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="104.0" styleClass="Home_btn" stylesheets="@style.css" text="supprimer" />
+                <TextField fx:id="lieufield" layoutX="102.0" layoutY="126.0" styleClass="bodyy" />
+                <TextField fx:id="Descfield" layoutX="102.0" layoutY="84.0" styleClass="bodyy" />
+                <TextField fx:id="nomfield" layoutX="102.0" layoutY="42.0" styleClass="bodyy" />
+                <DatePicker fx:id="dateField" layoutX="92.0" layoutY="166.0" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
