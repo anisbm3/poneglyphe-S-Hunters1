@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -48,12 +47,12 @@
             <Label layoutX="47.0" layoutY="214.0" prefHeight="18.0" prefWidth="48.0" text="Total:" />
             <Label fx:id="menu_Total" layoutX="87.0" layoutY="215.0" text="0.0" />
             <Label layoutX="47.0" layoutY="260.0" text="Amount" />
-            <TextField fx:id="menu_Amount" layoutX="95.0" layoutY="256.0" prefHeight="26.0" prefWidth="84.0" />
             <Label layoutX="47.0" layoutY="293.0" text="Change:" />
             <Label fx:id="menu_Change" layoutX="101.0" layoutY="293.0" text="0.0" />
             <Button fx:id="menu_Pay" layoutX="23.0" layoutY="332.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Pay" />
             <Button fx:id="menu_Recipt" layoutX="102.0" layoutY="332.0" mnemonicParsing="false" onAction="#menuDisplayTotal" prefHeight="26.0" prefWidth="63.0" text="Receipt" />
             <Button fx:id="menu_Remove" layoutX="179.0" layoutY="332.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Remove" />
+            <Button fx:id="afficher" layoutX="102.0" layoutY="255.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Afficher" />
          </children>
       </AnchorPane>
    </children>

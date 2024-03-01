@@ -1,5 +1,4 @@
 package Services;
-import Entities.Produit;
 import Entities.Panier;
 import Utils.MyDB;
 import java.sql.*;
@@ -55,7 +54,7 @@ public  class ServicePanier implements IService<Panier> {
         ResultSet res = ste.executeQuery(req);
         List<Panier> list = new ArrayList<>();
         while (res.next()) {
-            Panier pa = new Panier();
+            Panier pa = new Panier(res.getString("prod_name"), res.getInt("quantity"), res.getInt("price"));
             pa.setIDP(res.getInt(1));
             pa.setIDU(res.getInt(2));
 

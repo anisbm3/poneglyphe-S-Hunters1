@@ -1,7 +1,5 @@
 package Entities;
 
-import jdk.jfr.Category;
-
 public class Panier {
 
     int IDP ,IDU;
@@ -37,7 +35,7 @@ public class Panier {
                 '}';
     }
 
-    public Panier() {
+    public Panier(String prodName, int quantity, int price) {
     }
 
     public Panier(int IDP, int IDU) {

@@ -87,10 +87,28 @@ public class CatalogueCardController implements Initializable {
                 prepare.setDate(5, sqlDate);
                 prepare.executeUpdate();
 
+                // Afficher les valeurs ajoutées à la table PANIER
+                System.out.println("Values added to PANIER:");
+                System.out.println("panier_id: " + cID);
+                System.out.println("prod_name: " + prod_Name.getText());
+                System.out.println("quantity: " + qty);
+                System.out.println("price: " + totalP);
+                System.out.println("date: " + cID);
+                System.out.println("Insert query: " + insertData);
+                // System.out.println("Values: panier_id=" + panier_id + ", prod_name=" + prod_name + ", quantity=" + quantity + ", price=" + price + ", date=" + date);
+
+                // ...
+                // Ajoutez cette déclaration pour afficher la valeur de prodID
+                System.out.println("prodID before updateStock: " + prodID);
+
                 // Mise à jour du stock dans la table PRODUITS
                 int checkStck = result.getInt("stock");
                 int upStock = checkStck - qty;
-                String updateStock = "UPDATE PRODUITS SET stock=" + upStock + " WHERE prod_id='" + prodID + "'";
+
+                // Ajoutez cette déclaration pour afficher la requête SQL
+                System.out.println("updateStock query: " + "UPDATE PRODUITS SET stock=" + upStock + " WHERE ID_Produit='" + prodID + "'");
+
+                String updateStock = "UPDATE PRODUITS SET stock=" + upStock + " WHERE ID_Produit='" + prodID + "'";
                 prepare = connect.prepareStatement(updateStock);
                 prepare.executeUpdate();
 

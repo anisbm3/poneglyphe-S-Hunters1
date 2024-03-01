@@ -3,14 +3,18 @@ import Entities.Produit;
 import Utils.MyDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import Services.ServiceProduit;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,15 +52,13 @@ public class CatalogueController implements Initializable {
         private Label menu_Total;
 
         @FXML
-        private TableColumn<Produit, String> menu_col_Price;
+        private TableColumn<?, ?> menu_col_Price;
 
         @FXML
-        private TableColumn<Produit, String> menu_col_productName;
+        private TableColumn<?, ?> menu_col_productName;
 
         @FXML
-        private TableColumn<Produit, String> menu_col_quantity;
-        @FXML
-        private TableView<Produit> tableView;
+        private TableColumn<?, ?> menu_col_quantity;
 
         @FXML
         private GridPane menu_gridPane;
@@ -70,34 +72,6 @@ public class CatalogueController implements Initializable {
         private ObservableList<Produit> cardListData = FXCollections.observableArrayList();
 
         int cID;
-
-
-
-        @Override
-        public void initialize(URL url, ResourceBundle resourceBundle) {
-menuDisplayTotal();
-                menuDisplayCard();
-
-
-        }
-        private int totalP;
-
-        public void menuDisplayTotal() {
-                panierID();
-                String total = "SELECT SUM(price) FROM PANIER WHERE panier_id=" + cID;
-                connect = MyDB.getConnection();
-                try {
-                        prepare = connect.prepareStatement(total);
-                        result = prepare.executeQuery();
-                        if (result.next()) {
-                                totalP = result.getInt("SUM(price)");
-                                System.out.println("Total Price: " + totalP); // Ajout de débogage
-                        }
-                        menu_Total.setText("$" + totalP);
-                } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                }
-        }
 
         private void panierID() {
                 if (cID == 0) { // Si cID n'a pas encore été initialisé
@@ -118,15 +92,14 @@ menuDisplayTotal();
                 }
         }
 
-        private ObservableList<Produit> menuListData;
-        public void menushowData() {
-                menuListData = catalogueDisplay();
-                menu_col_productName.setCellValueFactory(new PropertyValueFactory<>("Nom"));
-                menu_col_quantity.setCellValueFactory(new PropertyValueFactory<>("Stock"));
-                menu_col_Price.setCellValueFactory(new PropertyValueFactory<>("Prix"));
-                tableView.setItems(menuListData);
-        }
+        @Override
+        public void initialize(URL url, ResourceBundle resourceBundle) {
 
+                menuDisplayCard();
+                menuDisplayTotal();
+
+
+        }
         public ObservableList<Produit> menuGetData() {
                 ObservableList<Produit> cardListData = FXCollections.observableArrayList();
 
@@ -160,8 +133,23 @@ menuDisplayTotal();
 
                 return cardListData;
         }
-
-
+        private int totalP;
+        public void menuDisplayTotal() {
+                panierID();
+                String total = "SELECT SUM(price) FROM PANIER WHERE panier_id=" + cID;
+                connect = MyDB.getConnection();
+                try {
+                        prepare = connect.prepareStatement(total);
+                        result = prepare.executeQuery();
+                        if (result.next()) {
+                                totalP = result.getInt("SUM(price)");
+                                System.out.println("Total Price: " + totalP);
+                        }
+                        menu_Total.setText("$" + totalP);
+                } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                }
+        }
 
         public void menuDisplayCard() {
                 cardListData.clear();
