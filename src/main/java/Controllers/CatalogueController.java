@@ -3,18 +3,14 @@ import Entities.Produit;
 import Utils.MyDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import Services.ServiceProduit;
 
 import java.io.IOException;
 import java.net.URL;
@@ -52,13 +48,15 @@ public class CatalogueController implements Initializable {
         private Label menu_Total;
 
         @FXML
-        private TableColumn<?, ?> menu_col_Price;
+        private TableColumn<Produit, String> menu_col_Price;
 
         @FXML
-        private TableColumn<?, ?> menu_col_productName;
+        private TableColumn<Produit, String> menu_col_productName;
 
         @FXML
-        private TableColumn<?, ?> menu_col_quantity;
+        private TableColumn<Produit, String> menu_col_quantity;
+        @FXML
+        private TableView<Produit> tableView;
 
         @FXML
         private GridPane menu_gridPane;
@@ -77,11 +75,58 @@ public class CatalogueController implements Initializable {
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
-
+menuDisplayTotal();
                 menuDisplayCard();
 
 
         }
+        private int totalP;
+
+        public void menuDisplayTotal() {
+                panierID();
+                String total = "SELECT SUM(price) FROM PANIER WHERE panier_id=" + cID;
+                connect = MyDB.getConnection();
+                try {
+                        prepare = connect.prepareStatement(total);
+                        result = prepare.executeQuery();
+                        if (result.next()) {
+                                totalP = result.getInt("SUM(price)");
+                                System.out.println("Total Price: " + totalP); // Ajout de débogage
+                        }
+                        menu_Total.setText("$" + totalP);
+                } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                }
+        }
+
+        private void panierID() {
+                if (cID == 0) { // Si cID n'a pas encore été initialisé
+                        String sql = "SELECT MAX(panier_id) FROM PANIER";
+                        connect = MyDB.getConnection();
+                        try {
+                                prepare = connect.prepareStatement(sql);
+                                result = prepare.executeQuery();
+                                if (result.next()) {
+                                        cID = result.getInt(1) + 1;
+                                } else {
+                                        cID = 1;
+                                }
+                                Data.cID = cID;
+                        } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                        }
+                }
+        }
+
+        private ObservableList<Produit> menuListData;
+        public void menushowData() {
+                menuListData = catalogueDisplay();
+                menu_col_productName.setCellValueFactory(new PropertyValueFactory<>("Nom"));
+                menu_col_quantity.setCellValueFactory(new PropertyValueFactory<>("Stock"));
+                menu_col_Price.setCellValueFactory(new PropertyValueFactory<>("Prix"));
+                tableView.setItems(menuListData);
+        }
+
         public ObservableList<Produit> menuGetData() {
                 ObservableList<Produit> cardListData = FXCollections.observableArrayList();
 
@@ -145,35 +190,34 @@ public class CatalogueController implements Initializable {
                         }
                 }
         }
-public  ObservableList<Produit> catalogueDisplay()
-{
-       ObservableList<Produit> listData=FXCollections.observableArrayList();
-       String sql="SELECT * FROM Panier";
-       connect =MyDB.getConnection();
-       try {
+        public  ObservableList<Produit> catalogueDisplay()
+        {
+                ObservableList<Produit> listData=FXCollections.observableArrayList();
+                String sql="SELECT * FROM Panier";
+                connect =MyDB.getConnection();
+                try {
 
-               prepare=connect.prepareStatement(sql);
-               result=prepare.executeQuery();
-               Produit prod;
-               while(result.next()){
-                       prod= new Produit(result.getInt("IDProduct")
+                        prepare=connect.prepareStatement(sql);
+                        result=prepare.executeQuery();
+                        Produit prod;
+                        while(result.next()){
+                                prod= new Produit(result.getInt("IDProduct")
 
-                               ,result.getInt("Stock")
-                               ,result.getString("Category")
-                               ,result.getString("Nom")
-                               ,result.getInt("Prix")
-                               ,result.getString("Description")
+                                        ,result.getInt("Stock")
+                                        ,result.getString("Category")
+                                        ,result.getString("Nom")
+                                        ,result.getInt("Prix")
+                                        ,result.getString("Description")
 
 
-                       );
-                       listData.add(prod);
-               }
+                                );
+                                listData.add(prod);
+                        }
 
-       } catch (SQLException e) {
-           throw new RuntimeException(e);
-       }
-       return listData;
+                } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                }
+                return listData;
+        }
+
 }
-
-}
-
