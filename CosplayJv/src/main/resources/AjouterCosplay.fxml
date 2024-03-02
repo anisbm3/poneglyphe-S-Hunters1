@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="primary_color" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.poneglyphe.Controllers.AjouterCosplayController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="697.0" prefWidth="1126.0" styleClass="primary_color" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.poneglyphe.Controllers.AjouterCosplayController">
    <left>
       <VBox prefHeight="200.0" prefWidth="235.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
          <children>
@@ -178,59 +178,60 @@
             </HBox>
             <HBox prefHeight="543.0" prefWidth="865.0">
                <children>
-                  <ScrollPane styleClass="body-background" stylesheets="@style.css">
-                     <content>
-                        <VBox fx:id="cosplayContainer" alignment="TOP_CENTER" prefHeight="546.0" prefWidth="651.0" styleClass="body-background" stylesheets="@style.css">
+                  <VBox alignment="CENTER" maxHeight="-Infinity" prefHeight="543.0" prefWidth="774.0" styleClass="body-background" stylesheets="@style.css">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="547.0" spacing="10.0" styleClass="post-background" stylesheets="@style.css">
                            <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="547.0" spacing="10.0" styleClass="post-background" stylesheets="@style.css">
+                              <HBox alignment="CENTER" prefHeight="66.0" prefWidth="464.0" spacing="10.0">
                                  <children>
-                                    <HBox alignment="CENTER" prefHeight="66.0" prefWidth="464.0" spacing="10.0">
+                                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@sabrina-modified.png" />
+                                       </image>
+                                    </ImageView>
+                                    <TextField prefHeight="50.0" prefWidth="465.0" promptText="Que souhaitez-vous publier ?" styleClass="text-field" stylesheets="@style.css">
+                                       <font>
+                                          <Font name="Segoe UI Semibold" size="15.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <Pane maxWidth="-Infinity" prefHeight="1.0" prefWidth="500.0" style="-fx-background-color: #F0F2F5;" />
+                              <HBox prefHeight="56.0" prefWidth="547.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="0.0" prefWidth="206.0" spacing="10.0">
                                        <children>
-                                          <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@sabrina-modified.png" />
-                                             </image>
-                                          </ImageView>
-                                          <TextField prefHeight="50.0" prefWidth="465.0" promptText="Que souhaitez-vous publier ?" styleClass="text-field" stylesheets="@style.css">
+                                          <Button fx:id="ajout" mnemonicParsing="false" onAction="#addcosplay" style="-fx-background-color: transparent;" stylesheets="@style.css" textFill="#faf5f5">
+                                             <graphic>
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@icons8-add-64.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                          <Label prefHeight="27.0" prefWidth="113.0" text="Ajouter Cosplay" textFill="#cfbebe">
                                              <font>
                                                 <Font name="Segoe UI Semibold" size="15.0" />
                                              </font>
-                                          </TextField>
-                                       </children>
-                                    </HBox>
-                                    <Pane maxWidth="-Infinity" prefHeight="1.0" prefWidth="500.0" style="-fx-background-color: #F0F2F5;" />
-                                    <HBox prefHeight="56.0" prefWidth="547.0">
-                                       <children>
-                                          <HBox alignment="CENTER" prefHeight="0.0" prefWidth="206.0" spacing="10.0">
-                                             <children>
-                                                <Button fx:id="ajout" mnemonicParsing="false" onAction="#addcosplay" style="-fx-background-color: transparent;" stylesheets="@style.css" textFill="#faf5f5">
-                                                   <graphic>
-                                                      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@icons8-add-64.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </graphic>
-                                                </Button>
-                                                <Label prefHeight="27.0" prefWidth="113.0" text="Ajouter Cosplay" textFill="#cfbebe">
-                                                   <font>
-                                                      <Font name="Segoe UI Semibold" size="15.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </HBox>
+                                          </Label>
                                        </children>
                                     </HBox>
                                  </children>
-                              </VBox>
+                              </HBox>
                            </children>
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
                         </VBox>
-                     </content>
-                  </ScrollPane>
-                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="543.0" prefWidth="51.0" HBox.hgrow="ALWAYS" />
+                        <ScrollPane prefHeight="468.0" prefWidth="750.0">
+                           <content>
+                              <VBox fx:id="cosplayContainer" prefHeight="442.0" prefWidth="742.0" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="578.0" prefWidth="123.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </children>

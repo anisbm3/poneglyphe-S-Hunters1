@@ -15,8 +15,8 @@ public class MainFx extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Addmateriaux.fxml"));
+    public   void start(Stage primaryStage) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterCosplay.fxml"));
 
         try {
             Parent root = loader.load();

@@ -10,36 +10,38 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="635.0" spacing="10.0" styleClass="post-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.poneglyphe.Controllers.CardPostController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="586.0" spacing="10.0" styleClass="post-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.poneglyphe.Controllers.CardPostController">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="10.0">
             <children>
-                <ImageView fx:id="imgProfile" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="imgProfile" fitHeight="50.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@sabrina-modified.png" />
-               </image></ImageView>
+               </image>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></ImageView>
                 <VBox alignment="CENTER" prefHeight="60.0">
                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="180.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="299.0">
                             <children>
-                                <Label fx:id="username" prefHeight="38.0" prefWidth="128.0" text="Otaku Sabrina">
+                                <Label fx:id="username" prefHeight="32.0" prefWidth="136.0" text="Otaku Sabrina">
                                     <font>
                                         <Font name="Segoe UI Semibold" size="18.0" />
                                     </font>
                                 </Label>
-                                <ImageView fx:id="imgVerified" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@ic_verified.png" />
-                                    </image>
-                                    <HBox.margin>
-                                        <Insets left="5.0" right="5.0" />
-                                    </HBox.margin>
-                                </ImageView>
-                        <Label prefHeight="18.0" prefWidth="38.0" text="avec">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </Label>
+                        <HBox prefHeight="32.0" prefWidth="81.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="57.0" text="avec">
+                                 <HBox.margin>
+                                    <Insets left="30.0" top="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                             </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT">
@@ -63,7 +65,7 @@
                 </VBox>
                 <Pane prefHeight="60.0" prefWidth="318.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="personnage" layoutY="11.0" text="Label" />
+                  <Label fx:id="personnage" layoutY="11.0" prefHeight="17.0" prefWidth="155.0" />
                </children></Pane>
                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -88,15 +90,15 @@
                 <Font name="Segoe UI Historic" size="18.0" />
             </font>
         </Label>
-      <Label fx:id="typemat" prefHeight="10.0" prefWidth="90.0" text="Label">
+      <Label fx:id="typemat" prefHeight="10.0" prefWidth="90.0">
          <VBox.margin>
             <Insets right="495.0" />
          </VBox.margin>
       </Label>
-        <ImageView fx:id="imgPost" fitHeight="342.0" fitWidth="519.0" pickOnBounds="true" preserveRatio="true" translateY="90.0" />
+        <ImageView fx:id="imgPost" fitHeight="225.0" fitWidth="539.0" pickOnBounds="true" preserveRatio="true" translateY="5.0" />
         <StackPane alignment="CENTER_LEFT" translateY="77.0">
             <children>
-                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <HBox alignment="CENTER_LEFT" spacing="10.0" translateY="-40.0">
                     <children>
                         <HBox alignment="CENTER" spacing="5.0">
                             <children>
@@ -189,7 +191,7 @@
                 </HBox>
             </children>
         </StackPane>
-        <HBox fillHeight="false" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="635.0" styleClass="top-border" stylesheets="style.css" translateY="50.0">
+        <HBox fillHeight="false" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="635.0" styleClass="top-border" stylesheets="style.css" translateY="10.0">
             <children>
                 <HBox fx:id="likeContainer" alignment="CENTER" onMousePressed="#onLikeContainerPressed" onMouseReleased="#onLikeContainerMouseReleased" spacing="10.0" HBox.hgrow="ALWAYS">
                     <children>

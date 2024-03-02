@@ -83,6 +83,7 @@ public class CrudMateriaux implements IService<Materiaux> {
         return materiau;
     }
 /// recuperation des noms
+
     public ArrayList<String> getAllMateriauxNoms() {
         ArrayList<String> materiauxNoms = new ArrayList<>();
         try {

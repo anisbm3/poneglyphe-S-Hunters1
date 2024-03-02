@@ -31,10 +31,11 @@ public class CrudCosplay implements IService<Cosplay> {
             stm.setDate(5, cosplay.getDateCreation());
             stm.setInt(6,cosplay.getIdmateriaux() );
 
-            stm.executeUpdate();
 
+            stm.executeUpdate();
+            System.out.println("Cosplay inserted successfully.");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error inserting cosplay: " + e.getMessage());
 
         }
     }
