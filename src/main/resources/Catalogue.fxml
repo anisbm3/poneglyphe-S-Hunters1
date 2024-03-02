@@ -50,8 +50,8 @@
             <Label layoutX="47.0" layoutY="260.0" text="Amount" />
             <Label layoutX="47.0" layoutY="293.0" text="Change:" />
             <Label fx:id="menu_Change" layoutX="101.0" layoutY="293.0" text="0.0" />
-            <Button fx:id="menu_Pay" layoutX="23.0" layoutY="332.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Pay" />
-            <Button fx:id="menu_Recipt" layoutX="102.0" layoutY="332.0" mnemonicParsing="false" onAction="#menuDisplayTotal" prefHeight="26.0" prefWidth="63.0" text="Receipt" />
+            <Button fx:id="menu_Pay" layoutX="23.0" layoutY="332.0" mnemonicParsing="false" onAction="#processPayment" prefHeight="26.0" prefWidth="63.0" text="Pay" />
+            <Button fx:id="menu_Recipt" layoutX="102.0" layoutY="332.0" mnemonicParsing="false" onAction="#menuDisplayTotal" prefHeight="26.0" prefWidth="63.0" text="Refresh" />
             <Button fx:id="menu_Remove" layoutX="179.0" layoutY="332.0" mnemonicParsing="false" onAction="#removeSelectedItem" prefHeight="26.0" prefWidth="63.0" text="Remove" />
             <Button fx:id="afficher" layoutX="102.0" layoutY="255.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Afficher" />
          </children>
