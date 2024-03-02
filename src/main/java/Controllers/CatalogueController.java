@@ -1,4 +1,5 @@
 package Controllers;
+import Entities.Panier;
 import Entities.Produit;
 import Utils.MyDB;
 import javafx.collections.FXCollections;
@@ -6,29 +7,21 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import Services.ServiceProduit;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class CatalogueController implements Initializable {
 
 
-
-
+        @FXML
+        private TableView<Panier> tableView;
 
         @FXML
         private AnchorPane form;
@@ -99,6 +92,9 @@ public class CatalogueController implements Initializable {
                 menuDisplayTotal();
 
 
+
+
+
         }
         public ObservableList<Produit> menuGetData() {
                 ObservableList<Produit> cardListData = FXCollections.observableArrayList();
@@ -143,9 +139,10 @@ public class CatalogueController implements Initializable {
                         result = prepare.executeQuery();
                         if (result.next()) {
                                 totalP = result.getInt("SUM(price)");
-                                System.out.println("Total Price: " + totalP);
+                                System.out.println("Total Price: " + totalP); // Ajout de débogage
                         }
                         menu_Total.setText("$" + totalP);
+                        updateTableView();
                 } catch (SQLException e) {
                         throw new RuntimeException(e);
                 }
@@ -207,5 +204,40 @@ public class CatalogueController implements Initializable {
                 }
                 return listData;
         }
+        private ObservableList<Panier> getProductsFromDatabase() {
+                ObservableList<Panier> productList = FXCollections.observableArrayList();
 
+                // Code de connexion à la base de données et récupération des données
+                try {
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/laugh_tale", "root", "");
+                        Statement statement = connection.createStatement();
+                        ResultSet resultSet = statement.executeQuery("SELECT * FROM Panier where panier_id="+cID);
+
+
+                        while (resultSet.next()) {
+                                String productName = resultSet.getString("prod_name");
+                                int quantity = resultSet.getInt("quantity");
+                                int price = resultSet.getInt("price");
+
+                                Panier panier = new Panier(productName, quantity, price);
+                                productList.add(panier);
+                        }
+
+                        resultSet.close();
+                        statement.close();
+                        connection.close();
+                } catch (SQLException e) {
+                        e.printStackTrace();
+                }
+
+                return productList;
+        }
+
+        private void updateTableView() {
+                menu_col_productName.setCellValueFactory(new PropertyValueFactory<>("prod_name"));
+                menu_col_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+                menu_col_Price.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+                tableView.setItems(getProductsFromDatabase());
+        }
 }

@@ -1,7 +1,7 @@
 package test;
 
 import Entities.Panier;
-import Services.ServicePanier;
+//import Services.ServicePanier;
 import Entities.Achats;
 import Services.ServiceAchats;
 import Entities.Produit;
