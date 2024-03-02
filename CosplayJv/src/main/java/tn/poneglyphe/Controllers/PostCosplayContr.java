@@ -1,23 +1,30 @@
 package tn.poneglyphe.Controllers;
+import javafx.scene.control.Button;
+import tn.poneglyphe.Services.CrudMateriaux;
+import tn.poneglyphe.Test.Main;
+import tn.poneglyphe.Utils.MyConnection;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.time.LocalDate;
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -32,10 +39,13 @@ import tn.poneglyphe.Services.CrudCosplay;
 
 
 public class PostCosplayContr {
-
+    @FXML
+    private Button ann;
     @FXML
     private ResourceBundle resources;
-
+    @FXML
+    private ComboBox<String> cb_mat;
+    ObservableList<String> optionsMateriaux = FXCollections.observableArrayList();
     @FXML
     private URL location;
 
@@ -54,6 +64,36 @@ public class PostCosplayContr {
     private ImageView imageView;
     @FXML
     private Label imagepath;
+
+    private final CrudCosplay cs =new CrudCosplay();
+    private final CrudMateriaux cm =new CrudMateriaux();
+
+    @FXML
+    void initialize() {
+        fillcomboMateriaux();
+
+    }
+
+    private void fillcomboMateriaux() {
+        ArrayList<String> materiauxNoms = cm.getAllMateriauxNoms();
+        System.out.println(materiauxNoms);
+        optionsMateriaux.addAll(materiauxNoms);
+        cb_mat.setItems(optionsMateriaux);
+    }
+  /*  private void fillcomboMateriaux() {
+        try {
+            Connection cnx = MyConnection.getInstance().getCnx();
+            String req = " select nomMa from materiaux";
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery(req);
+            while(rs.next()){
+                optionsMateriaux.add(rs.getString("nomMa"));
+            }
+            cb_mat.setItems(optionsMateriaux);
+        } catch (SQLException ex) {
+            Logger.getLogger(AjouterCosplayController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
     @FXML
     private void selectImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -85,12 +125,29 @@ public class PostCosplayContr {
             return;
         }
 
+        // Récupérer l'identifiant du matériau a partir  mn nom selection fi wost combo
+        String nomMa = cb_mat.getValue();
+        if (nomMa == null || nomMa.isEmpty()) {
 
-        CrudCosplay cs =new CrudCosplay();
-        LocalDate selectedDate = datepick.getValue();
-        // Convert LocalDate to Date
-        Date date = java.sql.Date.valueOf(selectedDate);
-        cs.add(new Cosplay(tfnom.getText(),tfdesc.getText(), tfpers.getText(),imagepath.getText(),date));
+            System.out.println("Aucun matériau sélectionné !");
+        } else {
+            int idMateriaux = cm.getIdMateriauxFromName(nomMa);
+            LocalDate selectedDate = datepick.getValue();
+            // Convert LocalDate to Date
+            Date date = java.sql.Date.valueOf(selectedDate);
+            cs.add(new Cosplay(tfnom.getText(), tfdesc.getText(), tfpers.getText(), imagepath.getText(), date, cb_mat.getValue()));
+            //setCosplays(cs.getAllCosplays());
+        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AjouterCosplay.fxml"));
+       // Parent root = loader.load();
+        AjouterCosplayController ajouterCosplayController = loader.getController();
+        //ajouterCosplayController.setCosplays(cosplays); // Pass the list of Cosplay objects to the showData controller
+
+        // Show the showData scene or add it to your layout
+        // For example:
+        Stage stage = new Stage();
+       // stage.setScene(new Scene(root));
+        stage.show();
     }
 
     private boolean isValidImagePath(String imagePath) {
@@ -103,24 +160,19 @@ public class PostCosplayContr {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();}
+
+
+
+
+
     @FXML
-    void initialize(URL url, ResourceBundle rb) {
-
-
-    }
-
-    @FXML
-    void retour(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("AjouterCosplay.fxml"));
-        try {
-            Parent root =loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(AjouterCosplayController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    void retour(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("src/main/resources/AjouterCosplay.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage primaryStage = (Stage) ann.getScene().getWindow();
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("go");
+        primaryStage.centerOnScreen();
 
     }
 

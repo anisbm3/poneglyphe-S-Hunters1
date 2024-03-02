@@ -51,3 +51,34 @@
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
+#EventVbox {
+    -fx-background-color: #b4b0b0; /* Set your desired color */
+}
+
+/* Set spacing between Separators */
+.separator {
+    -fx-padding: 10px 0; /* Adjust padding to increase or decrease spacing */
+}
+.label {
+    -fx-padding: 5px 0; /* Adjust padding to increase or decrease spacing */
+}
+
+.post-background{
+    -fx-background-color: #fff;
+    -fx-background-radius: 15;
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1) , 5.0, 0.0, 0.0, 5.0);
+}
+
+.reactions-container{
+    -fx-background-color: #fff;
+    -fx-background-radius: 50;
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1) , 5.0, 0.0, 0.0, 5.0);
+    -fx-border-width: 1;
+    -fx-border-color:#B8B9BB;
+    -fx-border-radius: 50;
+}
+
+.top-border{
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #606266;
+}

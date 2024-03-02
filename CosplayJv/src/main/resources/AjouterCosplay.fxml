@@ -178,10 +178,9 @@
             </HBox>
             <HBox prefHeight="543.0" prefWidth="865.0">
                <children>
-                  <Pane prefHeight="543.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
                   <ScrollPane styleClass="body-background" stylesheets="@style.css">
                      <content>
-                        <VBox alignment="TOP_CENTER" prefHeight="545.0" prefWidth="567.0" styleClass="body-background" stylesheets="@style.css">
+                        <VBox fx:id="cosplayContainer" alignment="TOP_CENTER" prefHeight="546.0" prefWidth="651.0" styleClass="body-background" stylesheets="@style.css">
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="547.0" spacing="10.0" styleClass="post-background" stylesheets="@style.css">
                                  <children>

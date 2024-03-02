@@ -16,9 +16,9 @@ public class CrudCosplay implements IService<Cosplay> {
     }
 
     @Override
-    public void add(Cosplay cosplay) {
-       /* String disableForeignKeyChecks = "SET FOREIGN_KEY_CHECKS = 0;";
-        String enableForeignKeyChecks = "SET FOREIGN_KEY_CHECKS = 1;";*/
+   public void add(Cosplay cosplay) {
+       // String disableForeignKeyChecks = "SET FOREIGN_KEY_CHECKS = 0;";
+        //String enableForeignKeyChecks = "SET FOREIGN_KEY_CHECKS = 1;";
         String qry = "INSERT INTO `cosplay`( `nomCp`, `descriptionCp`, `personnage`, `imageCp`, `dateCreation`, `idmateriaux`) VALUES (?,?,?,?,?,?)";
 
         try {
@@ -39,6 +39,50 @@ public class CrudCosplay implements IService<Cosplay> {
         }
     }
 
+    public String getNomMateriauxById (int idmateriaux) {
+        String nomMateriaux = "";
+        try {
+
+            String qry = "SELECT nomMa FROM materiaux WHERE idMa = ?";
+            PreparedStatement stm = cnx.prepareStatement(qry);
+            stm.setInt(1, idmateriaux);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                nomMateriaux = rs.getString("nomMa");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nomMateriaux;
+    }
+
+
+ /*  @Override
+     public void add(Cosplay cosplay) {
+
+        String qry = "INSERT INTO `cosplay`( `nomCp`, `descriptionCp`, `personnage`, `imageCp`, `dateCreation`, `idmateriaux`) VALUES (?,?,?,?,?,(SELECT idMa FROM materiaux WHERE nomMa = ?))";
+
+        try {
+
+            PreparedStatement stm = cnx.prepareStatement(qry);
+            stm.setString(1, cosplay.getNomCp());
+            stm.setString(2, cosplay.getDescriptionCp());
+            stm.setString(3, cosplay.getPersonnage());
+            stm.setString(4, cosplay.getImageCp());
+            stm.setDate(5, cosplay.getDateCreation());
+            stm.setString(6,cosplay.getNomMa() );
+
+            stm.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        }
+    }*/
+
+
+
     @Override
     public ArrayList<Cosplay> getAll() {
         ArrayList<Cosplay> cosplays = new ArrayList<>();
@@ -54,7 +98,7 @@ public class CrudCosplay implements IService<Cosplay> {
                 cosplay.setPersonnage(rs.getString("personnage"));
                 cosplay.setImageCp(rs.getString("imageCp"));
                 cosplay.setPersonnage(rs.getString("personnage"));
-                cosplay.setDateCreation(rs.getDate(6));
+                cosplay.setDateCreation(rs.getDate("dateCreation"));
                 cosplay.setIdmateriaux(rs.getInt("idmateriaux"));
                 cosplays.add(cosplay);
 

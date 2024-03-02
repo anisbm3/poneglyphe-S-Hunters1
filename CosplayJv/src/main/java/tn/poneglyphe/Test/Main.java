@@ -15,9 +15,9 @@ public class Main {
 
     public static void main(String[] args) {
        // MyConnection cn = MyConnection.getInstance();
-        Cosplay c=new Cosplay(12,"naruto","de couleur orange ..","naruto","naruto.jpg",new Date(System.currentTimeMillis()),3);
+       /* Cosplay c=new Cosplay(12,"naruto","de couleur orange ..","naruto","naruto.jpg",new Date(System.currentTimeMillis()),3);
         Cosplay c1=new Cosplay(12,"one piece luffy hat","round hat of color ..","Monkey d.luffy","luffy.jpg",new Date(System.currentTimeMillis()),1);
-        Cosplay c2=new Cosplay(12,"one piece ","yellow ..","Monkey d.luffy","luffy.jpg",new Date(System.currentTimeMillis()),1);
+        Cosplay c2=new Cosplay(12,"one piece ","yellow ..","Monkey d.luffy","luffy.jpg",new Date(System.currentTimeMillis()),1);*/
 
         // Materiaux materiaux=new Materiaux();
          //long millis=System.currentTimeMillis();
@@ -33,14 +33,14 @@ public class Main {
 
 
         // update
-        c2.setIdCp(4);
+        /*c2.setIdCp(4);
         c2.setPersonnage("sasusaku");
         c2.setIdmateriaux(1);
         c2.setDateCreation(new Date(System.currentTimeMillis()));
         c2.setNomCp("one piece ");
         c2.setDescriptionCp("round");
         c2.setImageCp("hat.jpg");
-        ccs.update(c2);
+        ccs.update(c2);*/
         System.out.println(ccs.getAll());
        // boolean isUpdated = ccs.update(c2);
 

@@ -11,11 +11,13 @@ public class Cosplay {
     private String imageCp;
     private Date dateCreation;
     private int idmateriaux;
+    private String nomMa;
+
 
     public Cosplay() {
     }
 
-    public Cosplay(int idCp, String nomCp, String descriptionCp, String personnage, String imageCp, Date dateCreation, int idmateriaux) {
+    public Cosplay(int idCp, String nomCp, String descriptionCp, String personnage, String imageCp, Date dateCreation, int idmateriaux, String nomMa) {
         this.idCp = idCp;
         this.nomCp = nomCp;
         this.descriptionCp = descriptionCp;
@@ -23,16 +25,31 @@ public class Cosplay {
         this.imageCp = imageCp;
         this.dateCreation = dateCreation;
         this.idmateriaux = idmateriaux;
+        this.nomMa= nomMa;
     }
 
-    public Cosplay( String nomCp, String descriptionCp, String personnage, String imageCp, Date dateCreation) {
-
+    public Cosplay(String nomCp, String descriptionCp, String personnage, String imageCp, Date dateCreation,String nomMa) {
         this.nomCp = nomCp;
         this.descriptionCp = descriptionCp;
         this.personnage = personnage;
         this.imageCp = imageCp;
         this.dateCreation = dateCreation;
+        this.nomMa= nomMa;
+
     }
+
+    public Cosplay(String nomCp, String descriptionCp, String personnage, String imageCp, Date dateCreation, int idmateriaux) {
+        this.nomCp = nomCp;
+        this.descriptionCp = descriptionCp;
+        this.personnage = personnage;
+        this.imageCp = imageCp;
+        this.dateCreation = dateCreation;
+        this.idmateriaux = idmateriaux;
+
+    }
+
+
+
 
     public int getIdCp() {
         return idCp;
@@ -90,6 +107,14 @@ public class Cosplay {
         this.idmateriaux = idmateriaux;
     }
 
+    public String getNomMa() {
+        return nomMa;
+    }
+
+    public void setNomMa(String nomMa) {
+        this.nomMa = nomMa;
+    }
+
     @Override
     public String toString() {
         return "Cosplay{" +
@@ -100,6 +125,7 @@ public class Cosplay {
                 ", imageCp='" + imageCp + '\'' +
                 ", dateCreation=" + dateCreation +
                 ", idmateriaux=" + idmateriaux +
+                ", nomMa='" + nomMa + '\'' +
                 '}';
     }
 }

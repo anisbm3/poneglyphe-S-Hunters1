@@ -6,7 +6,9 @@ import tn.poneglyphe.Models.entities.Materiaux;
 import tn.poneglyphe.Utils.MyConnection;
 
 import java.sql.*;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CrudMateriaux implements IService<Materiaux> {
     private final Connection cnx;
@@ -30,7 +32,35 @@ public class CrudMateriaux implements IService<Materiaux> {
 
         }
     }
-
+    public  int getIdMateriauxFromName (String nomMa) {
+        int idMateriaux = 0;
+        try {
+            Connection cnx = MyConnection.getInstance().getCnx();
+            String req = "SELECT idMa FROM materiaux WHERE nomMa = ?";
+            PreparedStatement cs = cnx.prepareStatement(req);
+            cs.setString(1, nomMa);
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()) {
+                idMateriaux = rs.getInt("idMa");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return idMateriaux;
+    }
+   /* public String getNomByIdMa(int idMa ) throws SQLException {
+        String nomMa = null;
+        String req = "SELECT nomMa FROM reservation WHERE idMa=?";
+        try (PreparedStatement pre = cnx.prepareStatement(req)) {
+            pre.setInt(1, idMa );
+            try (ResultSet result = pre.executeQuery()) {
+                if (result.next()) {
+                    nomMa = result.getString("nomMa");
+                }
+            }
+        }
+            return nomMa;
+    }*/
     @Override
     public ArrayList<Materiaux> getAll() {
         ArrayList<Materiaux> materiau = new ArrayList<>();
@@ -51,6 +81,22 @@ public class CrudMateriaux implements IService<Materiaux> {
             throw new RuntimeException(e);
         }
         return materiau;
+    }
+/// recuperation des noms
+    public ArrayList<String> getAllMateriauxNoms() {
+        ArrayList<String> materiauxNoms = new ArrayList<>();
+        try {
+            Connection cnx = MyConnection.getInstance().getCnx();
+            String req = "SELECT nomMa FROM materiaux";
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                materiauxNoms.add(rs.getString("nomMa"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return materiauxNoms;
     }
 
     @Override
@@ -85,5 +131,9 @@ public class CrudMateriaux implements IService<Materiaux> {
             System.out.println(e.getMessage());
 
         }
+    }
+
+    public ArrayList<Materiaux> getAllMateriaux() {
+         return null;
     }
 }
