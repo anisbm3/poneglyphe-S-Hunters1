@@ -67,10 +67,11 @@ public class Panier {
         this.date = date;
     }
 
-    public Panier(String prod_name, int quantity, int price) {
+    public Panier(String prod_name, int quantity, int price, int IDP) {
         this.prod_name = prod_name;
         this.quantity = quantity;
         this.price = price;
+        this.IDP=IDP;
     }
 
 

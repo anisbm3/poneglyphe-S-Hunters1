@@ -35,13 +35,14 @@
             </ScrollPane>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="334.0" prefHeight="400.0" prefWidth="267.0">
+      <AnchorPane layoutX="383.0" prefHeight="400.0" prefWidth="218.0">
          <children>
-            <TableView fx:id="tableView" prefHeight="200.0" prefWidth="230.0">
+            <TableView fx:id="tableView" prefHeight="200.0" prefWidth="226.0">
               <columns>
                 <TableColumn fx:id="menu_col_productName" prefWidth="75.0" text="Product" />
                 <TableColumn fx:id="menu_col_quantity" prefWidth="75.0" text="Quantity" />
-                  <TableColumn fx:id="menu_col_Price" prefWidth="75.0" text="Price" />
+                  <TableColumn fx:id="menu_col_Price" prefWidth="79.19998779296876" text="Price" />
+                  <TableColumn fx:id="menu_col_IDP" prefWidth="75.0" text="IDP" />
               </columns>
             </TableView>
             <Label layoutX="47.0" layoutY="214.0" prefHeight="18.0" prefWidth="48.0" text="Total:" />
@@ -51,7 +52,7 @@
             <Label fx:id="menu_Change" layoutX="101.0" layoutY="293.0" text="0.0" />
             <Button fx:id="menu_Pay" layoutX="23.0" layoutY="332.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Pay" />
             <Button fx:id="menu_Recipt" layoutX="102.0" layoutY="332.0" mnemonicParsing="false" onAction="#menuDisplayTotal" prefHeight="26.0" prefWidth="63.0" text="Receipt" />
-            <Button fx:id="menu_Remove" layoutX="179.0" layoutY="332.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Remove" />
+            <Button fx:id="menu_Remove" layoutX="179.0" layoutY="332.0" mnemonicParsing="false" onAction="#removeSelectedItem" prefHeight="26.0" prefWidth="63.0" text="Remove" />
             <Button fx:id="afficher" layoutX="102.0" layoutY="255.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="63.0" text="Afficher" />
          </children>
       </AnchorPane>

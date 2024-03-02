@@ -4,6 +4,7 @@ import Entities.Produit;
 import Utils.MyDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,7 +44,8 @@ public class CatalogueController implements Initializable {
 
         @FXML
         private Label menu_Total;
-
+        @FXML
+        private TableColumn<?, ?> menu_col_IDP;
         @FXML
         private TableColumn<?, ?> menu_col_Price;
 
@@ -204,6 +206,32 @@ public class CatalogueController implements Initializable {
                 }
                 return listData;
         }
+
+
+
+        @FXML
+        public void removeSelectedItem() {
+                Panier selectedPanier = tableView.getSelectionModel().getSelectedItem();
+
+                if (selectedPanier != null) {
+                        int selectedPanierIDP = selectedPanier.getIDP(); // Assurez-vous d'avoir une méthode getId() dans votre classe Panier
+
+                        // Construisez et exécutez la requête DELETE
+                        String deleteQuery = "DELETE FROM PANIER WHERE IDP = ?";
+                        try {
+                                prepare = connect.prepareStatement(deleteQuery);
+                                prepare.setInt(1, selectedPanierIDP);
+                                prepare.executeUpdate();
+                        } catch (SQLException e) {
+                                e.printStackTrace();
+                        }
+
+                        // Actualisez la TableView après la suppression
+                        updateTableView();
+                        // Actualisez également le total si nécessaire
+                        menuDisplayTotal();
+                }
+        }
         private ObservableList<Panier> getProductsFromDatabase() {
                 ObservableList<Panier> productList = FXCollections.observableArrayList();
 
@@ -218,8 +246,8 @@ public class CatalogueController implements Initializable {
                                 String productName = resultSet.getString("prod_name");
                                 int quantity = resultSet.getInt("quantity");
                                 int price = resultSet.getInt("price");
-
-                                Panier panier = new Panier(productName, quantity, price);
+                                int IDP=resultSet.getInt("IDP");
+                                Panier panier = new Panier(productName, quantity, price,IDP);
                                 productList.add(panier);
                         }
 
@@ -237,7 +265,7 @@ public class CatalogueController implements Initializable {
                 menu_col_productName.setCellValueFactory(new PropertyValueFactory<>("prod_name"));
                 menu_col_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
                 menu_col_Price.setCellValueFactory(new PropertyValueFactory<>("price"));
-
+                menu_col_IDP.setCellValueFactory(new PropertyValueFactory<>("IDP"));
                 tableView.setItems(getProductsFromDatabase());
         }
 }
