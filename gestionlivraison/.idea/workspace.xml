@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="53f04542-25d2-4d89-b1ec-1bce7f7b5938" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2chKcC61usBLZ76vUxLgjvRr5Kc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "gestionLivraisonNew",
+    "last_opened_file_path": "C:/Users/USER/Desktop/gestionlivraison/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.1150748",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "two.files.diff.last.used.file": "C:/Users/USER/Desktop/gestionlivraison/src/main/java/eh/gestionlivraison/AjouterFactureController.java",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\USER\Desktop\gestionlivraison\src\main\resources" />
+      <recent name="C:\Users\USER\IdeaProjects\gestionlivraison\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\USER\IdeaProjects\gestionlivraison\src\main\resources\eh\gestionlivraison" />
+      <recent name="C:\Users\USER\IdeaProjects\gestionlivraison\src\main\resources" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="eh.gestionlivraison" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="eh.gestionlivraison" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="MainFx" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="eh.gestionlivraison.test.MainFx" />
+      <module name="gestionlivraison" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="eh.gestionlivraison.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MainFx" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="53f04542-25d2-4d89-b1ec-1bce7f7b5938" name="Changes" comment="" />
+      <created>1708558450147</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1708558450147</updated>
+      <workItem from="1708558451148" duration="10688000" />
+      <workItem from="1708569271567" duration="22000" />
+      <workItem from="1708592748181" duration="674000" />
+      <workItem from="1708593433637" duration="1335000" />
+      <workItem from="1708597465504" duration="10763000" />
+      <workItem from="1708610431517" duration="3567000" />
+      <workItem from="1708616036874" duration="1193000" />
+      <workItem from="1708618556806" duration="2104000" />
+      <workItem from="1708630817587" duration="12920000" />
+      <workItem from="1708646853517" duration="7700000" />
+      <workItem from="1708682112062" duration="18799000" />
+      <workItem from="1708734371489" duration="1248000" />
+      <workItem from="1708791556059" duration="29800000" />
+      <workItem from="1708852966434" duration="15252000" />
+      <workItem from="1708937353414" duration="1689000" />
+      <workItem from="1708942423551" duration="56200000" />
+      <workItem from="1709017707397" duration="17800000" />
+      <workItem from="1709038240052" duration="3592000" />
+      <workItem from="1709041888334" duration="2242000" />
+      <workItem from="1709044196958" duration="23010000" />
+      <workItem from="1709159241459" duration="1214000" />
+      <workItem from="1709160658412" duration="42000" />
+      <workItem from="1709160762674" duration="11669000" />
+      <workItem from="1709203792147" duration="33790000" />
+      <workItem from="1709302194928" duration="19760000" />
+      <workItem from="1709476903805" duration="6243000" />
+      <workItem from="1709493816402" duration="10000" />
+      <workItem from="1709493927035" duration="3041000" />
+      <workItem from="1709497147483" duration="73000" />
+      <workItem from="1709497369164" duration="10000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/eh/gestionlivraison/Services/ServiceLivraison.java</url>
+          <line>7</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
