@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import java.util.List;
@@ -26,9 +28,11 @@ import java.util.List;
 public class AfficherController implements Initializable {
 
     private ServiceProduit SP= new ServiceProduit();
+    private List<VBox> displayedCards = new ArrayList<>();
 
     @FXML
     private FlowPane cardLayout2;
+  
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -56,7 +60,21 @@ public class AfficherController implements Initializable {
         }
 
     }
+    @FXML
+    void AffPanier(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Paniers.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
 
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
     @FXML
     void RefreshPage(ActionEvent event) {
         List<Produit> produits = null;

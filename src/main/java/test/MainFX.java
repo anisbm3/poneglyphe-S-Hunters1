@@ -11,14 +11,14 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Catalogue.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherProduit.fxml"));
             Parent root = loader.load();
             Scene sc = new Scene(root);
             primaryStage.setScene(sc);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+}
     }
 
 }

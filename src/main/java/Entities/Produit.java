@@ -1,5 +1,7 @@
 package Entities;
 
+import java.sql.Date;
+
 public class Produit {
 
     int ID_Produit ,Prix,Stock,Quantity;
@@ -69,7 +71,7 @@ public class Produit {
                 '}';
     }
 
-    public Produit(int id, int Stock,String nom, String category, String description, double prix) {
+    public Produit(int id, String Stock, int nom, int category, Date description, String prix) {
     }
 
     public Produit(int ID_Produit,int Stock, String Category, String Nom, int Prix,String Description) {

@@ -4,10 +4,9 @@ import java.util.Date;
 
 public class Panier {
 
-    int IDP ,quantity,price,panier_id;
+    int IDP, quantity, price, panier_id;
     String prod_name;
     Date date;
-
 
 
     public int getIDP() {
@@ -71,13 +70,12 @@ public class Panier {
         this.prod_name = prod_name;
         this.quantity = quantity;
         this.price = price;
-        this.IDP=IDP;
+        this.IDP = IDP;
     }
 
+    public Panier(int IDP, String prod_name, int quantity, int price, Date date, int panier_id) {
 
 
-
-
-
+    }
 }
 

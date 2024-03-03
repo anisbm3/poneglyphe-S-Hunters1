@@ -44,7 +44,7 @@
       <TextField fx:id="IDNom" layoutX="272.0" layoutY="169.0" />
       <TextField fx:id="IDDescription" layoutX="273.0" layoutY="234.0" />
       <TextField fx:id="IDPrix" layoutX="272.0" layoutY="325.0" />
-      <TextField fx:id="IDCategory1" layoutX="276.0" layoutY="48.0" onAction="#IDStock" />
+      <TextField fx:id="IDStock" layoutX="276.0" layoutY="48.0" />
       <Label layoutX="450.0" layoutY="118.0" text="Category">
          <textFill>
             <RadialGradient centerX="0.5" centerY="0.5" focusAngle="162.47" radius="0.5">

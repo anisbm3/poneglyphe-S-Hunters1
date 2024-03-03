@@ -9,16 +9,17 @@ import java.util.List;
 public class ServiceProduit implements IService<Produit> {
     private Connection connection;
 
-    public ServiceProduit(){
-        connection= MyDB.getInstance().getConnection();
+    public ServiceProduit() {
+        connection = MyDB.getInstance().getConnection();
     }
+
     @Override
     public void ajouter(Produit Produit) throws SQLException {
         String req = "INSERT INTO Produits (Stock, Prix, Nom, Category, Description) " +
                 "VALUES ('" + Produit.getStock() + "','" + Produit.getPrix() + "','" + Produit.getNom() + "','" + Produit.getCategory() + "','" + Produit.getDescription() + "')";
 
 
-        Statement ste= connection.createStatement();
+        Statement ste = connection.createStatement();
 
         ste.executeUpdate(req);
     }
@@ -43,7 +44,7 @@ public class ServiceProduit implements IService<Produit> {
 
         String req = " delete from Produits where   ID_Produit=?";
         PreparedStatement pre = connection.prepareStatement(req);
-        pre.setInt(1,Produit.getID());
+        pre.setInt(1, Produit.getID());
         pre.executeUpdate();
 
     }
@@ -55,8 +56,8 @@ public class ServiceProduit implements IService<Produit> {
         Statement ste = connection.
                 createStatement();
         ResultSet res = ste.executeQuery(req);
-        List<Produit> list =new ArrayList<>();
-        while (res.next()){
+        List<Produit> list = new ArrayList<>();
+        while (res.next()) {
             Produit p = new Produit(res.getInt("ID_Produit"), res.getInt("Stock"), res.getString("Category"), res.getString("Nom"), res.getInt("Prix"), res.getString("Description"));
             p.setID(res.getInt(1));
             p.setStock(res.getInt(2));
@@ -70,4 +71,28 @@ public class ServiceProduit implements IService<Produit> {
         }
         return list;
     }
+
+    public List<Produit> Tri() throws SQLException {
+        String req = "SELECT * FROM Produits ORDER BY PRIX";
+        Statement ste = connection.createStatement();
+        ResultSet res = ste.executeQuery(req);
+
+        List<Produit> list = new ArrayList<>();
+
+        while (res.next()) {
+            Produit p = new Produit(
+                    res.getInt("ID_Produit"),
+                    res.getInt("Stock"),
+                    res.getString("Category"),
+                    res.getString("Nom"),
+                    res.getInt("Prix"),
+                    res.getString("Description")
+            );
+
+            list.add(p);
+        }
+
+        return list;
+    }
+
 }

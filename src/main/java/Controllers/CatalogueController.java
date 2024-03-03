@@ -269,34 +269,34 @@ public class CatalogueController implements Initializable {
         private void processPayment() {
                 try {
 // Set your secret key here
-                    Stripe.apiKey = "sk_test_51OphDrASsnDruPyJOySx5PqgM1hr93yUE8nqPgaEd6cADAEW9x5ec18RJRcDnIYyJAuj1I0sqCau0UCAqqIzzacu00LqAp5eol";
-                    PaymentIntent intent = null;
-                    try {
-                        // Récupérez le texte du Label (suppose que le texte est dans le format "$xxx.xx")
-                        String totalText = menu_Total.getText();
+                        Stripe.apiKey = "sk_test_51OphDrASsnDruPyJOySx5PqgM1hr93yUE8nqPgaEd6cADAEW9x5ec18RJRcDnIYyJAuj1I0sqCau0UCAqqIzzacu00LqAp5eol";
+                        PaymentIntent intent = null;
+                        try {
+                                // Récupérez le texte du Label (suppose que le texte est dans le format "$xxx.xx")
+                                String totalText = menu_Total.getText();
 
-                        // Supprimez le signe dollar s'il est présent et convertissez la chaîne en double
-                        double totalDouble = Double.parseDouble(totalText.replace("$", ""));
+                                // Supprimez le signe dollar s'il est présent et convertissez la chaîne en double
+                                double totalDouble = Double.parseDouble(totalText.replace("$", ""));
 
-                        // Convertissez le montant en cents (multipliez par 100)
-                        long amountInCents = (long) (totalDouble * 100);
+                                // Convertissez le montant en cents (multipliez par 100)
+                                long amountInCents = (long) (totalDouble * 100);
 
-                        // Utilisez amountInCents dans la création du PaymentIntent
-                        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-                                .setAmount(amountInCents)
-                                .setCurrency("usd")
-                                .build();
+                                // Utilisez amountInCents dans la création du PaymentIntent
+                                PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
+                                        .setAmount(amountInCents)
+                                        .setCurrency("usd")
+                                        .build();
 
-                        intent = PaymentIntent.create(params);
+                                intent = PaymentIntent.create(params);
 
-                    } catch (NumberFormatException e) {
-                        // Gérez l'exception si la conversion échoue
-                        System.err.println("Erreur de conversion : " + e.getMessage());
-                    }
+                        } catch (NumberFormatException e) {
+                                // Gérez l'exception si la conversion échoue
+                                System.err.println("Erreur de conversion : " + e.getMessage());
+                        }
 
 
 // If the payment was successful, display a success message
-                    System.out.println("Payment successful. PaymentIntent ID: " + intent.getId());
+                        System.out.println("Payment successful. PaymentIntent ID: " + intent.getId());
                 } catch (StripeException e) {
 // If there was an error processing the payment, display the error message
                         System.out.println("Payment failed. Error: " + e.getMessage());
