@@ -1,6 +1,9 @@
 package Services;
 import Entities.Produit;
 import Utils.MyDB;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +96,40 @@ public class ServiceProduit implements IService<Produit> {
         }
 
         return list;
+    }
+    public List<Produit> rechercheDinamyque(String recherche) throws SQLException {
+        String sql = "SELECT * FROM PRODUITS WHERE ID_Produit LIKE ? OR Nom LIKE ? OR Category LIKE ? OR Prix LIKE ? OR Stock LIKE ? OR Description LIKE ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            for (int i = 1; i <= 6; i++) {
+                String searchValue = "%" + recherche + "%";
+                if (i == 4 || i == 1 || i == 5) { // Si c'est la colonne est un nombre (Prix ou Stock)
+                    try {
+                        int number = Integer.parseInt(recherche);
+                        statement.setInt(i, number);
+                    } catch (NumberFormatException e) {
+                        // La recherche n'est pas un nombre, donc ignorez cette colonne pour la recherche
+                        statement.setString(i, searchValue);
+                    }
+                } else {
+                    statement.setString(i, searchValue);
+                }
+            }
+
+            ResultSet resultSet = statement.executeQuery();
+            ObservableList<Produit> filteredList = FXCollections.observableArrayList();
+            while (resultSet.next()) {
+                Produit produit = new Produit();
+                produit.setID(resultSet.getInt("ID_Produit")); // Assurez-vous que la colonne s'appelle "ID_Produit" dans votre base de données
+                produit.setStock(resultSet.getInt("Stock"));
+                produit.setPrix(resultSet.getInt("Prix"));
+                produit.setNom(resultSet.getString("Nom"));
+                produit.setCategory(resultSet.getString("Category"));
+                produit.setDescription(resultSet.getString("Description"));
+
+                filteredList.add(produit);
+            }
+            return filteredList;
+        }
     }
 
 }

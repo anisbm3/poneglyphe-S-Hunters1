@@ -8,6 +8,10 @@ public class Panier {
     String prod_name;
     Date date;
 
+    public Panier() {
+
+    }
+
 
     public int getIDP() {
         return IDP;

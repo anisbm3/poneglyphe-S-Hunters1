@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -26,6 +27,8 @@ public class AfficherPanier implements  Initializable  {
 
 
 
+    @FXML
+    private Button triBtn;
     private ServicePanier SP= new ServicePanier();
     private List<VBox> displayedCards1 = new ArrayList<>();
 
@@ -38,6 +41,19 @@ public class AfficherPanier implements  Initializable  {
 
     }
 
+    private String tri="ASC";
+    private int i = 0;
+    @FXML
+    void OnClickedTri(ActionEvent event) {
+        if (i % 2 == 0) {
+            tri = "ASC";
+        } else {
+            tri = "DESC";
+        }
+        i++;
+        RefreshPage(event);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,6 +64,9 @@ public class AfficherPanier implements  Initializable  {
             throw new RuntimeException(e);
         }
         display(panier);
+        triBtn.setOnAction(this::OnClickedTri);
+
+
     }
 
 
@@ -55,14 +74,9 @@ public class AfficherPanier implements  Initializable  {
     @FXML
     void RefreshPage(ActionEvent event) {
         List<Panier> Panier = null;
-        try {
-            Panier = SP.afficher();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Panier = SP.afficherbyprix(tri); // Utilize the sorted list
         cardLayout2.getChildren().clear();
         display(Panier);
-
     }
 
 

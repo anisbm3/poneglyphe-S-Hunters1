@@ -279,7 +279,7 @@ public class CatalogueController implements Initializable {
                                 double totalDouble = Double.parseDouble(totalText.replace("$", ""));
 
                                 // Convertissez le montant en cents (multipliez par 100)
-                                long amountInCents = (long) (totalDouble * 100);
+                                long amountInCents = (long) (totalDouble );
 
                                 // Utilisez amountInCents dans la création du PaymentIntent
                                 PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()

@@ -1,8 +1,11 @@
 package Controllers;
 
+import Entities.Panier;
 import Entities.Produit;
 import Services.ServiceProduit;
 
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +14,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -29,6 +34,8 @@ public class AfficherController implements Initializable {
 
     private ServiceProduit SP= new ServiceProduit();
     private List<VBox> displayedCards = new ArrayList<>();
+    @FXML
+    private TextField searchField;
 
     @FXML
     private FlowPane cardLayout2;
@@ -42,8 +49,49 @@ public class AfficherController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        display(produits);
+      display(produits);
+
     }
+    @FXML
+    void searchproduit() throws SQLException {
+        // Récupérer le mot-clé de recherche saisi par l'utilisateur
+        String keyword = searchField.getText().toLowerCase().trim();
+
+        // Récupérer la liste complète des produits depuis le service ServiceProduit
+        List<Produit> produits = SP.afficher();
+
+        // Appliquer le filtre en fonction du mot-clé de recherche
+        FilteredList<Produit> filteredProduits = new FilteredList<>(FXCollections.observableArrayList(produits));
+        filteredProduits.setPredicate(produit -> produitContainsKeyword(produit, keyword));
+
+        // Mettre à jour l'affichage avec les cartes filtrées
+        updateDisplay(filteredProduits);
+    }
+
+    private void updateDisplay(List<Produit> produits) {
+        // Effacer les cartes existantes
+        cardLayout2.getChildren().clear();
+
+        // Afficher les nouvelles cartes
+        for (Produit produit : produits) {
+            VBox card = createProduit(produit);
+            cardLayout2.getChildren().add(card);
+            displayedCards.add(card);
+        }
+    }
+
+    private boolean produitContainsKeyword(Produit produit, String keyword) {
+        String id = String.valueOf(produit.getID());
+        String stock= String.valueOf(produit.getStock());
+        String price = String.valueOf(produit.getPrix());
+        return id.contains(keyword) ||
+                stock.contains(keyword)||
+                price.contains(keyword)||
+                produit.getNom().toLowerCase().contains(keyword) ||
+                produit.getDescription().toLowerCase().contains(keyword) ||
+                produit.getCategory().toLowerCase().contains(keyword);
+    }
+
 
     @FXML
    void AjouterProduit(ActionEvent event) {

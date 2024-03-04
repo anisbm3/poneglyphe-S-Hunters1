@@ -4,13 +4,12 @@ import java.sql.Date;
 
 public class Produit {
 
-    int ID_Produit ,Prix,Stock,Quantity;
+    int ID_Produit ,Prix,Stock;
     String Category , Nom, Description;
 
+    public Produit() {
 
-
-
-
+    }
 
 
     public int getStock() {

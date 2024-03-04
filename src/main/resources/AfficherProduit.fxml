@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
@@ -12,6 +13,7 @@
         <FlowPane fx:id="cardLayout2" layoutX="14.0" layoutY="14.0" prefHeight="423.0" prefWidth="460.0" />
         <VBox alignment="CENTER" layoutX="490.0" layoutY="3.0" prefHeight="434.0" prefWidth="160.0">
             <children>
+            <TextField fx:id="searchField" onKeyReleased="#searchproduit" />
                 <Button mnemonicParsing="false" onAction="#AjouterProduit" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: #da9a09; -fx-text-: white;" text="Ajouter">
                     <font>
                         <Font name="System Bold" size="14.0" />

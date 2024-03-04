@@ -4,6 +4,8 @@ import Entities.Produit;
 import Utils.MyDB;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -71,6 +73,31 @@ public class ServicePanier implements IService<Panier> {
             list.add(p);
         }
         return list;
+    }
+    public List<Panier> afficherbyprix(String tri) {
+        String req = "SELECT * FROM Panier";
+        List<Panier> list = new ArrayList<>();
+        try (Statement ste = connection.createStatement(); ResultSet res = ste.executeQuery(req)) {
+            while (res.next()) {
+                Panier Panier = new Panier();
+                Panier.setIDP(res.getInt(1));
+                Panier.setProd_name(res.getString(2));
+                Panier.setQuantity(res.getInt(3));
+                Panier.setPrice(res.getInt(4));
+                Panier.setDate(res.getDate(5));
+                Panier.setPanier_id(res.getInt(6));
+
+                list.add(Panier);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving paniers: " + e.getMessage());
+        }
+        if (tri.equals("ASC")) {
+            Collections.sort(list, Comparator.comparing(Panier::getPrice));
+        } else {
+            Collections.sort(list, Comparator.comparing(Panier::getPrice).reversed());
+        }
+        return list; // Return the sorted list
     }
 
 
