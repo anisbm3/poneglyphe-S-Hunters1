@@ -36,10 +36,7 @@ public class AfficherPanier implements  Initializable  {
     @FXML
     private FlowPane cardLayout2;
 
-    @FXML
-    void AjouterAuPanier(ActionEvent event) {
 
-    }
 
     private String tri="ASC";
     private int i = 0;

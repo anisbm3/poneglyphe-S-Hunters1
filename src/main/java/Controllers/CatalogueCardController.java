@@ -75,7 +75,7 @@ public class CatalogueCardController implements Initializable {
 
             if (result.next() && result.getInt("stock") >= qty && qty > 0) {
                 // Stock disponible, procéder à l'ajout au panier
-                String insertData = "INSERT INTO PANIER (panier_id, prod_name, quantity, price, date) VALUES (?, ?, ?, ?, ?)";
+                String insertData = "INSERT INTO PANIER (panier_id, prod_name, quantity, price, date,IDU) VALUES (?, ?, ?, ?, ?,?)";
                 prepare = connect.prepareStatement(insertData);
                 prepare.setInt(1, cID);
                 prepare.setString(2, prod_Name.getText());
@@ -85,6 +85,9 @@ public class CatalogueCardController implements Initializable {
                 Date date = new Date();
                 java.sql.Date sqlDate = java.sql.Date.valueOf(currentDateTime.toLocalDate());
                 prepare.setDate(5, sqlDate);
+// Remplacez la ligne suivante dans votre code
+                prepare.setInt(6, 1);
+
                 prepare.executeUpdate();
 
                 // Afficher les valeurs ajoutées à la table PANIER

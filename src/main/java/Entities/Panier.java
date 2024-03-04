@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Panier {
 
-    int IDP, quantity, price, panier_id;
+    int IDP, quantity, price, panier_id,IDU;
     String prod_name;
     Date date;
 
@@ -12,6 +12,13 @@ public class Panier {
 
     }
 
+    public int getIDU() {
+        return IDU;
+    }
+
+    public void setIDU(int IDU) {
+        this.IDU = IDU;
+    }
 
     public int getIDP() {
         return IDP;
@@ -61,13 +68,14 @@ public class Panier {
         this.date = date;
     }
 
-    public Panier(int IDP, int quantity, int price, int panier_id, String prod_name, Date date) {
+    public Panier(int IDP, int quantity, int price, int panier_id, String prod_name, Date date,int IDU) {
         this.IDP = IDP;
         this.quantity = quantity;
         this.price = price;
         this.panier_id = panier_id;
         this.prod_name = prod_name;
         this.date = date;
+        this.IDU=IDU;
     }
 
     public Panier(String prod_name, int quantity, int price, int IDP) {
@@ -77,7 +85,7 @@ public class Panier {
         this.IDP = IDP;
     }
 
-    public Panier(int IDP, String prod_name, int quantity, int price, Date date, int panier_id) {
+    public Panier(int IDP, String prod_name, int quantity, int price, Date date, int panier_id,int IDU) {
 
 
     }

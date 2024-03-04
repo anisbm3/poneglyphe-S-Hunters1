@@ -18,8 +18,8 @@ public class ServicePanier implements IService<Panier> {
 
     @Override
     public void ajouter(Panier Panier) throws SQLException {
-        String req = "INSERT INTO Panier (prod_name, quantity, price, date, panier_id) " +
-                "VALUES ('" + Panier.getProd_name() + "','" + Panier.getQuantity() + "','" + Panier.getPrice() + "','" + Panier.getDate() + "','" + Panier.getPanier_id() + "')";
+        String req = "INSERT INTO Panier (prod_name, quantity, price, date, panier_id,IDU) " +
+                "VALUES ('" + Panier.getProd_name() + "','" + Panier.getQuantity() + "','" + Panier.getPrice() + "','" + Panier.getDate() + "','" + Panier.getPanier_id() + "','" + Panier.getIDU() + "')";
 
 
         Statement ste = connection.createStatement();
@@ -29,14 +29,15 @@ public class ServicePanier implements IService<Panier> {
 
     @Override
     public void modifier(Panier Panier) throws SQLException {
-        String req = "update Panier set prod_name=? ,quantity=?, price=?, date=?, panier_id=? where IDP=?";
+        String req = "update Panier set prod_name=? ,quantity=?, price=?, date=?, panier_id=?, IDU=? where IDP=?";
         PreparedStatement pre = connection.prepareStatement(req);
         pre.setString(1, Panier.getProd_name());
         pre.setInt(2, Panier.getQuantity());
         pre.setInt(3, Panier.getPrice());
         pre.setDate(4, new java.sql.Date(Panier.getDate().getTime()));
         pre.setInt(5, Panier.getPanier_id());
-        pre.setInt(6, Panier.getIDP());
+        pre.setInt(7, Panier.getIDU());
+        pre.setInt(7, Panier.getIDP());
         pre.executeUpdate();
     }
 
@@ -61,13 +62,14 @@ public class ServicePanier implements IService<Panier> {
         ResultSet res = ste.executeQuery(req);
         List<Panier> list = new ArrayList<>();
         while (res.next()) {
-            Panier p = new Panier(res.getInt("IDP"), res.getString("prod_name"), res.getInt("quantity"), res.getInt("price"), res.getDate("date"), res.getInt("panier_id"));
+            Panier p = new Panier(res.getInt("IDP"), res.getString("prod_name"), res.getInt("quantity"), res.getInt("price"), res.getDate("date"), res.getInt("panier_id"),res.getInt("IDU"));
             p.setIDP(res.getInt("IDP"));
             p.setProd_name(res.getString("prod_name"));
             p.setQuantity(res.getInt("quantity"));
             p.setPrice(res.getInt("price"));
             p.setDate(res.getDate("date"));
             p.setPanier_id(res.getInt("panier_id"));
+            p.setIDP(res.getInt("IDU"));
 
 
             list.add(p);
@@ -86,6 +88,7 @@ public class ServicePanier implements IService<Panier> {
                 Panier.setPrice(res.getInt(4));
                 Panier.setDate(res.getDate(5));
                 Panier.setPanier_id(res.getInt(6));
+                Panier.setIDU(1);
 
                 list.add(Panier);
             }
