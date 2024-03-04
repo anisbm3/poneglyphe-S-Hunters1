@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.net.URL;
@@ -268,9 +269,10 @@ public class CatalogueController implements Initializable {
         @FXML
         private void processPayment() {
                 try {
-// Set your secret key here
+                        // Set your secret key here
                         Stripe.apiKey = "sk_test_51OphDrASsnDruPyJOySx5PqgM1hr93yUE8nqPgaEd6cADAEW9x5ec18RJRcDnIYyJAuj1I0sqCau0UCAqqIzzacu00LqAp5eol";
                         PaymentIntent intent = null;
+
                         try {
                                 // Récupérez le texte du Label (suppose que le texte est dans le format "$xxx.xx")
                                 String totalText = menu_Total.getText();
@@ -279,7 +281,7 @@ public class CatalogueController implements Initializable {
                                 double totalDouble = Double.parseDouble(totalText.replace("$", ""));
 
                                 // Convertissez le montant en cents (multipliez par 100)
-                                long amountInCents = (long) (totalDouble );
+                                long amountInCents = (long) (totalDouble * 100);
 
                                 // Utilisez amountInCents dans la création du PaymentIntent
                                 PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
@@ -294,14 +296,25 @@ public class CatalogueController implements Initializable {
                                 System.err.println("Erreur de conversion : " + e.getMessage());
                         }
 
+                        // Si le paiement a réussi, affichez une notification de réussite
+                        Notifications.create()
+                                .title("Paiement réussi")
+                                .text("Le paiement a été effectué avec succès.")
+                                .showInformation();
 
-// If the payment was successful, display a success message
                         System.out.println("Payment successful. PaymentIntent ID: " + intent.getId());
+
                 } catch (StripeException e) {
-// If there was an error processing the payment, display the error message
+                        // Si une erreur s'est produite lors du traitement du paiement, affichez le message d'erreur
+                        Notifications.create()
+                                .title("Erreur de paiement")
+                                .text("Le paiement a échoué. Erreur : " + e.getMessage())
+                                .showError();
+
                         System.out.println("Payment failed. Error: " + e.getMessage());
                 }
         }
+
         private void updateTableView() {
                 menu_col_productName.setCellValueFactory(new PropertyValueFactory<>("prod_name"));
                 menu_col_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
