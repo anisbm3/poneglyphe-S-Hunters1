@@ -12,22 +12,6 @@
         <FlowPane fx:id="cardLayout2" layoutX="14.0" layoutY="14.0" prefHeight="423.0" prefWidth="460.0" />
         <VBox alignment="CENTER" layoutX="490.0" layoutY="3.0" prefHeight="434.0" prefWidth="160.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: #da9a09; -fx-text-fill: white;" text="Ajouter au Panier">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets bottom="30.0" left="15.0" right="15.0" top="30.0" />
-                    </VBox.margin>
-                </Button>
-                <Button mnemonicParsing="false" onAction="#RefreshPage" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #da9a09; -fx-text-fill: white;" text="Refresh Panier">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets bottom="30.0" left="15.0" right="15.0" top="30.0" />
-                    </VBox.margin>
-                </Button>
                 <Button fx:id="triBtn" mnemonicParsing="false" onAction="#OnClickedTri" prefHeight="30.0" prefWidth="162.0" style="-fx-background-color: #da9a09; -fx-text-fill: white;" text="Tri Panier">
                     <font>
                         <Font size="14.0" />

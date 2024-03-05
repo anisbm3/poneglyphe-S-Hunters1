@@ -280,6 +280,16 @@ public class CatalogueController implements Initializable {
                                 // Supprimez le signe dollar s'il est présent et convertissez la chaîne en double
                                 double totalDouble = Double.parseDouble(totalText.replace("$", ""));
 
+                                // Appliquez une réduction de 25% si le total dépasse 500 DT
+                                if (totalDouble > 500) {
+                                        totalDouble *= 0.75;
+                                        // Affichez une notification de félicitations pour la réduction
+                                        Notifications.create()
+                                                .title("Félicitations!")
+                                                .text("Vous avez droit à une réduction de 25% sur votre paiement.")
+                                                .showInformation();
+                                }
+
                                 // Convertissez le montant en cents (multipliez par 100)
                                 long amountInCents = (long) (totalDouble * 100);
 
