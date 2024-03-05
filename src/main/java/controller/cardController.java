@@ -43,16 +43,15 @@ public class cardController {
     private Label RoleSignup ;
     @FXML
     Pane Card;
-    private static user user;
+    private user userr;
     userService userService = new userService();
     dashboard d;
     public void initialize() {}
     public void setData(user user) throws SQLException {
         userService utilisateurService = new userService();
         List<user> users = utilisateurService.Readall();
-
+        userr = user;
         if (!users.isEmpty()) {
-            this.user = user;
             pseudoSignup.setText(String.valueOf(user.getPseudo()));
             nomSignup.setText(String.valueOf(user.getNom()));
             prenomSignup.setText(String.valueOf(user.getPrenom()));
@@ -65,19 +64,24 @@ public class cardController {
     }
     @FXML
     private void SupprimerButtonOnClick(ActionEvent event) throws SQLException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("confirmation :");
-        alert.setHeaderText("Voulez-vous vraiment supprimer cet utilisateur ?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK)
-        {
-            userService.delete(user);
-            userService.changeScreen(event, "/dashboard.fxml", "dashboard");
+        if (userr != null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("confirmation :");
+            alert.setHeaderText("Voulez-vous vraiment supprimer "+ userr.getNom() +"?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK)
+            {
+                userService.delete(userr);
+                userService.changeScreen(event, "/dashboard.fxml", "dashboard");
+            }
+        }else {
+            System.out.println("MAFAMMECH");
         }
+
     }
     @FXML
     private void modiferOnClick(ActionEvent event){
-        modifierUtilisateur.setLoggedInuser(user);
+        modifierUtilisateur.setLoggedInuser(userr);
         userService.changeScreen(event, "/modifierUtilisateur.fxml", "MODIFIER");
     }
 }

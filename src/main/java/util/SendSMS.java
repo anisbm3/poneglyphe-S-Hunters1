@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class SendSMS {
     // Find your Account Sid and Token at twilio.com/console
     public static final String ACCOUNT_SID = "AC96604554941c6cc96b4a5f15ff20c9fb";
-    public static final String AUTH_TOKEN = "fb6686260869d30c631535662ed3bc0f";
+    public static final String AUTH_TOKEN = "e876be36b4d956b99736f8a70f3ee0d1";
 
     public static void SendSMS(String msg, String number) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);

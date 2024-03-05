@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -61,12 +62,8 @@ public class dashboard {
     //ANCHOR PANE userS
     @FXML
     private AnchorPane usersAnchorPane;
-    //HBOX (RECHERCHE, AJOUTER ADMIN, MODIFIER, SUPPRIMER)
-    @FXML
-    private Button modifierButton, supprimerButton, rechercheButton, ajouterButton;
     @FXML
     private TextField rechercheDashboard;
-    //GRIDPANE
     @FXML
     private TextField pseudoDashboard, cinDashboard, nomDashboard, prenomDashboard, ageDashboard, numtelDashboard, emailDashboard;
     @FXML
@@ -75,7 +72,6 @@ public class dashboard {
     private RadioButton roleAdminSignup, roleLivreurSignup;
     @FXML
     private Label roleSignupError;
-    //ANCHOR PANE ADD ADMIN, PROFILE
     @FXML
     private AnchorPane ajouterAnchorPane;
     @FXML
@@ -86,9 +82,8 @@ public class dashboard {
     private Label pseudoError, cinError, nomError, prenomError, ageError, numtelError, emailError, mdpError, confirmMdpError, mdpLabel, confirmMdpLabel;
     @FXML
     private Button annulerButton, ajoutAdminButton;
-    //ANCHOR PANE MODIFIER MDP
     @FXML
-    private AnchorPane anchorPaneModifierMdp;
+    private AnchorPane anchorPaneModifierMdp, statsAnchor;
     @FXML
     private PasswordField ancienText, nouveauMdp, confirmNouveauMdp;
     @FXML
@@ -112,13 +107,10 @@ public class dashboard {
     private List<user> u = new ArrayList<>();
 
     private List<user> getData() throws SQLException {
-
         List<user> Users = getlist();
         return Users;
     }
     userService userService = new userService();
-
-
     private static user loggedInuser;
     public static void setLoggedInuser(user user) {
         loggedInuser = user;
@@ -126,7 +118,8 @@ public class dashboard {
     cardController card;
     Encryptor encryptor = new Encryptor();
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
+        statsAnchor.setVisible(false);
         logo.setOnAction(event -> {
             usersAnchorPane.setVisible(false);
             ajouterAnchorPane.setVisible(false);
@@ -143,8 +136,7 @@ public class dashboard {
 
         });
         updateScroll();
-
-
+        updateChart();
     }
 
     public void updateScroll(){
@@ -194,6 +186,7 @@ public class dashboard {
         usersAnchorPane.setVisible(true);
         ajouterAnchorPane.setVisible(false);
         anchorPaneModifierMdp.setVisible(false);
+        statsAnchor.setVisible(false);
     }
     @FXML
     private void ajouterButtonOnClick(ActionEvent event){
@@ -226,7 +219,6 @@ public class dashboard {
             nomError.setText("Le nom est invalide");
             return true;
         }
-
         if(prenomAjout.getText().isBlank() || !prenomAjout.getText().matches("[a-zA-Z ]+")){
             prenomError.setTextFill(Color.RED);
             prenomError.setText("Le prénom est invalide");
@@ -286,6 +278,7 @@ public class dashboard {
                     encryptor.encryptString(mdpAjout.getText()), (roleAdminSignup.isSelected() ? "Admin" : "Livreur"));
             try {
                 userService.add(newuser);
+                updateChart();
                 System.out.println("Utilisateur ajouté avec succès !");
                 JOptionPane.showMessageDialog(null,"Utilisateur ajouté avec succès !");
                 userService.changeScreen(event, "/dashboard.fxml", "DASHBOARD");
@@ -308,6 +301,8 @@ public class dashboard {
         emailAjout.setDisable(true);
         mdpAjout.setDisable(true);
         confirmMdpAjout.setDisable(true);
+        roleAdminSignup.setVisible(false);
+        roleLivreurSignup.setVisible(false);
         pseudoAjout.setText(loggedInuser.getPseudo());
         cinAjout.setText(String.valueOf(loggedInuser.getCin()));
         nomAjouter.setText(loggedInuser.getNom());
@@ -370,5 +365,45 @@ public class dashboard {
             }
         }
     }
+
+    private void pieChart () throws SQLException {
+        List<user> user = userService.Readall();
+        List<user> admins = userService.afficherParRole("Admin");
+        List<user> clients = userService.afficherParRole("Utilisateur");
+        List<user> livreurs = userService.afficherParRole("Livreur");
+        float admin = (float) admins.size() /user.size();
+        float client = (float) clients.size()/user.size();
+        float livreur = (float) livreurs.size()/user.size();
+        float adminP = admin*100;
+        float clientP = client*100;
+        float livreurP = livreur*100;
+
+        ObservableList<PieChart.Data> pie = FXCollections.observableArrayList(
+                new PieChart.Data("ADMINS : " + String.valueOf(adminP) + " %", admin),
+                new PieChart.Data("USERS : " + String.valueOf(clientP) + " %", client),
+                new PieChart.Data("LIVREURS : " + String.valueOf(livreurP) + " %", livreur)
+        );
+        PieChart pieChart = new PieChart(pie);
+        pieChart.setTitle("ROLES");
+        pieChart.setClockwise(true);
+        pieChart.setAnimated(true);
+        pieChart.setLabelLineLength(50);
+        pieChart.setVisible(true);
+        pieChart.setStartAngle(180);
+        statsAnchor.getChildren().add(pieChart);
+    }
+    private void updateChart() throws SQLException {
+        statsAnchor.getChildren().clear();
+        pieChart();
+    }
+    @FXML
+    private void showStats(){
+        usersAnchorPane.setVisible(false);
+        ajouterAnchorPane.setVisible(false);
+        anchorPaneModifierMdp.setVisible(false);
+        statsAnchor.setVisible(true);
+    }
+
+
 
 }

@@ -84,8 +84,7 @@ public class signUp {
     Encryptor encryptor = new Encryptor();
 
     @FXML
-    void initialize() {
-    }
+    void initialize() {}
 
     public boolean getErrors(){
         pseudoSignupError.setText("");
@@ -196,7 +195,6 @@ public class signUp {
     }
 
     private void sendMail(ActionEvent event, int Rand){
-
         Properties props=new Properties();
         props.put("mail.smtp.host","smtp.gmail.com");
         props.put("mail.smtp.port",465);
@@ -207,7 +205,6 @@ public class signUp {
         props.put("mail.smtp.socketFactory.port",465);
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback",false);
-
         try {
             Session session = Session.getDefaultInstance(props, null);
             session.setDebug(true);

@@ -57,7 +57,7 @@ public class recherche {
         ageSignup.setText(String.valueOf(loggedInUser.getAge()));
         num_telSignup.setText(String.valueOf(loggedInUser.getNumTel()));
         emailSignup.setText(loggedInUser.getEmail());
-        RoleSignup.setText(loggedInUser.getEmail());
+        RoleSignup.setText(loggedInUser.getRole());
     }
 
 

@@ -92,11 +92,11 @@ public class userService implements IService<user>{
         return rs.next();
     }
     public user afficherParPseudo(String pseudo) throws SQLException {
-        user u = null; // Initialisez à null en dehors de la boucle
+        user u = null;
         String req = "SELECT * FROM `user` WHERE pseudo=?";
         PreparedStatement ps= cnx.prepareStatement(req);
         ps.setString(1, pseudo);
-        ResultSet rs = ps.executeQuery(); // Remove req from executeQuery
+        ResultSet rs = ps.executeQuery();
         while (rs.next()){
             u = new user(rs.getString("PSEUDO"), rs.getInt("CIN"), rs.getString("NOM"), rs.getString("PRENOM"), rs.getInt("AGE"), rs.getInt("NUMTEL"), rs.getString("EMAIL"), rs.getString("MDP"), rs.getString("ROLE"));
         }
@@ -122,7 +122,7 @@ public class userService implements IService<user>{
         }
     }
     public List<user> afficherParRole(String role){
-        List<user> users = new ArrayList<>() ; // Initialize the ObservableList
+        List<user> users = new ArrayList<>() ;
         String req = "SELECT * FROM `user` WHERE `role`=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
