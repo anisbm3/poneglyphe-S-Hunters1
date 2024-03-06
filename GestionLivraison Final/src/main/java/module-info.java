@@ -5,7 +5,9 @@ module eh.gestionlivraison {
     requires java.sql;
     requires org.apache.pdfbox;
     requires java.desktop;
-    requires com.google.zxing.javase; // Ajouter cette ligne pour lire le module com.google.zxing.javase
+    requires com.google.zxing.javase;
+    requires stripe.java;
+    requires org.controlsfx.controls; // Ajouter cette ligne pour lire le module com.google.zxing.javase
 
     opens eh.gestionlivraison to javafx.fxml;
     exports eh.gestionlivraison;

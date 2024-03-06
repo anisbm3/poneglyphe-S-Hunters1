@@ -37,17 +37,18 @@ public class ServiceFacture implements IService<Facture> {
     }
 
     private int recupereIdPannier(String Produits) throws SQLException {
-        int ID_Pannier = 0;
-        String query = "SELECT ID_Pannier FROM panier WHERE Produits = ?";
+        int panier_id = 0;
+        String query = "SELECT panier_id FROM panier WHERE prod_name = ?";
         try (PreparedStatement statement = cnx.prepareStatement(query)) {
-            statement.setString(1, Produits);
+            String prod_name = null;
+            statement.setString(1, prod_name);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    ID_Pannier = resultSet.getInt("ID_Pannier");
+                    panier_id = resultSet.getInt("ID_Pannier");
                 }
             }
         }
-        return ID_Pannier;
+        return panier_id;
     }
     @Override
     public void add(Facture facture) throws SQLException {
@@ -55,7 +56,7 @@ public class ServiceFacture implements IService<Facture> {
             // Récupérer l'ID de livraison
             int ID_Livraison = recupereIdLivraison(facture.getNomPrenomClient(), facture.getAdresse(), facture.getQuantity(), facture.getMontant(), facture.getDate());
             if (ID_Livraison != 0) {
-                int ID_Pannier = recupereIdPannier(facture.getProduits());
+                int ID_Pannier = recupereIdPannier(facture.getProd_name());
                 System.out.println("ID_Livraison: " + ID_Livraison);
 
                 // Récupérer les détails de la livraison pour mettre à jour la facture
@@ -66,31 +67,32 @@ public class ServiceFacture implements IService<Facture> {
                     if (rsLivraison.next()) {
                         facture.setNomPrenomClient(rsLivraison.getString("NomPrenomClient"));
                         facture.setAdresse(rsLivraison.getString("Adresse"));
-                        facture.setID_Pannier(rsLivraison.getInt("ID_Pannier"));
+                        facture.setPanier_id(rsLivraison.getInt("ID_Pannier"));
                         facture.setQuantity(rsLivraison.getInt("quantity"));
                         facture.setMontant(rsLivraison.getFloat("montant"));
                     }
                 }
 
                 // Récupérer le produit du panier pour mettre à jour la facture
-                String queryProduit = "SELECT Produits FROM panier WHERE ID_Pannier = ?";
+                String queryProduit = "SELECT prod_name FROM panier WHERE panier_id = ?";
+                int panier_id = 0;
                 try (PreparedStatement stmProduits = cnx.prepareStatement(queryProduit)) {
-                    stmProduits.setInt(1, ID_Pannier); // Utilisez l'ID_Pannier récupéré
+                    stmProduits.setInt(1, panier_id); // Utilisez l'ID_Pannier récupéré
                     ResultSet rsProduit = stmProduits.executeQuery();
                     if (rsProduit.next()) {
-                        facture.setProduits(rsProduit.getString("Produits"));
+                        facture.setProd_name(rsProduit.getString("Produits"));
                     }
                 }
 
                 // Insérer la facture dans la table "facture" après avoir récupéré les détails nécessaires
-                String queryFacture = "INSERT INTO facture (IdFacture, Remise, MontantAvecRemise, dateFacture, ID_Livraison, ID_Pannier) VALUES (?, ?, ?, ?, ?, ?)";
+                String queryFacture = "INSERT INTO facture (IdFacture, Remise, MontantAvecRemise, dateFacture, ID_Livraison, panier_id) VALUES (?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement stmFacture = cnx.prepareStatement(queryFacture)) {
                     stmFacture.setInt(1, facture.getIdFacture());
                     stmFacture.setInt(2, facture.getRemise());
                     stmFacture.setFloat(3, facture.getMontantAvecRemise());
                     stmFacture.setDate(4, facture.getDateFacture());
                     stmFacture.setInt(5, ID_Livraison);
-                    stmFacture.setInt(6, ID_Pannier);
+                    stmFacture.setInt(6, panier_id);
                     stmFacture.executeUpdate();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -140,12 +142,12 @@ public class ServiceFacture implements IService<Facture> {
                 }
 
                 // Récupérer le produit du panier depuis la table "panier"
-                String queryPannier = "SELECT Produits FROM panier WHERE ID_Pannier = ?";
+                String queryPannier = "SELECT prod_name FROM panier WHERE panier_id = ?";
                 try (PreparedStatement stmPannier = cnx.prepareStatement(queryPannier)) {
                     stmPannier.setInt(1, idPannier);
                     ResultSet rsPannier = stmPannier.executeQuery();
                     if (rsPannier.next()) {
-                        facture.setProduits(rsPannier.getString("Produits"));
+                        facture.setProd_name(rsPannier.getString("Produits"));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -161,7 +163,7 @@ public class ServiceFacture implements IService<Facture> {
                 System.out.println("ID Livraison: " + idLivraison);
                 System.out.println("NomPrenomClient: " + facture.getNomPrenomClient());
                 System.out.println("Adresse: " + facture.getAdresse());
-                System.out.println("Produit: " + facture.getProduits());
+                System.out.println("Produit: " + facture.getProd_name());
                 System.out.println("Quantity: " + facture.getQuantity());
                 System.out.println("Montant: " + facture.getMontant());
             }

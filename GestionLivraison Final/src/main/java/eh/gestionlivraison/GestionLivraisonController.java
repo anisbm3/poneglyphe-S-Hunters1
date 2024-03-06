@@ -123,8 +123,8 @@ public class GestionLivraisonController implements Initializable {
 
         // Charger les données depuis la base de données
         loadProduitsFromDatabase();
-        List<String> Produits = Arrays.asList("game", "pull"); // Liste de produits récupérée depuis la base de données ou autre source
-        cb_Produits.getItems().addAll(Produits);
+        List<String> prod_name = Arrays.asList("game", "pull"); // Liste de produits récupérée depuis la base de données ou autre source
+        cb_Produits.getItems().addAll(prod_name);
         // Afficher les produits dans le ComboBox
         // cb_Produits.setItems(optionsProduits); // Il semble que optionsProduits ne soit pas défini dans le code que vous avez partagé
 
@@ -140,13 +140,13 @@ public class GestionLivraisonController implements Initializable {
     private void loadProduitsFromDatabase() {
         try {
             Connection cnx = MyDataBase.getInstance().getCnx();
-            String req = "SELECT DISTINCT Produits FROM panier"; // Sélectionnez les produits distincts
+            String req = "SELECT DISTINCT prod_name FROM panier"; // Sélectionnez les produits distincts
             PreparedStatement cs = cnx.prepareStatement(req);
             ResultSet rs = cs.executeQuery();
             while (rs.next()) {
-                String Produits = rs.getString("produits");
-                optionsProduits.add(Produits);
-                System.out.println("Produit récupéré depuis la base de données : " + Produits);
+                String prod_name= rs.getString("prod_name");
+                optionsProduits.add(prod_name);
+                System.out.println("Produit récupéré depuis la base de données : " + prod_name);
             }
             cb_Produits.setItems(optionsProduits); // Associer les produits à la ComboBox
         } catch (SQLException ex) {
@@ -167,14 +167,14 @@ public class GestionLivraisonController implements Initializable {
     public void fillcomboProduit() {
         try {
             Connection cnx = MyDataBase.getInstance().getCnx();
-            String req = "SELECT DISTINCT Produits FROM panier"; // Sélectionnez les produits distincts
+            String req = "SELECT DISTINCT prod_name FROM panier"; // Sélectionnez les produits distincts
             PreparedStatement cs = cnx.prepareStatement(req);
             ResultSet rs = cs.executeQuery();
             ObservableList<String> optionsProduits = FXCollections.observableArrayList();
             while (rs.next()) {
-                String Produits = rs.getString("Produits");
-                optionsProduits.add(Produits);
-                System.out.println("Produit récupéré depuis la base de données : " + Produits);
+                String prod_name = rs.getString("prod_name");
+                optionsProduits.add(prod_name);
+                System.out.println("Produit récupéré depuis la base de données : " + prod_name);
             }
             cb_Produits.setItems(optionsProduits);
         } catch (SQLException ex) {
@@ -248,7 +248,7 @@ public class GestionLivraisonController implements Initializable {
             }
 
             if (labelIDPannier != null) {
-                labelIDPannier.setText(String.valueOf(livraison.getID_Pannier()));
+                labelIDPannier.setText(String.valueOf(livraison.getPanier_id()));
             } else {
                 System.err.println("labelIDPannier est null");
             }
@@ -266,7 +266,7 @@ public class GestionLivraisonController implements Initializable {
             }
 
             if (labelProduits != null) {
-                labelProduits.setText(livraison.getProduits());
+                labelProduits.setText(livraison.getProd_name());
             } else {
                 System.err.println("labelProduits est null");
             }
@@ -400,7 +400,7 @@ public class GestionLivraisonController implements Initializable {
                     selectedLivraison.setNomPrenomClient(NomPrenomClientField.getText());
                     System.out.println(NomPrenomClientField.getText());
                     selectedLivraison.setAdresse(AdresseField.getText());
-                    selectedLivraison.setProduits(cb_Produits.getValue());
+                    selectedLivraison.setProd_name(cb_Produits.getValue());
                     selectedLivraison.setQuantity(Integer.parseInt(TfQuantityField.getText()));
                     selectedLivraison.setMontant(Float.parseFloat(TfMontantField.getText()));
                     selectedLivraison.setDate(Date.valueOf(dateField.getValue()));

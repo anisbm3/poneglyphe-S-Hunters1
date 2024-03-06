@@ -97,7 +97,7 @@ public class FactureCardController {
         labelNomPrenimClient.setText("NomPrenomClient: " + facture.getNomPrenomClient());
         labelAdresse.setText("Adresse: " + facture.getAdresse());
         labelDate_Livraison.setText("Date_Livraison:" + facture.getDate());
-        labelProduit.setText("Produit: " + facture.getProduits());
+        labelProduit.setText("Produit: " + facture.getProd_name());
         labelQuantity.setText("Quantity: " + facture.getQuantity());
         labelMontantSansRemise.setText("Montant sans remise: " + facture.getMontant());
         labelRemise.setText("Remise: " + facture.getRemise());

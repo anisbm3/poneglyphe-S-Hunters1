@@ -96,14 +96,14 @@ public class AjouterLivraisonController  implements Initializable {
     public void fillcomboProduit() {
         try {
             Connection cnx = MyDataBase.getInstance().getCnx();
-            String req = "SELECT DISTINCT Produits FROM panier"; // Sélectionnez les produits distincts
+            String req = "SELECT DISTINCT prod_name FROM panier"; // Sélectionnez les produits distincts
             PreparedStatement cs = cnx.prepareStatement(req);
             ResultSet rs = cs.executeQuery();
             ObservableList<String> optionsProduits = FXCollections.observableArrayList();
             while (rs.next()) {
-                String Produit = rs.getString("Produits");
-                optionsProduits.add(Produit);
-                System.out.println("Produit récupéré depuis la base de données : " + Produit);
+                String prod_name = rs.getString("prod_name");
+                optionsProduits.add(prod_name);
+                System.out.println("Produit récupéré depuis la base de données : " + prod_name);
             }
             cb_Produits.setItems(optionsProduits);
         } catch (SQLException ex) {
@@ -142,7 +142,7 @@ public class AjouterLivraisonController  implements Initializable {
             alert.showAndWait();
         } else {
             // Vérifier l'ID_Pannier
-            System.out.println("ID_Pannier: " + Livraison.getID_Pannier());
+            System.out.println("ID_Pannier: " + Livraison.getPanier_id());
 
             // Vérifier le produit sélectionné
             System.out.println("Produit sélectionné: " + cb_Produits.getValue());

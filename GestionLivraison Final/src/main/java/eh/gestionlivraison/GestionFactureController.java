@@ -588,7 +588,7 @@ public class GestionFactureController implements Initializable {
                 selectedFacture.setDateFacture(Date.valueOf(date.getValue()));
                 selectedFacture.setNomPrenomClient(cb_NomPrenom.getValue());
                 selectedFacture.setAdresse(cb_Adresse.getValue());
-                selectedFacture.setProduits(cb_Produits.getValue());
+                selectedFacture.setProd_name(cb_Produits.getValue());
                 selectedFacture.setQuantity(cb_quantity.getValue());
                 selectedFacture.setMontant(cb_montant.getValue());
                 selectedFacture.setDate(cb_Date.getValue());
@@ -618,7 +618,7 @@ public class GestionFactureController implements Initializable {
         if (selectedFacture != null) {
             String nomClient = selectedFacture.getNomPrenomClient();
             String date = selectedFacture.getDateFacture().toString();
-            String produits = selectedFacture.getProduits();
+            String produits = selectedFacture.getProd_name();
             String prixTotal = String.valueOf(selectedFacture.getMontant());
             String tva = String.valueOf(selectedFacture.getMontant() * 0.2); // Exemple de calcul de TVA
             String prixTTC = String.valueOf(selectedFacture.getMontant() * 1.2); // Exemple de calcul de prix TTC

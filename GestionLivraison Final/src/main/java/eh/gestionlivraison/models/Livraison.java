@@ -7,13 +7,15 @@ public class Livraison {
     private int ID_Livraison;
     private String NomPrenomClient;
     private String Adresse;
-    private static int ID_Pannier;
-    private int quantity;
+
     private float montant;
+    private int panier_id;
 
     private Date date;
-    private String Produits ;
     private boolean selected;
+
+    public Livraison(String text, String text1, String value, int montant, float v, Date date) {
+    }
 
     public boolean isSelected() {
         return selected;
@@ -26,37 +28,36 @@ public class Livraison {
     public Livraison() {
     }
 
-
-    public Livraison(String nomPrenomClient, String adresse, String produits, int quantity, float montant, Date date) {
+    public Livraison(String nomPrenomClient, String adresse, float montant, Date date, int panier_id) {
         NomPrenomClient = nomPrenomClient;
         Adresse = adresse;
-        this.quantity = quantity;
+        this.panier_id = panier_id;
         this.montant = montant;
         this.date = date;
-        Produits = produits;
+
     }
 
-    public Livraison(int ID_Livraison, String nomPrenomClient, String adresse, int ID_Pannier, int quantity, float montant, Date date, String produits) {
+    public Livraison(int ID_Livraison, String nomPrenomClient, String adresse, float montant, Date date, int panier_id) {
         this.ID_Livraison = ID_Livraison;
         NomPrenomClient = nomPrenomClient;
         Adresse = adresse;
-        this.ID_Pannier = ID_Pannier;
-        this.quantity = quantity;
+        this.panier_id = panier_id;
+        // this.quantity = quantity;
         this.montant = montant;
         this.date = date;
-        Produits = produits;
+        //this.prod_name = prod_name;
     }
 
-    public Livraison(String nomPrenomClient, String adresse, int ID_Pannier, int quantity, float montant, Date date, String produits) {
-        NomPrenomClient = nomPrenomClient;
-        Adresse = adresse;
-        this.ID_Pannier = ID_Pannier;
-        this.quantity = quantity;
-        this.montant = montant;
-        this.date = date;
-        Produits = produits;
-    }
-
+    /*  public Livraison(String nomPrenomClient, String adresse, int panier_id, int quantity, float montant, Date date, String prod_name) {
+          NomPrenomClient = nomPrenomClient;
+          Adresse = adresse;
+          this.panier_id = panier_id;
+          this.quantity = quantity;
+          this.montant = montant;
+          this.date = date;
+          this.prod_name = prod_name;
+      }
+  */
     public int getID_Livraison() {
         return ID_Livraison;
     }
@@ -69,26 +70,19 @@ public class Livraison {
         return Adresse;
     }
 
-    public static int getID_Pannier() {
-        return ID_Pannier;
+
+    public  int getPanier_id() {
+        return panier_id;
     }
 
-
-    public int getQuantity() {
-        return quantity;
-    }
 
     public float getMontant() {
         return montant;
     }
 
 
-    public String getProduits() {
-        return Produits;
-    }
-
-    public void setProduits(String produits) {
-        Produits = produits;
+    public void setPanier_id(int panier_id) {
+        this.panier_id = panier_id;
     }
 
     public void setID_Livraison(int ID_Livraison) {
@@ -101,13 +95,6 @@ public class Livraison {
 
     public void setAdresse(String adresse) {
         Adresse = adresse;
-    }
-
-    public void setID_Pannier(int ID_Pannier) {
-        this.ID_Pannier = ID_Pannier;
-    }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public void setMontant(float montant) {
@@ -128,11 +115,9 @@ public class Livraison {
                 "ID_Livraison=" + ID_Livraison +
                 ", NomPrenomClient='" + NomPrenomClient + '\'' +
                 ", Adresse='" + Adresse + '\'' +
-                ", ID_Pannier=" + ID_Pannier +
-                ", quantity=" + quantity +
                 ", montant=" + montant +
+                ", panier_id=" + panier_id +
                 ", date=" + date +
-                ", Produits='" + Produits + '\'' +
                 ", selected=" + selected +
                 '}';
     }
@@ -142,12 +127,12 @@ public class Livraison {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Livraison livraison = (Livraison) o;
-        return ID_Livraison == livraison.ID_Livraison && ID_Pannier == livraison.ID_Pannier && quantity == livraison.quantity && Float.compare(montant, livraison.montant) == 0 && selected == livraison.selected && Objects.equals(NomPrenomClient, livraison.NomPrenomClient) && Objects.equals(Adresse, livraison.Adresse) && Objects.equals(date, livraison.date) && Objects.equals(Produits, livraison.Produits);
+        return ID_Livraison == livraison.ID_Livraison && Float.compare(montant, livraison.montant) == 0 && panier_id == livraison.panier_id && selected == livraison.selected && Objects.equals(NomPrenomClient, livraison.NomPrenomClient) && Objects.equals(Adresse, livraison.Adresse) && Objects.equals(date, livraison.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID_Livraison, NomPrenomClient, Adresse, ID_Pannier, quantity, montant, date, Produits, selected);
+        return Objects.hash(ID_Livraison, NomPrenomClient, Adresse, montant, panier_id, date, selected);
     }
 }
 

@@ -13,19 +13,7 @@ public class ServiceLivraison implements IService<Livraison> {
         cnx = MyDataBase.getInstance().getCnx();
     }
 
-    private int recupereIdPannier(String Produits) throws SQLException {
-        int ID_Pannier = 0;
-        String query = "SELECT ID_Pannier FROM panier WHERE Produits = ?";
-        try (PreparedStatement statement = cnx.prepareStatement(query)) {
-            statement.setString(1, Produits);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    ID_Pannier = resultSet.getInt("ID_Pannier");
-                }
-            }
-        }
-        return ID_Pannier;
-    }
+
 
     public void add(Livraison livraison) {
         // Vérifiez si la date de livraison est nulle
@@ -34,27 +22,27 @@ public class ServiceLivraison implements IService<Livraison> {
         }
 
         try {
-            int ID_Pannier = recupereIdPannier(livraison.getProduits()); // Utilisez getProduits pour obtenir le nom du produit
+            int panier_id = 1; // Utilisez getProduits pour obtenir le nom du produit
             // Insérez la livraison dans la table "livraison"
-            String queryLivraison = "INSERT INTO livraison (ID_Livraison, NomPrenomClient, Adresse, ID_Pannier, quantity, montant, Date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String queryLivraison = "INSERT INTO livraison (ID_Livraison, NomPrenomClient, Adresse, panier_id , montant, Date) VALUES ( ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement stm = cnx.prepareStatement(queryLivraison)) {
                 stm.setInt(1, livraison.getID_Livraison());
                 stm.setString(2, livraison.getNomPrenomClient());
                 stm.setString(3, livraison.getAdresse());
-                stm.setInt(4, ID_Pannier); // Utilisez l'ID_Pannier récupéré
-                stm.setInt(5, livraison.getQuantity());
-                stm.setFloat(6, livraison.getMontant());
-                stm.setDate(7, livraison.getDate());
+                stm.setInt(4, panier_id ); // Utilisez l'ID_Pannier récupéré
+               // stm.setInt(5, livraison.getQuantity());
+                stm.setFloat(5, livraison.getMontant());
+                stm.setDate(6, livraison.getDate());
                 stm.executeUpdate();
             }
 
             // Récupérez le nom du produit depuis la table "panier" en utilisant l'ID du panier
-            String queryProduit = "SELECT Produits FROM panier WHERE ID_Pannier = ?";
+            String queryProduit = "SELECT price FROM panier WHERE panier_id  = ?";
             try (PreparedStatement stmProduits = cnx.prepareStatement(queryProduit)) {
-                stmProduits.setInt(1, ID_Pannier); // Utilisez l'ID_Pannier récupéré
+                stmProduits.setInt(1, panier_id ); // Utilisez l'ID_Pannier récupéré
                 ResultSet rsProduit = stmProduits.executeQuery();
                 if (rsProduit.next()) {
-                    livraison.setProduits(rsProduit.getString("Produits"));
+                    livraison.setMontant(rsProduit.getInt("prix"));
                 }
             }
         } catch (SQLException e) {
@@ -65,7 +53,7 @@ public class ServiceLivraison implements IService<Livraison> {
     @Override
     public ArrayList<Livraison> getAll() {
         ArrayList<Livraison> livraisons = new ArrayList<>();
-        String query = "SELECT ID_Livraison,NomPrenomClient, Adresse, quantity, montant, date, ID_Pannier FROM livraison";
+        String query = "SELECT ID_Livraison,NomPrenomClient, Adresse, panier_id , quantity, montant, date FROM livraison";
         try {
             Statement stm = cnx.createStatement();
             ResultSet rs = stm.executeQuery(query);
@@ -78,24 +66,24 @@ public class ServiceLivraison implements IService<Livraison> {
                 livraison.setMontant(rs.getFloat("montant"));
                 livraison.setDate(rs.getDate("date"));
 
-                int idPannier = rs.getInt("ID_Pannier");
+                int idPannier = rs.getInt("panier_id ");
 
                 // Récupérer le nom du produit depuis la table "panier"
                 // Récupérer le nom du produit depuis la table "panier"
-                String queryProduit = "SELECT Produits FROM panier WHERE ID_Pannier = ?";
+                String queryProduit = "SELECT prod_name FROM panier WHERE panier_id  = ?";
                 try {
                     PreparedStatement stmProduit = cnx.prepareStatement(queryProduit);
                     stmProduit.setInt(1, idPannier);
                     ResultSet rsProduit = stmProduit.executeQuery();
                     if (rsProduit.next()) {
-                        String Produits = rsProduit.getString("Produits");
-                        livraison.setProduits(Produits != null ? Produits : "Produit non disponible");
+                        String prod_name = rsProduit.getString("prod_name");
+                        livraison.setProd_name(prod_name != null ? prod_name : "Produit non disponible");
                     } else {
-                        livraison.setProduits("Produit non trouvé pour cet ID");
+                        livraison.setProd_name("Produit non trouvé pour cet ID");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    livraison.setProduits("Erreur de récupération des produits");
+                    livraison.setProd_name("Erreur de récupération des produits");
                 }
 
                 livraisons.add(livraison);
@@ -107,7 +95,7 @@ public class ServiceLivraison implements IService<Livraison> {
                 System.out.println("Montant: " + livraison.getMontant());
                 System.out.println("Date: " + livraison.getDate());
                 System.out.println("ID_Pannier: " + idPannier);
-                System.out.println("Produits: " + livraison.getProduits());
+                System.out.println("Produits: " + livraison.getProd_name());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -144,13 +132,13 @@ public class ServiceLivraison implements IService<Livraison> {
         }
     }
 
-    public boolean deleteAllByPannierId(int ID_Pannier) {
+    public boolean deleteAllByPannierId(int panier_id ) {
         try {
             // Supprimer les livraisons liées à une pannier spécifié
-            String query = "DELETE FROM livraison WHERE ID_Pannier = ?";
+            String query = "DELETE FROM livraison WHERE panier_id  = ?";
             int rowsDeleted;
             try (PreparedStatement stm = cnx.prepareStatement(query)) {
-                stm.setInt(1, ID_Pannier);
+                stm.setInt(1, panier_id );
                 rowsDeleted = stm.executeUpdate();
             }
             return rowsDeleted > 0;
@@ -172,7 +160,7 @@ public class ServiceLivraison implements IService<Livraison> {
                     livraison.setID_Livraison(rs.getInt("ID_Livraison"));
                     livraison.setNomPrenomClient(rs.getString("NomPrenomClient"));
                     livraison.setAdresse(rs.getString("Adresse"));
-                    livraison.setID_Pannier(rs.getInt("ID_Pannier"));
+                    livraison.setPanier_id(rs.getInt("ID_Pannier"));
                     livraison.setQuantity(rs.getInt("quantity"));
                     livraison.setMontant(rs.getFloat("montant"));
                     livraison.setDate(rs.getDate("date"));
@@ -186,12 +174,12 @@ public class ServiceLivraison implements IService<Livraison> {
     }
     @Override
     public void update(Livraison livraison) {
-        String query = "UPDATE livraison SET NomPrenomClient=?,Adresse=?,ID_Pannier=?, quantity=?, montant=?, date=? WHERE ID_Livraison=?";
+        String query = "UPDATE livraison SET NomPrenomClient=?,Adresse=?,panier_id=?, quantity=?, montant=?, date=? WHERE ID_Livraison=?";
         try {
             PreparedStatement stm = cnx.prepareStatement(query);
             stm.setString(1, livraison.getNomPrenomClient());
             stm.setString(2, livraison.getAdresse());
-            stm.setInt(3, livraison.getID_Pannier());
+            stm.setInt(3, livraison.getPanier_id());
             stm.setInt(4, livraison.getQuantity());
             stm.setFloat(5, livraison.getMontant());
             stm.setDate(6, livraison.getDate());

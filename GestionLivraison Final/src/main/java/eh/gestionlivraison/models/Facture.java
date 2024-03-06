@@ -12,40 +12,30 @@ public class Facture {
     private int ID_Livraison;
     private String NomPrenomClient;
     private String Adresse;
-    private int ID_Pannier;
+    private int panier_id;
     private int quantity;
     private float montant;
-    private String Produits;
+    private String prod_name;
     private boolean selected;
 
     public Facture() {}
 
-    public Facture(int idFacture, int remise, float montantAvecRemise, Date dateFacture, int ID_Livraison, String nomPrenomClient, String adresse, int ID_Pannier, int quantity, float montant, String produits) {
+    public Facture(int idFacture, int remise, float montantAvecRemise, Date dateFacture, Date date, int ID_Livraison, String nomPrenomClient, String adresse, int panier_id, int quantity, float montant, String prod_name) {
         IdFacture = idFacture;
         Remise = remise;
         MontantAvecRemise = montantAvecRemise;
         this.dateFacture = dateFacture;
+        this.date = date;
         this.ID_Livraison = ID_Livraison;
         NomPrenomClient = nomPrenomClient;
         Adresse = adresse;
-        this.ID_Pannier = ID_Pannier;
+        this.panier_id = panier_id;
         this.quantity = quantity;
         this.montant = montant;
-        Produits = produits;
+        this.prod_name = prod_name;
     }
 
-    public Facture(int remise, float montantAvecRemise, Date dateFacture, String nomPrenomClient, String adresse, int quantity, float montant, String produits) {
-        Remise = remise;
-        MontantAvecRemise = montantAvecRemise;
-        this.dateFacture = dateFacture;
-        NomPrenomClient = nomPrenomClient;
-        Adresse = adresse;
-        this.quantity = quantity;
-        this.montant = montant;
-        Produits = produits;
-    }
-
-    public Facture(int remise, float montantAvecRemise, Date dateFacture, Date date, String nomPrenomClient, String adresse, int quantity, float montant, String produits) {
+    public Facture(int remise, float montantAvecRemise, Date dateFacture, Date date, String nomPrenomClient, String adresse, int quantity, float montant, String prod_name) {
         Remise = remise;
         MontantAvecRemise = montantAvecRemise;
         this.dateFacture = dateFacture;
@@ -54,36 +44,12 @@ public class Facture {
         Adresse = adresse;
         this.quantity = quantity;
         this.montant = montant;
-        Produits = produits;
+        this.prod_name = prod_name;
     }
 
-    public Facture(int idFacture, int remise, float montantAvecRemise, Date dateFacture, Date date, int ID_Livraison, String nomPrenomClient, String adresse, int ID_Pannier, int quantity, float montant, String produits) {
-
-       this.IdFacture = idFacture;
-      this.Remise = remise;
-       this.MontantAvecRemise = montantAvecRemise;
-        this.dateFacture = dateFacture;
-        this.date = date;
-        this.ID_Livraison = ID_Livraison;
-        this.NomPrenomClient = nomPrenomClient;
-        this.Adresse = adresse;
-        this.ID_Pannier = ID_Pannier;
-        this.quantity = quantity;
-        this.montant = montant;
-        this.Produits = produits;
+    public Facture(int remise, float montantAvecRemise, Date dateFacture, String value, String value1, String value2, Integer value3, Float value4, Date value5) {
     }
 
-    public Facture(int remise, float montantAvecRemise, Date dateFacture, String nomPrenomClient, String adresse, String produits, Integer quantity, Float montant, Date date) {
-        this.Remise = remise;
-        this.MontantAvecRemise = montantAvecRemise;
-        this.dateFacture = dateFacture;
-        this.NomPrenomClient = nomPrenomClient;
-        this.Adresse = adresse;
-        this.Produits = produits;
-        this.quantity = quantity;
-        this.montant = montant;
-        this.date = date;
-    }
 
     public int getIdFacture() {
         return IdFacture;
@@ -117,8 +83,8 @@ public class Facture {
         return Adresse;
     }
 
-    public int getID_Pannier() {
-        return ID_Pannier;
+    public int getPanier_id() {
+        return panier_id;
     }
 
     public int getQuantity() {
@@ -129,8 +95,8 @@ public class Facture {
         return montant;
     }
 
-    public String getProduits() {
-        return Produits;
+    public String getProd_name() {
+        return prod_name;
     }
 
     public boolean isSelected() {
@@ -169,8 +135,8 @@ public class Facture {
         Adresse = adresse;
     }
 
-    public void setID_Pannier(int ID_Pannier) {
-        this.ID_Pannier = ID_Pannier;
+    public void setPanier_id(int panier_id) {
+        this.panier_id = panier_id;
     }
 
     public void setQuantity(int quantity) {
@@ -181,8 +147,8 @@ public class Facture {
         this.montant = montant;
     }
 
-    public void setProduits(String produits) {
-        Produits = produits;
+    public void setProd_name(String prod_name) {
+        this.prod_name = prod_name;
     }
 
     public void setSelected(boolean selected) {
@@ -200,10 +166,10 @@ public class Facture {
                 ", ID_Livraison=" + ID_Livraison +
                 ", NomPrenomClient='" + NomPrenomClient + '\'' +
                 ", Adresse='" + Adresse + '\'' +
-                ", ID_Pannier=" + ID_Pannier +
+                ", panier_id=" + panier_id +
                 ", quantity=" + quantity +
                 ", montant=" + montant +
-                ", Produits='" + Produits + '\'' +
+                ", prod_name='" + prod_name + '\'' +
                 ", selected=" + selected +
                 '}';
     }
@@ -213,12 +179,12 @@ public class Facture {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Facture facture = (Facture) o;
-        return IdFacture == facture.IdFacture && Remise == facture.Remise && Float.compare(MontantAvecRemise, facture.MontantAvecRemise) == 0 && ID_Livraison == facture.ID_Livraison && ID_Pannier == facture.ID_Pannier && quantity == facture.quantity && Float.compare(montant, facture.montant) == 0 && selected == facture.selected && Objects.equals(dateFacture, facture.dateFacture) && Objects.equals(date, facture.date) && Objects.equals(NomPrenomClient, facture.NomPrenomClient) && Objects.equals(Adresse, facture.Adresse) && Objects.equals(Produits, facture.Produits);
+        return IdFacture == facture.IdFacture && Remise == facture.Remise && Float.compare(MontantAvecRemise, facture.MontantAvecRemise) == 0 && ID_Livraison == facture.ID_Livraison && panier_id == facture.panier_id && quantity == facture.quantity && Float.compare(montant, facture.montant) == 0 && selected == facture.selected && Objects.equals(dateFacture, facture.dateFacture) && Objects.equals(date, facture.date) && Objects.equals(NomPrenomClient, facture.NomPrenomClient) && Objects.equals(Adresse, facture.Adresse) && Objects.equals(prod_name, facture.prod_name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(IdFacture, Remise, MontantAvecRemise, dateFacture, date, ID_Livraison, NomPrenomClient, Adresse, ID_Pannier, quantity, montant, Produits, selected);
+        return Objects.hash(IdFacture, Remise, MontantAvecRemise, dateFacture, date, ID_Livraison, NomPrenomClient, Adresse, panier_id, quantity, montant, prod_name, selected);
     }
 
     public void setDate(java.util.Date value) {
