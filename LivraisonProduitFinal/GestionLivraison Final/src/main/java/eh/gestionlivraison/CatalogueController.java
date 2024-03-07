@@ -318,6 +318,7 @@ public class CatalogueController implements Initializable {
                     .showInformation();
 
             // Chargez la vue AjouterLivraison.fxml
+            Parent root = FXMLLoader.load(getClass().getResource("/AjouterLivraison.fxml"));
 
         } catch (StripeException e) {
             // Si une erreur s'est produite lors du traitement du paiement, affichez le message d'erreur
@@ -327,6 +328,8 @@ public class CatalogueController implements Initializable {
                     .showError();
 
             System.out.println("Payment failed. Error: " + e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     private void updateTableView() {

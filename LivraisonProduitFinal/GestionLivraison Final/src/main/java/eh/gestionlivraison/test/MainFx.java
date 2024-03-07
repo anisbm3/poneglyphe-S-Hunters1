@@ -12,7 +12,7 @@ public class MainFx extends Application {
         try {
 
           //  URL url = new File("src/main/resources/AjouterFacture.fxml").toURI().toURL();
-            Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherProduit.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

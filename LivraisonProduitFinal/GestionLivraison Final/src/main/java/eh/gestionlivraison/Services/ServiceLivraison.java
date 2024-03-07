@@ -56,7 +56,7 @@ int cID;
                 stm.setString(2, livraison.getNomPrenomClient());
                 stm.setString(3, livraison.getAdresse());
                 stm.setInt(4, cID-1);
-                double totalPanierPrice = getTotalPriceForPanier(cID);
+                double totalPanierPrice = getTotalPriceForPanier(cID-1);
 
                 stm.setDouble(5, totalPanierPrice);
                 stm.setDate(6, livraison.getDate());

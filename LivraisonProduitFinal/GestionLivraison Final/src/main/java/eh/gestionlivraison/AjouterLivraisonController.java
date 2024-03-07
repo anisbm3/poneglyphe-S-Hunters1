@@ -1,6 +1,7 @@
 package eh.gestionlivraison;
 import eh.gestionlivraison.Services.ServiceLivraison;
 import eh.gestionlivraison.models.Livraison;
+import eh.gestionlivraison.utils.MyDB;
 import eh.gestionlivraison.utils.MyDataBase;
 import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
@@ -65,6 +66,7 @@ private Label prix;
 
     public void initialize(URL url, ResourceBundle rb) {
         loader = new FXMLLoader(getClass().getResource("AjouterLivraison.fxml"));
+
     }
 
     @FXML
@@ -79,6 +81,7 @@ private Label prix;
             Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 
     @FXML
     public void initialize() {
