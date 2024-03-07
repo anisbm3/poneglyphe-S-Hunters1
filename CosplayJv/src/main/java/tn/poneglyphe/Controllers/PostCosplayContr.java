@@ -64,15 +64,12 @@ public class PostCosplayContr {
     private ImageView imageView;
     @FXML
     private Label imagepath;
-
+    private AjouterCosplayController showController =new AjouterCosplayController();;
     private final CrudCosplay cs = new CrudCosplay();
     private final CrudMateriaux cm = new CrudMateriaux();
     private ArrayList<Cosplay> cosplays;
 
-    public void setCosplays(ArrayList<Cosplay> cosplays) {
-        // Set the received list of cosplays to the local field
-        this.cosplays = cosplays;
-    }
+
 
     @FXML
     void initialize() {
@@ -140,40 +137,82 @@ public class PostCosplayContr {
             System.out.println("Aucun matériau sélectionné !");
         } else {
             int idMateriaux = cm.getIdMateriauxFromName(nomMa);
+            System.out.println("Identifiant du matériau: " + idMateriaux); // Vérifiez si l'identifiant est correct
+
             if (idMateriaux == -1) {
                 // Handle the case where the material name was not found
                 showAlert("Matériau introuvable", "Le matériau sélectionné n'existe pas.");
                 return;
             }
+
+            String materialName = cm.getNomMateriauxById(idMateriaux);
             LocalDate selectedDate = datepick.getValue();
             // Convert LocalDate to Date
             Date date = java.sql.Date.valueOf(selectedDate);
             System.out.println("Before adding: " + cs.getAll().size());
-            cs.add(new Cosplay(tfnom.getText(), tfdesc.getText(), tfpers.getText(), imagepath.getText(), date, cb_mat.getValue()));
+            cs.add(new Cosplay(tfnom.getText(), tfdesc.getText(), tfpers.getText(), imagepath.getText(), date,idMateriaux ,materialName));
             System.out.println("After adding: " + cs.getAll().size());
-            ArrayList<Cosplay> allCosplays = cs.getAll();
-            if (allCosplays != null) {
-                setCosplays(allCosplays);
-            } else {
-                // Handle the case where getAll() returns null
+            System.out.println("Material Name: " + materialName);
+
+            ArrayList<Cosplay> cosplays = cs.getAll();
+            if (cosplays == null) {
                 showAlert("Erreur de récupération", "Impossible de récupérer la liste des cosplays.");
+                return;
             }
-        }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterCosplay.fxml"));
-        try {
-            Parent root = loader.load();
-            AjouterCosplayController ajouterCosplayController = loader.getController();
-            ajouterCosplayController.setCosplays(cosplays);
 
+        }
+
+            // Load the FXML file for the cosplay card
+
+
+
+            // Pass the cosplay card controller to the ShowController
+            showController.addCosplayCard(cosplays);
+
+            // Close the AddController window
+            Stage stage = (Stage) tfnom.getScene().getWindow();
+            stage.close();
+
+        }
+        /*
+        if (cosplays != null) {
+
+            // Create a new stage
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            // Handle the IOException
-            e.printStackTrace(); // Print the exception stack trace or handle it appropriately
 
-        }
-    }
+// Create the root node (the parent of your scene graph)
+            Parent root = null;
+            try {
+                // Load the FXML file manually
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterCosplay.fxml"));
+                root = loader.load();
+
+                // Get the controller
+                AjouterCosplayController ajouterCosplayController = loader.getController();
+                if (ajouterCosplayController != null) {
+                    ajouterCosplayController.displayCosplays(cosplays);
+                } else {
+                    showAlert("Erreur de chargement", "Impossible de charger le contrôleur AjouterCosplay.");
+                    return;
+                }
+            } catch (IOException e) {
+                // Handle the IOException
+                e.printStackTrace(); // Print the exception stack trace or handle it appropriately
+                showAlert("Erreur de chargement", "Impossible de charger la fenêtre AjouterCosplay.");
+                return;
+            }
+
+// Create a new scene with the root node
+            Scene scene = new Scene(root);
+
+// Set the scene to the stage
+            stage.setScene(scene);
+
+// Show the stage
+            stage.show();
+
+        }*/
+
 
 
     private boolean isValidImagePath(String imagePath) {

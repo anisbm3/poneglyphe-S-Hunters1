@@ -1,23 +1,14 @@
 package tn.poneglyphe.Controllers;
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import tn.poneglyphe.Models.entities.Materiaux;
-import tn.poneglyphe.Controllers.ViewmateriauxController;
 import tn.poneglyphe.Services.CrudMateriaux;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
@@ -64,12 +55,7 @@ public class AddmateriauxContr implements Initializable   {
    private final CrudMateriaux cm =new CrudMateriaux();
      private ArrayList<Materiaux> materiau = new ArrayList<>();
     private Materiaux selectedMateriau;
-    //private Materiaux selectedMateriaux;
-   //  int id;
-   // Materiaux materiaux;
-   // ObservableList<Materiaux> data = FXCollections.observableArrayList();
-   /* MatCardLoader = new FXMLLoader(getClass().getResource("/Viewmateriaux.fxml"));
-    loadLivraisonData();*/
+
 @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -180,101 +166,11 @@ public class AddmateriauxContr implements Initializable   {
 
 
 
-   /* @FXML
-    public void EditMateriaux() {
-        if (selectedMateriaux != null) {
-            System.out.println("ooooooooooooooo");
-            try {
-                // Mise à jour des attributs de la livraison avec les nouvelles valeurs
-                selectedMateriaux.setNomMa(tfnma.getText());
-                System.out.println(tfnma.getText());
-                selectedMateriaux.setTypeMa(tftype.getText());
-                selectedMateriaux.setDisponibilite(tfdispo.getText());
-
-                System.out.println(selectedMateriaux);
-                // Appel de la méthode de mise à jour du service de livraison
-                cm.update(selectedMateriaux);
-
-                // Rafraîchir la liste des livraisons pour afficher les modifications
-                loadMatData();
-
-                // Afficher un message de succès
-                showAlert(Alert.AlertType.INFORMATION, "Succès", "La livraison a été mise à jour avec succès.");
-
-            } catch (NumberFormatException e) {
-                // En cas d'erreur de conversion de type, afficher un message d'erreur
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez saisir des valeurs numériques valides pour la quantité et le montant.");
-            } catch (Exception e) {
-                // En cas d'erreur, afficher un message d'erreur
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur s'est produite lors de la mise à jour de la livraison : " + e.getMessage());
-            }
-        }
-
-    }*/
-/*  private  void  loadMatData(){
-
-        ArrayList<Materiaux> materiaux =cm.getAll() ;
 
 
-      flowPaneMat.getChildren().clear();
-      for (Materiaux  material: materiaux) {
-          try {
-              FXMLLoader loader = new FXMLLoader(getClass().getResource("/Viewmateriaux.fxml"));
-              AnchorPane card = loader.load();
-              ViewmateriauxController controller = loader.getController();
-              controller.initialize(material); // Initialise la carte avec les données de la livraison
-              card.setUserData(material); // Définit l'objet Livraison comme userData de la carte
-              card.getProperties().put("controller", controller); // Définit le contrôleur comme propriété de la carte
-              flowPaneMat.getChildren().add(card);
-
-              // Mettre en place l'événement de sélection de la carte de livraison
-              card.setOnMouseClicked(event -> {
-                  onLivraisonSelected(event);
-                  updateLivraisonCards(); // Mettre à jour l'apparence des cartes de livraison
-              });
-          } catch (IOException e) {
-              showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du chargement des données de livraison.");
-              e.printStackTrace();
-          }
-      }
-    }*/
-  /*  @FXML
-    void DeleteMateriauxSelected(ActionEvent event) {
-        cm.delete(selectedMateriaux);
-        loadMatData(); // Recharger les données de livraison
-    }*/
 
 
-   /* private ViewmateriauxController getSelectedCardController() {
-        AnchorPane selectedCard = getSelectedCard();
-        if (selectedCard != null) {
-            return (ViewmateriauxController)  selectedCard.getProperties().get("controller");
-        }
-        return null;
-    }
 
-    @FXML
-    void RefrecheListe(ActionEvent event) {
-        loadMatData();
-    }
-    public void showCards() {
-        List<Materiaux> material = getMateriaux();
-        flowPaneMat.getChildren().clear();
-        for (Materiaux material : Materiaux) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Viewmateriaux.fxml"));
-                AnchorPane card = loader.load();
-                ViewmateriauxController controller = loader.getController();
-                // Initialiser les éléments de la carte avec les données de la livraison
-                System.out.println("Contrôleur chargé: " + controller.getClass().getName()); // Vérifier le contrôleur chargé
-                controller.initialize(material);
-                // Ajouter la carte au FlowPane
-                flowPaneMat.getChildren().add(card);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
 
 
 

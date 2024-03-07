@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -67,11 +69,25 @@
                <children>
                   <Label fx:id="personnage" layoutY="11.0" prefHeight="17.0" prefWidth="155.0" />
                </children></Pane>
-                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@ic_more.png" />
-                    </image>
-                </ImageView>
+            <StackPane>
+               <children>
+                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@ic_more.png" />
+                          </image>
+                      </ImageView>
+                  <Label prefHeight="26.0" prefWidth="27.0">
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#handleEditAction" text="Edit" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </Label>
+                   
+               </children>
+            </StackPane>
             </children>
             <padding>
                 <Insets left="20.0" right="20.0" />
@@ -96,7 +112,7 @@
          </VBox.margin>
       </Label>
         <ImageView fx:id="imgPost" fitHeight="225.0" fitWidth="539.0" pickOnBounds="true" preserveRatio="true" translateY="5.0" />
-        <StackPane alignment="CENTER_LEFT" translateY="77.0">
+        <StackPane alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="577.0" translateY="77.0">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="10.0" translateY="-40.0">
                     <children>
@@ -190,6 +206,9 @@
                     </padding>
                 </HBox>
             </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
         </StackPane>
         <HBox fillHeight="false" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="635.0" styleClass="top-border" stylesheets="style.css" translateY="10.0">
             <children>

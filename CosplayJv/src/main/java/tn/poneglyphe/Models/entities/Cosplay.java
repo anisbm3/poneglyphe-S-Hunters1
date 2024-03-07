@@ -28,7 +28,17 @@ public class Cosplay {
         this.nomMa= nomMa;
     }
 
-    public Cosplay(String nomCp, String descriptionCp, String personnage, String imageCp, Date dateCreation,String nomMa) {
+    public Cosplay(String nomCp, String descriptionCp, String personnage, String imageCp, Date dateCreation, int idmateriaux, String nomMa) {
+        this.nomCp = nomCp;
+        this.descriptionCp = descriptionCp;
+        this.personnage = personnage;
+        this.imageCp = imageCp;
+        this.dateCreation = dateCreation;
+        this.idmateriaux = idmateriaux;
+        this.nomMa = nomMa;
+    }
+
+    public Cosplay(String nomCp, String descriptionCp, String personnage, String imageCp, Date dateCreation, String nomMa) {
         this.nomCp = nomCp;
         this.descriptionCp = descriptionCp;
         this.personnage = personnage;

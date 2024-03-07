@@ -1,4 +1,5 @@
 package tn.poneglyphe.Controllers;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -7,13 +8,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import tn.poneglyphe.Models.entities.Cosplay;
+import tn.poneglyphe.Services.CrudMateriaux;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class CardPostController  {
+public class CardPostController {
     @FXML
     private ImageView audience;
 
@@ -39,7 +43,8 @@ public class CardPostController  {
     private ImageView imgLove;
 
     @FXML
-    private ImageView imgcosplay;
+    private ImageView imgPost;
+    // image
 
     @FXML
     private ImageView imgProfile;
@@ -85,6 +90,7 @@ public class CardPostController  {
     private Label personnage;
 
     private Cosplay cosplay;
+    private final CrudMateriaux cm = new CrudMateriaux();
 
     //@Override
    /* public void initialize(URL location, ResourceBundle resources) {
@@ -105,48 +111,59 @@ public class CardPostController  {
 
     }
 
-    public void setData(Cosplay cosplay){
-        this.cosplay = cosplay;
-        Image img;
-        /*img = new Image(getClass().getResourceAsStream(cosplay.getAccount().getProfileImg()));
-        imgProfile.setImage(img);
-        username.setText(cosplay.getAccount().getName());
-        if(cosplay.getAccount().isVerified()){
-            imgVerified.setVisible(true);
-        }else{
-            imgVerified.setVisible(false);
-        }*/
+    public void initData (Cosplay cosplay) {
+
         Date date = cosplay.getDateCreation();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Specify the desired date format
         String dateString = dateFormat.format(date); // Convert the date to a string in the desired format
         labeldate.setText(dateString);
-       // date.setDate(cosplay.getDateCreation());
-       /* if(cosplay.getAudience() == cosplayAudience.PUBLIC){
-            img = new Image(getClass().getResourceAsStream(cosplayAudience.PUBLIC.getImgSrc()));
-        }else{
-            img = new Image(getClass().getResourceAsStream(cosplayAudience.FRIENDS.getImgSrc()));
-        }
-        audience.setImage(img);*/
-
-        if(cosplay.getDescriptionCp() != null && !cosplay.getDescriptionCp().isEmpty()){
+        if (cosplay.getDescriptionCp() != null && !cosplay.getDescriptionCp().isEmpty()) {
             caption.setText(cosplay.getDescriptionCp());
-        }else{
+        } else {
             caption.setManaged(false);
         }
+        //image
+        if (cosplay.getImageCp() != null && !cosplay.getImageCp().isEmpty()) {
 
-        if(cosplay.getImageCp() != null && !cosplay.getImageCp().isEmpty()){
-            img = new Image(getClass().getResourceAsStream(cosplay.getImageCp()));
-            imgcosplay.setImage(img);
-        }else{
-            imgcosplay.setVisible(false);
-            imgcosplay.setManaged(false);
+            Image img = new Image(new File(cosplay.getImageCp()).toURI().toString());
+           imgPost.setImage(img);
+            double maxWidth = 100; // Set the maximum width for the image
+            double maxHeight = 100; // Set the maximum height for the image
+           imgPost.setFitWidth(maxWidth);
+           imgPost.setFitHeight(maxHeight);
+        } else {
+           imgPost.setVisible(false);
+           imgPost.setManaged(false);
         }
         personnage.setText(String.valueOf(cosplay.getPersonnage()));
         nomCosp.setText(String.valueOf(cosplay.getNomCp()));
-        typemat.setText(String.valueOf(cosplay.getNomMa()));
-       /* nbReactions.setText(String.valueOf(cosplay.getTotalReactions()));
-        currentReaction = Reactions.NON;*/
+        String materialName = cm.getNomMateriauxById(cosplay.getIdmateriaux());
+        if (materialName != null && !materialName.isEmpty()) {
+            typemat.setText(materialName);
+        } else {
+            typemat.setText("Material Name Not Found");
+        }
     }
 
 
+       /* nbReactions.setText(String.valueOf(cosplay.getTotalReactions()));
+        currentReaction = Reactions.NON;*/
+
+      /*  System.out.println("Date: "+dateString);
+        System.out.println("Caption: "+(cosplay.getDescriptionCp()!=null?cosplay.getDescriptionCp():"No caption"));
+        System.out.println("Image Path: "+(cosplay.getImageCp()!=null?cosplay.getImageCp():"No image"));
+        System.out.println("Personnage: "+(cosplay.getPersonnage()!=null?cosplay.getPersonnage():"No personnage"));
+        System.out.println("NomCosp: "+(cosplay.getNomCp()!=null?cosplay.getNomCp():"No nomCosp"));
+        System.out.println("Material Name: "+(materialName !=null?materialName :"No material name"));*/
+
+
+
+       public Cosplay getCosplay() {
+        return cosplay;
+        }
+
+
+    public void handleEditAction(ActionEvent actionEvent) {
+
+    }
 }

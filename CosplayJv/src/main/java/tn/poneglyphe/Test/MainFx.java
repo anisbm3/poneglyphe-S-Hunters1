@@ -22,10 +22,10 @@ public class MainFx extends Application {
             Parent root = loader.load();
 
             Scene sc = new Scene(root);
-            primaryStage.setTitle("Crud");
+            primaryStage.setTitle("Cosplay");
             primaryStage.setScene(sc);
             primaryStage.show();
-            sc.getStylesheets().add("C:\\Users\\sabri\\OneDrive\\Bureau\\poneglyphe-S-Hunters1\\CosplayJv\\src\\main\\java\\tn\\poneglyphe\\assets\\style.css");
+            //sc.getStylesheets().add("C:\\Users\\sabri\\OneDrive\\Bureau\\poneglyphe-S-Hunters1\\CosplayJv\\src\\main\\resources\\style.css");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

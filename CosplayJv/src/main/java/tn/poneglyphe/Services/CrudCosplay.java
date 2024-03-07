@@ -19,7 +19,7 @@ public class CrudCosplay implements IService<Cosplay> {
    public void add(Cosplay cosplay) {
        // String disableForeignKeyChecks = "SET FOREIGN_KEY_CHECKS = 0;";
         //String enableForeignKeyChecks = "SET FOREIGN_KEY_CHECKS = 1;";
-        String qry = "INSERT INTO `cosplay`( `nomCp`, `descriptionCp`, `personnage`, `imageCp`, `dateCreation`, `idmateriaux`) VALUES (?,?,?,?,?,?)";
+        String qry = "INSERT INTO `cosplay`( `nomCp`, `descriptionCp`, `personnage`, `imageCp`, `dateCreation`, `idmateriaux`,`nomMa`) VALUES (?,?,?,?,?,?,?)";
 
         try {
 
@@ -30,7 +30,8 @@ public class CrudCosplay implements IService<Cosplay> {
             stm.setString(4, cosplay.getImageCp());
             stm.setDate(5, cosplay.getDateCreation());
             stm.setInt(6,cosplay.getIdmateriaux() );
-
+            System.out.println("Identifiant du matériau à insérer: " + cosplay.getIdmateriaux());
+            stm.setString(7, cosplay.getNomMa());
 
             stm.executeUpdate();
             System.out.println("Cosplay inserted successfully.");
@@ -40,23 +41,7 @@ public class CrudCosplay implements IService<Cosplay> {
         }
     }
 
-    public String getNomMateriauxById (int idmateriaux) {
-        String nomMateriaux = "";
-        try {
 
-            String qry = "SELECT nomMa FROM materiaux WHERE idMa = ?";
-            PreparedStatement stm = cnx.prepareStatement(qry);
-            stm.setInt(1, idmateriaux);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                nomMateriaux = rs.getString("nomMa");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return nomMateriaux;
-    }
 
 
  /*  @Override
@@ -93,7 +78,7 @@ public class CrudCosplay implements IService<Cosplay> {
             ResultSet rs = stm.executeQuery(qry);
             while(rs.next()){
                 Cosplay cosplay=new Cosplay();
-                cosplay.setIdCp(rs.getInt(1));
+                cosplay.setIdCp(rs.getInt("idCp"));
                 cosplay.setNomCp(rs.getString("nomCp"));
                 cosplay.setDescriptionCp(rs.getString("descriptionCp"));
                 cosplay.setPersonnage(rs.getString("personnage"));
@@ -101,12 +86,20 @@ public class CrudCosplay implements IService<Cosplay> {
                 cosplay.setPersonnage(rs.getString("personnage"));
                 cosplay.setDateCreation(rs.getDate("dateCreation"));
                 cosplay.setIdmateriaux(rs.getInt("idmateriaux"));
+                cosplay.setNomMa(rs.getString("nomMa"));
+
                 cosplays.add(cosplay);
 
             }
         }catch (SQLException e){
-            throw new RuntimeException(e);
+
+            // Rethrow the exception or handle it as needed
+
+            throw new RuntimeException("Erreur lors de l'exécution de la requête SQL",e);
         }
+       /* for (Cosplay cosplay : cosplays) {
+            System.out.println(cosplay);
+        }*/
         return cosplays;
     }
 

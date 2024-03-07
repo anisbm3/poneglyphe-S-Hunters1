@@ -48,6 +48,29 @@ public class CrudMateriaux implements IService<Materiaux> {
         }
         return idMateriaux;
     }
+    public String getNomMateriauxById (int idmateriaux) {
+        String nomMateriaux = "";
+        try {
+
+            String qry = "SELECT nomMa FROM materiaux WHERE idMa = ?";
+            PreparedStatement stm = cnx.prepareStatement(qry);
+            stm.setInt(1, idmateriaux);
+            //débogage
+           // System.out.println("Executing SQL query: " + qry);
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                nomMateriaux = rs.getString("nomMa");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //débogage pour voir le nom du matériau récupéré
+        System.out.println("Nom du matériau récupéré: " + nomMateriaux);
+
+        return nomMateriaux;
+    }
    /* public String getNomByIdMa(int idMa ) throws SQLException {
         String nomMa = null;
         String req = "SELECT nomMa FROM reservation WHERE idMa=?";

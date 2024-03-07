@@ -1,5 +1,6 @@
 package tn.poneglyphe.Controllers;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -15,61 +16,138 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tn.poneglyphe.Models.entities.Cosplay;
+import tn.poneglyphe.Services.CrudCosplay;
 
-public class AjouterCosplayController implements Initializable {
+public class AjouterCosplayController  implements Initializable {
 
     @FXML
     private ResourceBundle resources;
-    @FXML
-    private Button btn;
+
     @FXML
     private URL location;
     @FXML
-    private VBox cosplayContainer;
+    private VBox cosplayContainer ;
+    @FXML
+    private Label caption;
+
+    @FXML
+    private ImageView imgPost;
+
+    @FXML
+    private Label labeldate;
+
+    @FXML
+    private Label labeldate1;
+
+    @FXML
+    private Label nomCosp;
+
+    @FXML
+    private Label personnage;
+
+    @FXML
+    private Label typemat;
+    @FXML
+    private VBox cosplayCard;
+
     private   ArrayList<Cosplay> cosplays ;
-    @FXML
-    void onbutton(ActionEvent event) {}
-    public void setCosplays(ArrayList<Cosplay> cosplays) {
-        // Set the received list of cosplays to the local field
-        this.cosplays = cosplays;
-        cosplayContainer.getChildren().clear();
-    }
+    private final CrudCosplay cs = new CrudCosplay();
 
-    @FXML
-   public void initialize(URL url, ResourceBundle rb) {
 
-        cosplays = new ArrayList<>(getCosplays());
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+
+        if (cosplayContainer != null) {
+            System.out.println("cosplayContainer is initialized");
+
+            // Display the cosplays
+            addCosplayCard(cosplays);
+        } else {
+            System.out.println("cosplayContainer is not initialized");
+
+        }
+
+
+
+        }
+   /* public void displayCosplays(ArrayList<Cosplay> cosplays) {
+
+        cosplayCard.getChildren().clear();
+
         for (Cosplay cosplay : cosplays) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardPost.fxml"));
-            try {
-                Node cardNode = loader.load();
-                CardPostController cosplayCardController = loader.getController();
-                cosplayCardController.setData(cosplay); // Set data for the cosplay card
-                cosplayContainer.getChildren().add(cardNode); // Add the card to the container
-            } catch (IOException e) {
-                e.printStackTrace();
+            VBox cosplayCardItem = createCosplayCard(cosplay);
+            cosplayCard.getChildren().add(cosplayCardItem);
+        }
+        //cosplayContainer.getChildren().add(cosplayCard);
+    }*/
+   /* private VBox createCosplayCard(Cosplay cosplay) {
+        // Create UI components to display the cosplay information
+        Label nomCosp = new Label("Nom: " + cosplay.getNomCp());
+        Label caption = new Label("description " + cosplay.getDescriptionCp());
+
+        Label personnage = new Label("Personnage: " + cosplay.getPersonnage());
+        Label typemat = new Label("Type de matériau: " + cosplay.getNomMa());
+        Label dateLabel = new Label("Date: " + cosplay.getDateCreation().toString()); // Assuming getDate returns a Date object
+        ImageView imgPost = new ImageView(new File(cosplay.getImageCp()).toURI().toString());
+        double maxWidth = 100; // Set the maximum width for the image
+        double maxHeight = 100; // Set the maximum height for the image
+        imgPost.setFitWidth(maxWidth);
+        imgPost.setFitHeight(maxHeight);
+
+// Set the preserve ratio to true to maintain the aspect ratio of the image
+        imgPost.setPreserveRatio(true);
+        VBox cardLayout = new VBox(nomCosp, caption, personnage, typemat, dateLabel, imgPost);
+        cardLayout.setSpacing(10); // Add spacing between components
+        cardLayout.setStyle("-fx-border-color: white; -fx-border-width: 1px;"); // Add border to the card layout
+        return cardLayout;
+
+    }*/
+
+   /* public void displayCosplays(ArrayList<Cosplay> cosplays) {
+        if (cosplayContainer == null) {
+            System.err.println("cosplayContainer is null. Unable to display cosplays.");
+            return; // Exit the function if cosplayContainer is null
+        }
+        // Clear the existing UI components
+        cosplayContainer.getChildren().clear();
+
+        // Loop through the cosplays and add them to the container
+        for () {
+            if (cosplay == null) {
+                System.err.println("Found null cosplay object. Skipping.");
+                continue; // Skip to the next cosplay if current cosplay is null
             }
-        }
-    }
+            // Check if any required data within cosplay is null
+            if (cosplay.getNomCp() == null || cosplay.getDescriptionCp() == null || cosplay.getPersonnage() == null ||
+                    cosplay.getNomMa() == null || cosplay.getDateCreation() == null || cosplay.getImageCp() == null) {
+                System.err.println("Found null data in cosplay object. Skipping.");
+                continue; // Skip to the next cosplay if any required data is null
+            }
+            try {
+                // Create UI components to display the cosplay information
+                Label nomCosp = new Label("Nom: " + cosplay.getNomCp());
+                Label caption = new Label("description " + cosplay.getDescriptionCp());
 
-public ArrayList<Cosplay>getCosplays(){
-        ArrayList<Cosplay> cs = new ArrayList<>();
+                Label personnage = new Label("Personnage: " + cosplay.getPersonnage());
+                Label typemat = new Label("Type de matériau: " + cosplay.getNomMa());
+                Label dateLabel = new Label("Date: " + cosplay.getDateCreation().toString()); // Assuming getDate returns a Date object
+            ImageView imgPost = new ImageView(new File(cosplay.getImageCp()).toURI().toString());
 
-    int totalCosplays = getNumberOfCosplays(); // Method to get total number of cosplays
 
-    for (int i = 1; i <= totalCosplays; i++) {
+                // Add them to the container
+            cosplayContainer.getChildren().addAll(nomCosp,caption, personnage, typemat, dateLabel, imgPost);
+            } catch (Exception e) {
+                System.err.println("Error while creating UI components for cosplay: " + e.getMessage());
+            }
+            }
+        }*/
 
-        Cosplay cosplay = getCosplayById(i); // Method to get cosplay by ID
-        if (cosplay != null) {
-            cs.add(cosplay);
-        }
-    }
 
-    return cs;
-}
     @FXML
     private void addcosplay(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/PostCosplay.fxml"));
@@ -83,34 +161,38 @@ public ArrayList<Cosplay>getCosplays(){
             Logger.getLogger(PostCosplayContr.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private Cosplay getCosplayById(int id) {
-        // Implement logic to fetch a cosplay from your data source based on its ID (e.g., database query)
-        // For demonstration purposes, let's assume you have a list of cosplays stored in a variable named `cosplaysList`
-        // and you want to retrieve a cosplay by its index in the list.
 
-        // Check if the ID is within the valid range of indices in the cosplaysList
-        if (id >= 0 && id < cosplays.size()) {
-            return cosplays.get(id); // Return the cosplay at the specified index
-        } else {
-            return null; // Return null if the ID is out of range
+
+    public void addCosplayCard(ArrayList<Cosplay> cosplays) {
+        if (cosplayContainer == null) {
+            System.out.println("Error: cosplayContainer is null.");
+            return;
+        }
+
+        cosplays = cs.getAll();
+        if (cosplays == null) {
+            System.out.println("Cosplays list is null. Cannot add cosplay cards.");
+            return;
+        }
+
+        for (Cosplay cosplay : cosplays) {
+            try {
+                // Load the FXML file for the cosplay card
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/CardPost.fxml"));
+                Node cosplayCard = loader.load(); // Load the root node of the FXML file
+
+                // Retrieve the controller for the cosplay card
+                CardPostController cosplayCardController = loader.getController();
+
+                // Initialize the data for the cosplay card
+                cosplayCardController.initData(cosplay);
+
+                // Add the cosplay card to the cosplayContainer
+                cosplayContainer.getChildren().add(cosplayCard);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-
-    private int getNumberOfCosplays() {
-        // Implement logic to retrieve the number of cosplays from your data source
-        // For example, if you're fetching cosplays from a database, you can execute a query to count the number of cosplays.
-
-        // For demonstration purposes, let's assume you have a list of cosplays stored in a variable named `cosplaysList`.
-        // You can return the size of this list as the number of cosplays.
-
-        if (cosplays != null) {
-            return cosplays.size(); // Return the number of cosplays in the list
-        } else {
-            return 0; // Return 0 if the list is null or empty
-        }
-    }
-
-
-
 }
 
