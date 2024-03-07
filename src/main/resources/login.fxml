@@ -73,7 +73,7 @@
                               <Insets left="130.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="connecterLogin" mnemonicParsing="false" onAction="#connecterButtonOnClick" prefHeight="46.0" prefWidth="204.0" style="-fx-background-color: #2596be; -fx-border-color: #ffffff;" text="Connecter" textFill="WHITE">
+                        <Button fx:id="connecterLogin" mnemonicParsing="false" onAction="#connecterButtonOnClick" prefHeight="34.0" prefWidth="196.0" style="-fx-background-color: #2596be; -fx-border-color: #ffffff;" text="Connecter" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -92,7 +92,7 @@
                               <FontAwesomeIconView fill="WHITE" glyphName="FACEBOOK" translateX="-5.0" />
                            </graphic>
                         </Button>
-                        <Button fx:id="signinlogin" mnemonicParsing="false" onAction="#signinLoginButtonOnClick" prefHeight="40.0" prefWidth="204.0" style="-fx-background-color: transparent; -fx-border-color: #ffffff;" text="Sign in" textFill="WHITE">
+                        <Button fx:id="signinlogin" mnemonicParsing="false" onAction="#signinLoginButtonOnClick" prefHeight="34.0" prefWidth="195.0" style="-fx-background-color: transparent; -fx-border-color: #ffffff;" text="Sign up" textFill="WHITE">
                            <font>
                               <Font size="15.0" />
                            </font>

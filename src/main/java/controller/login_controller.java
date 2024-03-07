@@ -75,9 +75,11 @@ public class login_controller {
                         break;
                     case "Utilisateur":
                         clientFrontController.setLoggedInUser(utilisateur);
-                        ps.changeScreen(event, "/clientFront.fxml", "Admin");
+                        ps.changeScreen(event, "/clientFront.fxml", "client");
                         break;
                     case "Livreur":
+                        livreurFrontController.setLoggedInUser(utilisateur);
+                        ps.changeScreen(event, "/livreurFront.fxml", "livreur");
                         break;
                 }
             }

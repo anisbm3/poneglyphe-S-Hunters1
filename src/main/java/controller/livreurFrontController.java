@@ -35,7 +35,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.*;
 
-public class clientFrontController {
+public class livreurFrontController {
 
     @FXML
     private ResourceBundle resources;
@@ -66,13 +66,6 @@ public class clientFrontController {
 
     @FXML
     private TextField codeVerification;
-
-    @FXML
-    private ProgressBar complexiteBar;
-
-    @FXML
-    private Label complexiteLabel;
-
     @FXML
     private Button confirmerAdresseCode, confirmerAdresseCode1;
 
@@ -185,7 +178,7 @@ public class clientFrontController {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
             try
             {
-                clientFrontController.setRand(Rand);
+                livreurFrontController.setRand(Rand);
                 Transport transport = session.getTransport("smtp");
                 transport.connect("smtp.gmail.com","bchirben8@gmail.com","oeopsajyvhamngzz");
                 transport.sendMessage(message, message.getAllRecipients());
