@@ -43,7 +43,7 @@ public class AjouterLivraisonController  implements Initializable {
     private TextField TfMontant;
 
 @FXML
-private Label prix;
+private Label label_Prix;
 
     @FXML
     private HBox chosenhotelCard;
@@ -61,10 +61,55 @@ private Label prix;
     ServiceLivraison sl =new ServiceLivraison();
     int id;
     Livraison l;
+    int cID;
+    private void panierID() {
+        if (cID == 0) { // Si cID n'a pas encore été initialisé
+            String sql = "SELECT MAX(panier_id) FROM PANIER";
+            Connection connect;
+            connect = MyDB.getConnection();
+            try {
+                PreparedStatement prepare = connect.prepareStatement(sql);
+                ResultSet result = prepare.executeQuery();
+                if (result.next()) {
+                    cID = result.getInt(1) + 1;
+                } else {
+                    cID = 1;
+                }
+                Data.cID = cID;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    private double getTotalPriceForPanier(int cID) {
+        String sql = "SELECT SUM(price) AS total_price FROM PANIER WHERE panier_id = ?";
+        double totalPrice = 0;
+
+        try {
+            Connection cnx = MyDataBase.getCnx();
+            PreparedStatement prepare = cnx.prepareStatement(sql);
+            prepare.setInt(1, cID);
+            ResultSet result = prepare.executeQuery();
+
+            if (result.next()) {
+                totalPrice = result.getDouble("total_price");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return totalPrice;
+    }
 
     @Override
 
     public void initialize(URL url, ResourceBundle rb) {
+       panierID();
+        double totalPanierPrice = getTotalPriceForPanier(cID-1);
+
+        String totalPanierPriceText = String.valueOf(totalPanierPrice);
+        label_Prix.setText(totalPanierPriceText);
+    //    System.out.println(totalPanierPrice);
         loader = new FXMLLoader(getClass().getResource("AjouterLivraison.fxml"));
 
     }
@@ -85,6 +130,8 @@ private Label prix;
 
     @FXML
     public void initialize() {
+
+
         loader = new FXMLLoader(getClass().getResource("AjouterLivraison.fxml"));
     }
     @FXML

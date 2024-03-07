@@ -318,7 +318,19 @@ public class CatalogueController implements Initializable {
                     .showInformation();
 
             // Chargez la vue AjouterLivraison.fxml
-            Parent root = FXMLLoader.load(getClass().getResource("/AjouterLivraison.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterLivraison.fxml"));
+            Parent root = loader.load();
+
+            // Obtenez le contrôleur de la vue AjouterLivraison.fxml
+            AjouterLivraisonController controller = loader.getController();
+
+            // Créez une nouvelle scène avec la vue chargée
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+
+            // Affichez la nouvelle scène
+            stage.show();
 
         } catch (StripeException e) {
             // Si une erreur s'est produite lors du traitement du paiement, affichez le message d'erreur
@@ -332,6 +344,7 @@ public class CatalogueController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     private void updateTableView() {
         menu_col_productName.setCellValueFactory(new PropertyValueFactory<>("prod_name"));
         menu_col_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
