@@ -37,6 +37,11 @@ public class FactureCardController {
     @FXML
     private Label labelNomPrenimClient;
 
+    @FXML
+    private Label labelProduit;
+
+    @FXML
+    private Label labelQuantity;
 
     @FXML
     private Label labelRemise;
@@ -92,6 +97,8 @@ public class FactureCardController {
         labelNomPrenimClient.setText("NomPrenomClient: " + facture.getNomPrenomClient());
         labelAdresse.setText("Adresse: " + facture.getAdresse());
         labelDate_Livraison.setText("Date_Livraison:" + facture.getDate());
+        labelProduit.setText("Produit: " + facture.getProd_name());
+        labelQuantity.setText("Quantity: " + facture.getQuantity());
         labelMontantSansRemise.setText("Montant sans remise: " + facture.getMontant());
         labelRemise.setText("Remise: " + facture.getRemise());
         labelMontantavecremise.setText("Montant avec remise: " + facture.getMontantAvecRemise());

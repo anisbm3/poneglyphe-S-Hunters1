@@ -112,7 +112,7 @@ public class GestionLivraisonController implements Initializable {
         System.out.println("Chargement des données de livraison...");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GestionLivraison.fxml"));
-      //  fillcomboProduit();
+        fillcomboProduit();
 
         livraisonCardLoader = new FXMLLoader(getClass().getResource("/LivraisonCard.fxml"));
         loadLivraisonData();
@@ -123,8 +123,8 @@ public class GestionLivraisonController implements Initializable {
 
         // Charger les données depuis la base de données
         loadProduitsFromDatabase();
-       // List<String> prod_name = Arrays.asList("game", "pull"); // Liste de produits récupérée depuis la base de données ou autre source
-        //cb_Produits.getItems().addAll(prod_name);
+        List<String> prod_name = Arrays.asList("game", "pull"); // Liste de produits récupérée depuis la base de données ou autre source
+        cb_Produits.getItems().addAll(prod_name);
         // Afficher les produits dans le ComboBox
         // cb_Produits.setItems(optionsProduits); // Il semble que optionsProduits ne soit pas défini dans le code que vous avez partagé
 
@@ -134,21 +134,21 @@ public class GestionLivraisonController implements Initializable {
             System.err.println("AdresseField est null");
         }
 
-      //  afficherProduitsDansComboBox(); // Correction de l'appel de la méthode
+        afficherProduitsDansComboBox(); // Correction de l'appel de la méthode
     }
 
     private void loadProduitsFromDatabase() {
         try {
             Connection cnx = MyDataBase.getInstance().getCnx();
-            String req = "SELECT DISTINCT price FROM panier"; // Sélectionnez les produits distincts
+            String req = "SELECT DISTINCT prod_name FROM panier"; // Sélectionnez les produits distincts
             PreparedStatement cs = cnx.prepareStatement(req);
             ResultSet rs = cs.executeQuery();
             while (rs.next()) {
-                int price= rs.getInt("price");
-              //  optionsProduits.add(price);
-                System.out.println("Produit récupéré depuis la base de données : " + price);
+                String prod_name= rs.getString("prod_name");
+                optionsProduits.add(prod_name);
+                System.out.println("Produit récupéré depuis la base de données : " + prod_name);
             }
-           // cb_Produits.setItems(optionsProduits); // Associer les produits à la ComboBox
+            cb_Produits.setItems(optionsProduits); // Associer les produits à la ComboBox
         } catch (SQLException ex) {
             Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -156,6 +156,31 @@ public class GestionLivraisonController implements Initializable {
 
 
 
+    private void afficherProduitsDansComboBox() {
+        if (cb_Produits != null) {
+            System.out.println("ComboBoxProduits n'est pas null");
+            cb_Produits.setItems(optionsProduits);
+        } else {
+            System.out.println("ERREUR : ComboBoxProduits est null");
+        }
+    }
+    public void fillcomboProduit() {
+        try {
+            Connection cnx = MyDataBase.getInstance().getCnx();
+            String req = "SELECT DISTINCT prod_name FROM panier"; // Sélectionnez les produits distincts
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery();
+            ObservableList<String> optionsProduits = FXCollections.observableArrayList();
+            while (rs.next()) {
+                String prod_name = rs.getString("prod_name");
+                optionsProduits.add(prod_name);
+                System.out.println("Produit récupéré depuis la base de données : " + prod_name);
+            }
+            cb_Produits.setItems(optionsProduits);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 
     public Livraison getL() {
@@ -166,8 +191,105 @@ public class GestionLivraisonController implements Initializable {
         this.l = l;
     }
 
+    public void initData(Livraison livraison) {
+        if (livraison != null) {
+            if (NomPrenomClientField != null) {
+                NomPrenomClientField.setText(livraison.getNomPrenomClient());
+            } else {
+                System.err.println("NomPrenomClientField est null");
+            }
+
+            if (AdresseField != null) {
+                AdresseField.setText(livraison.getAdresse());
+            } else {
+                System.err.println("AdresseField est null");
+            }
+
+          /*  if (ID_PannierField != null) {
+                ID_PannierField.setText(String.valueOf(livraison.getID_Pannier()));
+            } else {
+                System.err.println("ID_PannierField est null");
+            }*/
+
+            if (TfQuantityField != null) {
+                TfQuantityField.setText(String.valueOf(livraison.getQuantity()));
+            } else {
+                System.err.println("TfQuantityField est null");
+            }
+
+            if (TfMontantField != null) {
+                TfMontantField.setText(String.valueOf(livraison.getMontant()));
+            } else {
+                System.err.println("TfMontantField est null");
+            }
+
+            if (dateField != null) {
+                System.out.println("im here ");
+                if (livraison.getDate() != null) {
+                    System.out.println("Date avant assignation au DatePicker : " + livraison.getDate()); // Vérifiez la date avant l'assignation
+                    dateField.setValue(livraison.getDate().toLocalDate());
+                } else {
+                    dateField.setValue(null);
+                }
+            } else {
+                System.err.println("dateField est null");
+            }
+
+            if (labelNomPrenom != null) {
+                labelNomPrenom.setText(livraison.getNomPrenomClient());
+            } else {
+                System.err.println("labelNomPrenom est null");
+            }
+
+            if (labelAdresse != null) {
+                labelAdresse.setText(livraison.getAdresse());
+            } else {
+                System.err.println("labelAdresse est null");
+            }
+
+            if (labelIDPannier != null) {
+                labelIDPannier.setText(String.valueOf(livraison.getPanier_id()));
+            } else {
+                System.err.println("labelIDPannier est null");
+            }
+
+            if (labelQuantity != null) {
+                labelQuantity.setText(String.valueOf(livraison.getQuantity()));
+            } else {
+                System.err.println("labelQuantity est null");
+            }
+
+            if (labelMontant != null) {
+                labelMontant.setText(String.valueOf(livraison.getMontant()));
+            } else {
+                System.err.println("labelMontant est null");
+            }
+
+            if (labelProduits != null) {
+                labelProduits.setText(livraison.getProd_name());
+            } else {
+                System.err.println("labelProduits est null");
+            }
 
 
+            System.out.println("Date is :" + livraison.getDate());
+            if (labelDate != null) {
+
+                if (livraison.getDate() != null) {
+                    Date date = livraison.getDate();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                    String dateString = sdf.format(date);
+                    labelDate.setText(dateString);
+                } else {
+                    labelDate.setText("N/A");
+                }
+            } else {
+                System.err.println("labelDate est null");
+            }
+        } else {
+            System.err.println("Livraison est null");
+        }
+    }
 
 
 
@@ -267,7 +389,7 @@ public class GestionLivraisonController implements Initializable {
         this.selectedLivraison = selectedLivraison;
 
         // Appeler initData pour mettre à jour les champs avec les données de la livraison sélectionnée
-       // initData(selectedLivraison);
+        initData(selectedLivraison);
     }
     @FXML
     public void EditLivraison() {
@@ -278,7 +400,8 @@ public class GestionLivraisonController implements Initializable {
                     selectedLivraison.setNomPrenomClient(NomPrenomClientField.getText());
                     System.out.println(NomPrenomClientField.getText());
                     selectedLivraison.setAdresse(AdresseField.getText());
-               //     selectedLivraison.setID_Livraison();
+                    selectedLivraison.setProd_name(cb_Produits.getValue());
+                    selectedLivraison.setQuantity(Integer.parseInt(TfQuantityField.getText()));
                     selectedLivraison.setMontant(Float.parseFloat(TfMontantField.getText()));
                     selectedLivraison.setDate(Date.valueOf(dateField.getValue()));
                     System.out.println(selectedLivraison);
@@ -473,7 +596,7 @@ public class GestionLivraisonController implements Initializable {
 
         // Tri des livraisons par quantité en utilisant Java Streams
         livraisons = livraisons.stream()
-                .sorted(Comparator.comparing(Livraison::getMontant))
+                .sorted(Comparator.comparingInt(Livraison::getQuantity))
                 .collect(Collectors.toList());
 
         // Recharger les données de livraison triées

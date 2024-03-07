@@ -13,6 +13,4 @@ module eh.gestionlivraison {
     exports eh.gestionlivraison;
     exports eh.gestionlivraison.test;
     opens eh.gestionlivraison.test to javafx.fxml;
-    opens eh.gestionlivraison.models to javafx.base;
-
 }

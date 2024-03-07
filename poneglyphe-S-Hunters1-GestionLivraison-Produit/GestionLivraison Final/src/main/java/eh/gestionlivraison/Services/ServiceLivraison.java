@@ -22,26 +22,27 @@ public class ServiceLivraison implements IService<Livraison> {
         }
 
         try {
-            int panier_id = 30; // Utilisez getProduits pour obtenir le nom du produit
+            int panier_id = 1; // Utilisez getProduits pour obtenir le nom du produit
             // Insérez la livraison dans la table "livraison"
-            String queryLivraison = "INSERT INTO livraison (ID_Livraison, NomPrenomClient, Adresse,panier_id, montant, Date) VALUES (?, ?, ?, ?, ?, ?)";
+            String queryLivraison = "INSERT INTO livraison (ID_Livraison, NomPrenomClient, Adresse, panier_id , montant, Date) VALUES ( ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement stm = cnx.prepareStatement(queryLivraison)) {
                 stm.setInt(1, livraison.getID_Livraison());
                 stm.setString(2, livraison.getNomPrenomClient());
                 stm.setString(3, livraison.getAdresse());
-                stm.setInt(4, panier_id);
+                stm.setInt(4, panier_id ); // Utilisez l'ID_Pannier récupéré
+               // stm.setInt(5, livraison.getQuantity());
                 stm.setFloat(5, livraison.getMontant());
                 stm.setDate(6, livraison.getDate());
                 stm.executeUpdate();
             }
 
             // Récupérez le nom du produit depuis la table "panier" en utilisant l'ID du panier
-            String queryProduit = "SELECT price FROM panier WHERE panier_id = ?";
+            String queryProduit = "SELECT price FROM panier WHERE panier_id  = ?";
             try (PreparedStatement stmProduits = cnx.prepareStatement(queryProduit)) {
-                stmProduits.setInt(1, panier_id);
+                stmProduits.setInt(1, panier_id ); // Utilisez l'ID_Pannier récupéré
                 ResultSet rsProduit = stmProduits.executeQuery();
                 if (rsProduit.next()) {
-                    livraison.setMontant(rsProduit.getInt("price"));
+                    livraison.setMontant(rsProduit.getInt("prix"));
                 }
             }
         } catch (SQLException e) {
@@ -52,7 +53,7 @@ public class ServiceLivraison implements IService<Livraison> {
     @Override
     public ArrayList<Livraison> getAll() {
         ArrayList<Livraison> livraisons = new ArrayList<>();
-        String query = "SELECT ID_Livraison,NomPrenomClient, Adresse,panier_id, montant, date FROM livraison";
+        String query = "SELECT ID_Livraison,NomPrenomClient, Adresse, panier_id , quantity, montant, date FROM livraison";
         try {
             Statement stm = cnx.createStatement();
             ResultSet rs = stm.executeQuery(query);
@@ -61,26 +62,28 @@ public class ServiceLivraison implements IService<Livraison> {
                 livraison.setID_Livraison(rs.getInt("ID_Livraison"));
                 livraison.setNomPrenomClient(rs.getString("NomPrenomClient"));
                 livraison.setAdresse(rs.getString("Adresse"));
-                //  livraison.setQuantity(rs.getInt("quantity"));
+                livraison.setQuantity(rs.getInt("quantity"));
                 livraison.setMontant(rs.getFloat("montant"));
                 livraison.setDate(rs.getDate("date"));
 
-                int idPannier = rs.getInt("panier_id");
-
+                int idPannier = rs.getInt("panier_id ");
 
                 // Récupérer le nom du produit depuis la table "panier"
                 // Récupérer le nom du produit depuis la table "panier"
-                String queryProduit = "SELECT price FROM panier WHERE panier_id = ?";
+                String queryProduit = "SELECT prod_name FROM panier WHERE panier_id  = ?";
                 try {
                     PreparedStatement stmProduit = cnx.prepareStatement(queryProduit);
                     stmProduit.setInt(1, idPannier);
                     ResultSet rsProduit = stmProduit.executeQuery();
                     if (rsProduit.next()) {
-                        livraison.setMontant(rsProduit.getInt("price"));
+                        String prod_name = rsProduit.getString("prod_name");
+                        livraison.setProd_name(prod_name != null ? prod_name : "Produit non disponible");
+                    } else {
+                        livraison.setProd_name("Produit non trouvé pour cet ID");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    // livraison.setMontant("Erreur de récupération des produits");
+                    livraison.setProd_name("Erreur de récupération des produits");
                 }
 
                 livraisons.add(livraison);
@@ -88,17 +91,19 @@ public class ServiceLivraison implements IService<Livraison> {
                 // Afficher les données de la livraison
                 System.out.println("NomPrenomClient: " + livraison.getNomPrenomClient());
                 System.out.println("Adresse: " + livraison.getAdresse());
-                //   System.out.println("Quantity: " + livraison.getQuantity());
+                System.out.println("Quantity: " + livraison.getQuantity());
                 System.out.println("Montant: " + livraison.getMontant());
                 System.out.println("Date: " + livraison.getDate());
-                System.out.println("panier_id: " + idPannier);
-                //   System.out.println("Produits: " + livraison.getProd_name());
+                System.out.println("ID_Pannier: " + idPannier);
+                System.out.println("Produits: " + livraison.getProd_name());
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return livraisons;
     }
+
+
 
     @Override
     public  boolean delete(Livraison livraison) {
@@ -155,8 +160,8 @@ public class ServiceLivraison implements IService<Livraison> {
                     livraison.setID_Livraison(rs.getInt("ID_Livraison"));
                     livraison.setNomPrenomClient(rs.getString("NomPrenomClient"));
                     livraison.setAdresse(rs.getString("Adresse"));
-                    livraison.setPanier_id(rs.getInt("panier_id"));
-                   // livraison.setQuantity(rs.getInt("quantity"));
+                    livraison.setPanier_id(rs.getInt("ID_Pannier"));
+                    livraison.setQuantity(rs.getInt("quantity"));
                     livraison.setMontant(rs.getFloat("montant"));
                     livraison.setDate(rs.getDate("date"));
                     return livraison;
@@ -169,16 +174,16 @@ public class ServiceLivraison implements IService<Livraison> {
     }
     @Override
     public void update(Livraison livraison) {
-        String query = "UPDATE livraison SET NomPrenomClient=?,Adresse=?,panier_id=?,  montant=?, date=? WHERE ID_Livraison=?";
+        String query = "UPDATE livraison SET NomPrenomClient=?,Adresse=?,panier_id=?, quantity=?, montant=?, date=? WHERE ID_Livraison=?";
         try {
             PreparedStatement stm = cnx.prepareStatement(query);
             stm.setString(1, livraison.getNomPrenomClient());
             stm.setString(2, livraison.getAdresse());
             stm.setInt(3, livraison.getPanier_id());
-        //    stm.setInt(4, livraison.getQuantity());
-            stm.setFloat(4, livraison.getMontant());
-            stm.setDate(5, livraison.getDate());
-            stm.setInt(6, livraison.getID_Livraison());
+            stm.setInt(4, livraison.getQuantity());
+            stm.setFloat(5, livraison.getMontant());
+            stm.setDate(6, livraison.getDate());
+            stm.setInt(7, livraison.getID_Livraison());
 
 
             int rowsAffected = stm.executeUpdate();
@@ -188,7 +193,5 @@ public class ServiceLivraison implements IService<Livraison> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-    }
-    }
-}
+    }}}
 

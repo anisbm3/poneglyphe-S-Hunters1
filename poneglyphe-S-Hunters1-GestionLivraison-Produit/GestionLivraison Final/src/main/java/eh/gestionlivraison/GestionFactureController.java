@@ -87,6 +87,8 @@ public class GestionFactureController implements Initializable {
     @FXML
     private Button btn_Refresh2;
     @FXML
+    private ComboBox<String> cb_Produits;
+    @FXML
     private ComboBox<String> cb_Adresse;
 
     @FXML
@@ -98,6 +100,8 @@ public class GestionFactureController implements Initializable {
     @FXML
     private ComboBox<Float> cb_montant;
 
+    @FXML
+    private ComboBox<Integer> cb_quantity;
     @FXML
     private DatePicker date;
 
@@ -126,6 +130,11 @@ public class GestionFactureController implements Initializable {
     private ObservableList<String> optionsNomPrenom = FXCollections.observableArrayList();
     @FXML
     private ObservableList<String> optionsAdresse = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<String> optionsProduit = FXCollections.observableArrayList();
+
+    @FXML
+    private ObservableList<Integer> optionsquantity = FXCollections.observableArrayList();
 
     @FXML
     private ObservableList<Float> optionsMantantAvantRemise = FXCollections.observableArrayList();
@@ -139,6 +148,8 @@ public class GestionFactureController implements Initializable {
 
         fillcomboNomPrenom();
         fillcomboAdresse();
+        fillcomboProduit();
+        fillcomboqunantity();
         fillcomboLMantantAvantRemise();
         fillcomboDateLivraison();
 
@@ -150,21 +161,28 @@ public class GestionFactureController implements Initializable {
         // Charger les données depuis la base de données
         loadNomPrenomFromDatabase();
         loadAdresseFreomDatabase();
+        loadProduitsFromDatabase();
+        loadQuantityFromDatabase();
         loadMontantFromDatabase();
         loadDateFromDatabase();
         List<String> NomPrenomClient = Arrays.asList();
         List<String> Adresse = Arrays.asList();
+        List<String> Produits = Arrays.asList("game", "pull");
+        List<Integer> quantity = Arrays.asList(); // Exemple de liste de quantités
         List<Float> montant = Arrays.asList(); // Exemple de liste de montants
         List<Date> Date = Arrays.asList(); // Exemple de liste de dates
 
         cb_NomPrenom.getItems().addAll(NomPrenomClient);
         cb_Adresse.getItems().addAll(Adresse);
+        cb_Produits.getItems().addAll(Produits);
+        cb_quantity.getItems().addAll(quantity);
         cb_montant.getItems().addAll(montant);
         cb_Date.getItems().addAll(Date);
 
         afficherNomprenomDansComboBox();
         afficherAdresseDansComboBox();
-
+        afficherProduitsDansComboBox();
+        afficherQuantitysDansComboBox();
         affichermontantsDansComboBox();
         afficherDateDansComboBox();
         // Correction de l'appel de la méthode
@@ -226,6 +244,39 @@ public class GestionFactureController implements Initializable {
         }
     }
 
+    private void loadProduitsFromDatabase() {
+        try {
+            Connection cnx = MyDataBase.getInstance().getCnx();
+            String req = "SELECT DISTINCT Produits FROM panier"; // Sélectionnez les produits distincts
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                String Produits = rs.getString("produits");
+                optionsProduit.add(Produits);
+                System.out.println("Produit récupéré depuis la base de données : " + Produits);
+            }
+            cb_Produits.setItems(optionsProduit); // Associer les produits à la ComboBox
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void loadQuantityFromDatabase() {
+        try {
+            Connection cnx = MyDataBase.getInstance().getCnx();
+            String req = "SELECT DISTINCT quantity FROM livraison"; // Sélectionnez les produits distincts
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                int quantity = rs.getInt("quantity");
+                optionsquantity.add(quantity);
+                System.out.println("Produit récupéré depuis la base de données : " + quantity);
+            }
+            cb_quantity.setItems(optionsquantity); // Associer les produits à la ComboBox
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionFactureController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private void loadMontantFromDatabase() {
         try {
@@ -286,6 +337,23 @@ public class GestionFactureController implements Initializable {
         }
     }
 
+    private void afficherProduitsDansComboBox() {
+        if (cb_Produits != null) {
+            System.out.println("ComboBoxProduits n'est pas null");
+            cb_Produits.setItems(optionsProduit);
+        } else {
+            System.out.println("ERREUR : ComboBoxProduits est null");
+        }
+    }
+
+    private void afficherQuantitysDansComboBox() {
+        if (cb_quantity != null) {
+            System.out.println("ComboBoxQuantity n'est pas null");
+            cb_quantity.setItems(optionsquantity);
+        } else {
+            System.out.println("ERREUR : ComboBoxquantity est null");
+        }
+    }
 
     private void affichermontantsDansComboBox() {
         if (cb_montant != null) {
@@ -341,9 +409,41 @@ public class GestionFactureController implements Initializable {
         }
     }
 
+    public void fillcomboProduit() {
+        try {
+            Connection cnx = MyDataBase.getInstance().getCnx();
+            String req = "SELECT DISTINCT Produits FROM panier"; // Sélectionnez les produits distincts
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery();
+            ObservableList<String> optionsProduits = FXCollections.observableArrayList();
+            while (rs.next()) {
+                String Produits = rs.getString("Produits");
+                optionsProduits.add(Produits);
+                System.out.println("Produit récupéré depuis la base de données : " + Produits);
+            }
+            cb_Produits.setItems(optionsProduits);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-
-
+    private void fillcomboqunantity() {
+        try {
+            Connection cnx = MyDataBase.getInstance().getCnx();
+            String req = "SELECT quantity FROM livraison"; // Sélectionnez les livraison
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery();
+            ObservableList<Integer> optionsquantity = FXCollections.observableArrayList();
+            while (rs.next()) {
+                int quantity = rs.getInt("quantity");
+                optionsquantity.add(quantity);
+                System.out.println("Adressequantity depuis la base de données : " + quantity);
+            }
+            cb_quantity.setItems(optionsquantity);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionFactureController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private void fillcomboLMantantAvantRemise() {
         try {
@@ -488,6 +588,8 @@ public class GestionFactureController implements Initializable {
                 selectedFacture.setDateFacture(Date.valueOf(date.getValue()));
                 selectedFacture.setNomPrenomClient(cb_NomPrenom.getValue());
                 selectedFacture.setAdresse(cb_Adresse.getValue());
+                selectedFacture.setProd_name(cb_Produits.getValue());
+                selectedFacture.setQuantity(cb_quantity.getValue());
                 selectedFacture.setMontant(cb_montant.getValue());
                 selectedFacture.setDate(cb_Date.getValue());
 
@@ -516,12 +618,13 @@ public class GestionFactureController implements Initializable {
         if (selectedFacture != null) {
             String nomClient = selectedFacture.getNomPrenomClient();
             String date = selectedFacture.getDateFacture().toString();
+            String produits = selectedFacture.getProd_name();
             String prixTotal = String.valueOf(selectedFacture.getMontant());
             String tva = String.valueOf(selectedFacture.getMontant() * 0.2); // Exemple de calcul de TVA
             String prixTTC = String.valueOf(selectedFacture.getMontant() * 1.2); // Exemple de calcul de prix TTC
 
             // Appeler la méthode imprimezFacture avec les données de la facture et le nom du fichier
-            imprimezFacture("facture.pdf", nomClient, date, prixTotal, tva, prixTTC);
+            imprimezFacture("facture.pdf", nomClient, date, produits, prixTotal, tva, prixTTC);
 
             // Afficher le fichier PDF généré dans une nouvelle fenêtre
             File file = new File("facture.pdf");
@@ -534,7 +637,7 @@ public class GestionFactureController implements Initializable {
         }
     }
 
-    private void imprimezFacture(String nomFichier, String nomClient, String date, String prixTotal, String tva, String prixTTC) {
+    private void imprimezFacture(String nomFichier, String nomClient, String date, String produits, String prixTotal, String tva, String prixTTC) {
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
         document.addPage(page);
@@ -547,14 +650,13 @@ public class GestionFactureController implements Initializable {
             float fontSize = 12;
 
             // Ajouter le logo
-            PDImageXObject logo = PDImageXObject.createFromFile("src/main/resources/logo.png", document);
-
-            contentStream.drawImage(logo, 50, 700);
+            PDImageXObject logo = PDImageXObject.createFromFile("/logo.png", document);
+            contentStream.drawImage(logo, 50, 750);
 
             // Ajouter le nom du groupe
             contentStream.beginText();
             contentStream.setFont(font, fontSize);
-            contentStream.newLineAtOffset(100, 200);
+            contentStream.newLineAtOffset(100, 700);
             contentStream.showText("Nom du groupe");
             contentStream.endText();
 
@@ -569,6 +671,9 @@ public class GestionFactureController implements Initializable {
             contentStream.showText("Facture pour : " + nomClient);
             contentStream.newLineAtOffset(0, -20);
             contentStream.showText("Date : " + date);
+            contentStream.newLineAtOffset(0, -20);
+            contentStream.showText("Produits : " + produits);
+            contentStream.newLineAtOffset(0, -20);
             contentStream.showText("Prix Total : " + prixTotal);
             contentStream.newLineAtOffset(0, -20);
             contentStream.showText("TVA : " + tva);

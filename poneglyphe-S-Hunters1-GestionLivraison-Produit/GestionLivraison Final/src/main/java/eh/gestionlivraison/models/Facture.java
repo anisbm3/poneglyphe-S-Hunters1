@@ -13,9 +13,9 @@ public class Facture {
     private String NomPrenomClient;
     private String Adresse;
     private int panier_id;
-private  int price ;
+    private int quantity;
     private float montant;
-
+    private String prod_name;
     private boolean selected;
 
     public Facture() {}
@@ -30,20 +30,26 @@ private  int price ;
         NomPrenomClient = nomPrenomClient;
         Adresse = adresse;
         this.panier_id = panier_id;
+        this.quantity = quantity;
         this.montant = montant;
-        this.price=price;
+        this.prod_name = prod_name;
     }
 
-
-    public Facture(int remise, float montantAvecRemise, Date dateFacture, String nomPrenomClient, String adresse, float montant, Date date) {
-        this.Remise = remise;
-        this.MontantAvecRemise = montantAvecRemise;
+    public Facture(int remise, float montantAvecRemise, Date dateFacture, Date date, String nomPrenomClient, String adresse, int quantity, float montant, String prod_name) {
+        Remise = remise;
+        MontantAvecRemise = montantAvecRemise;
         this.dateFacture = dateFacture;
-        this.NomPrenomClient = nomPrenomClient;
-        this.Adresse = adresse;
-        this.montant = montant;
         this.date = date;
+        NomPrenomClient = nomPrenomClient;
+        Adresse = adresse;
+        this.quantity = quantity;
+        this.montant = montant;
+        this.prod_name = prod_name;
     }
+
+    public Facture(int remise, float montantAvecRemise, Date dateFacture, String value, String value1, String value2, Integer value3, Float value4, Date value5) {
+    }
+
 
     public int getIdFacture() {
         return IdFacture;
@@ -80,8 +86,17 @@ private  int price ;
     public int getPanier_id() {
         return panier_id;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
     public float getMontant() {
         return montant;
+    }
+
+    public String getProd_name() {
+        return prod_name;
     }
 
     public boolean isSelected() {
@@ -124,12 +139,17 @@ private  int price ;
         this.panier_id = panier_id;
     }
 
-
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public void setMontant(float montant) {
         this.montant = montant;
     }
 
+    public void setProd_name(String prod_name) {
+        this.prod_name = prod_name;
+    }
 
     public void setSelected(boolean selected) {
         this.selected = selected;
@@ -147,7 +167,9 @@ private  int price ;
                 ", NomPrenomClient='" + NomPrenomClient + '\'' +
                 ", Adresse='" + Adresse + '\'' +
                 ", panier_id=" + panier_id +
+                ", quantity=" + quantity +
                 ", montant=" + montant +
+                ", prod_name='" + prod_name + '\'' +
                 ", selected=" + selected +
                 '}';
     }
@@ -157,12 +179,12 @@ private  int price ;
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Facture facture = (Facture) o;
-        return IdFacture == facture.IdFacture && Remise == facture.Remise && Float.compare(MontantAvecRemise, facture.MontantAvecRemise) == 0 && ID_Livraison == facture.ID_Livraison && panier_id == facture.panier_id && Float.compare(montant, facture.montant) == 0 && selected == facture.selected && Objects.equals(dateFacture, facture.dateFacture) && Objects.equals(date, facture.date) && Objects.equals(NomPrenomClient, facture.NomPrenomClient) && Objects.equals(Adresse, facture.Adresse);
+        return IdFacture == facture.IdFacture && Remise == facture.Remise && Float.compare(MontantAvecRemise, facture.MontantAvecRemise) == 0 && ID_Livraison == facture.ID_Livraison && panier_id == facture.panier_id && quantity == facture.quantity && Float.compare(montant, facture.montant) == 0 && selected == facture.selected && Objects.equals(dateFacture, facture.dateFacture) && Objects.equals(date, facture.date) && Objects.equals(NomPrenomClient, facture.NomPrenomClient) && Objects.equals(Adresse, facture.Adresse) && Objects.equals(prod_name, facture.prod_name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(IdFacture, Remise, MontantAvecRemise, dateFacture, date, ID_Livraison, NomPrenomClient, Adresse, panier_id, montant, selected);
+        return Objects.hash(IdFacture, Remise, MontantAvecRemise, dateFacture, date, ID_Livraison, NomPrenomClient, Adresse, panier_id, quantity, montant, prod_name, selected);
     }
 
     public void setDate(java.util.Date value) {

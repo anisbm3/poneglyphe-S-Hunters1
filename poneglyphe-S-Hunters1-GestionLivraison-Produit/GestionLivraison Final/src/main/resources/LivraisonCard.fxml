@@ -9,7 +9,8 @@
         <VBox layoutX="7.0" layoutY="14.0" prefHeight="178.0" prefWidth="256.0" spacing="5" style="-fx-padding: 10px;">
             <Label fx:id="labelNomPrenom" layoutX="14.0" layoutY="14.0" text="Nom Prenom:" />
             <Label fx:id="labelAdresse" layoutX="14.0" layoutY="33.0" text="Adresse:" />
-
+            <Label fx:id="labelProduits" layoutX="14.0" layoutY="52.0" text="Produits:" />
+            <Label fx:id="labelQuantity" layoutX="14.0" layoutY="71.0" text="Quantity:" />
             <Label fx:id="labelMontant" layoutX="14.0" layoutY="90.0" text="Montant:" />
             <Label fx:id="labelDate" layoutX="14.0" layoutY="109.0" text="Date:" />
         </VBox>

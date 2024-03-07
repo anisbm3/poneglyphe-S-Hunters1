@@ -78,8 +78,8 @@ public class LivraisonCardController {
 
         labelNomPrenom.setText("NomPrenomClient: " + livraison.getNomPrenomClient());
         labelAdresse.setText("Adresse: " + livraison.getAdresse());
-      //  labelProduits.setText("Produits: " + livraison.getProd_name());
-      //  labelQuantity.setText("Quantity: " + livraison.getQuantity());
+        labelProduits.setText("Produits: " + livraison.getProd_name());
+        labelQuantity.setText("Quantity: " + livraison.getQuantity());
         labelMontant.setText("Montant: " + livraison.getMontant());
 
         if (livraison.getDate() != null) {

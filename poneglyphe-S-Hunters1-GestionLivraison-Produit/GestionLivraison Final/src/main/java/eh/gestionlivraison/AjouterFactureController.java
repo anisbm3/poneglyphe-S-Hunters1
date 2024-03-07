@@ -108,6 +108,8 @@ public class AjouterFactureController {
 
         fillcomboNomPrenom();
         fillcomboAdresse();
+        fillcomboProduit();
+        fillcomboqunantity();
         fillcomboLMantantAvantRemise();
         fillcomboDateLivraison();
     }
@@ -123,6 +125,12 @@ public class AjouterFactureController {
     private ObservableList<String> optionsNomPrenom = FXCollections.observableArrayList();
     @FXML
     private ObservableList<String> optionsAdresse = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<String> optionsProduit = FXCollections.observableArrayList();
+
+    @FXML
+    private ObservableList<String> optionsquantity = FXCollections.observableArrayList();
+
     @FXML
     private ObservableList<String> optionsMantantAvantRemise = FXCollections.observableArrayList();
     @FXML
@@ -163,9 +171,46 @@ public class AjouterFactureController {
         }
     }
 
+    private void fillcomboProduit() {
+        if (cb_Produits != null) {
+            try {
+                Connection cnx = MyDataBase.getInstance().getCnx();
+                String req = "SELECT  DISTINCT Produits FROM panier"; // Sélectionnez les produits
+                PreparedStatement cs = cnx.prepareStatement(req);
+                ResultSet rs = cs.executeQuery();
+                ObservableList<String> optionsProduits = FXCollections.observableArrayList();
+                while (rs.next()) {
+                    String Produit = rs.getString("Produits");
+                    optionsProduits.add(Produit);
+                    System.out.println("Produit récupéré depuis la base de données : " + Produit);
+                }
+                cb_Produits.setItems(optionsProduits);
+            } catch (SQLException ex) {
+                Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.err.println("cb_Produits est null. Ne peut pas remplir les options de produit.");
+        }
+    }
 
 
-
+    private void fillcomboqunantity() {
+        try {
+            Connection cnx = MyDataBase.getInstance().getCnx();
+            String req = "SELECT quantity FROM livraison"; // Sélectionnez les livraison
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery();
+            ObservableList<Integer> optionsquantity = FXCollections.observableArrayList();
+            while (rs.next()) {
+                int quantity = rs.getInt("quantity");
+                optionsquantity.add(quantity);
+                System.out.println("Adressequantity depuis la base de données : " + quantity);
+            }
+            cb_quantity.setItems(optionsquantity);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionFactureController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private void fillcomboLMantantAvantRemise() {
         try {
@@ -210,6 +255,8 @@ public class AjouterFactureController {
         System.out.println("Date sélectionné: " + date.getValue());
         System.out.println("NomPreno sélectionné: " + cb_NomPrenom.getValue());
         System.out.println("Adresse sélectionné: " + cb_Adresse.getValue());
+        System.out.println("Produit sélectionné: " + cb_Produits.getValue());
+        System.out.println("Quantity sélectionné: " + cb_quantity.getValue());
         System.out.println("MontantAvantRemise: " + cb_montant.getValue());
         System.out.println("DateLivraison: " + cb_Date.getValue());
 
@@ -235,6 +282,8 @@ public class AjouterFactureController {
                     java.sql.Date.valueOf(date.getValue()),
                     cb_NomPrenom.getValue(),
                     cb_Adresse.getValue(),
+                    cb_Produits.getValue(),
+                    cb_quantity.getValue(),
                     cb_montant.getValue(),
                     cb_Date.getValue());
 

@@ -75,13 +75,15 @@
                                                 </Button>
                                                 <DatePicker fx:id="date" layoutX="101.0" layoutY="154.0" prefHeight="42.0" prefWidth="299.0" promptText="date" />
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="57.0" layoutX="100.0" layoutY="24.0" stroke="#1e2b3c" strokeType="OUTSIDE" strokeWidth="2.0" width="300.0" />
-                                                <TextField fx:id="remise" layoutX="100.0" layoutY="24.0" prefHeight="57.0" prefWidth="300.0" promptText="remise" />
+                                                <TextField fx:id="remise" layoutX="100.0" layoutY="24.0" prefHeight="57.0" prefWidth="300.0" promptText="remise" text="Remise" />
                                     <Rectangle fx:id="montant" arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="57.0" layoutX="100.0" layoutY="87.0" stroke="#1e2b3c" strokeType="OUTSIDE" strokeWidth="2.0" width="300.0" />
-                                    <TextField fx:id="MontantAvecRemise" layoutX="100.0" layoutY="87.0" prefHeight="57.0" prefWidth="300.0" promptText="montant" />
+                                    <TextField fx:id="MontantAvecRemise" layoutX="100.0" layoutY="87.0" prefHeight="57.0" prefWidth="300.0" promptText="montant" text="MontantAvecRemise" />
                                     <ComboBox fx:id="cb_NomPrenom" layoutX="100.0" layoutY="206.0" prefHeight="56.0" prefWidth="300.0" promptText="NomPrenomClient" />
-                                    <ComboBox fx:id="cb_montant" layoutX="100.0" layoutY="337.0" prefHeight="56.0" prefWidth="300.0" promptText="MantantAvantRemise" />
+                                    <ComboBox fx:id="cb_quantity" layoutX="100.0" layoutY="392.0" prefHeight="56.0" prefWidth="300.0" promptText="quantity" />
+                                    <ComboBox fx:id="cb_montant" layoutX="100.0" layoutY="459.0" prefHeight="56.0" prefWidth="300.0" promptText="MantantAvantRemise" />
                                     <ComboBox fx:id="cb_Adresse" layoutX="100.0" layoutY="269.0" prefHeight="56.0" prefWidth="300.0" promptText="Adresse" />
-                                    <ComboBox fx:id="cb_Date" layoutX="100.0" layoutY="401.0" prefHeight="56.0" prefWidth="300.0" promptText="DateLivraison" />
+                                    <ComboBox fx:id="cb_Date" layoutX="100.0" layoutY="522.0" prefHeight="56.0" prefWidth="300.0" promptText="DateLivraison" />
+                                    <ComboBox fx:id="cb_Produits" layoutX="101.0" layoutY="331.0" prefHeight="56.0" prefWidth="300.0" promptText="Produit" />
                                             </children>
                                         </Pane>
                                     </content>

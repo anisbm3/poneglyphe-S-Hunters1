@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +40,11 @@ public class AjouterLivraisonController  implements Initializable {
     @FXML
     private TextField TfMontant;
 
+    @FXML
+    private TextField TfQuantity;
 
+    @FXML
+    private ComboBox<String> cb_Produits;
 
     @FXML
     private HBox chosenhotelCard;
@@ -61,7 +64,7 @@ public class AjouterLivraisonController  implements Initializable {
     Livraison l;
     public void initialize(URL url, ResourceBundle rb) {
         loader = new FXMLLoader(getClass().getResource("AjouterLivraison.fxml"));
-
+        fillcomboProduit();
     }
 
     @FXML
@@ -90,29 +93,71 @@ public class AjouterLivraisonController  implements Initializable {
     @FXML
     private ObservableList<String> optionsProduit = FXCollections.observableArrayList();
 
+    public void fillcomboProduit() {
+        try {
+            Connection cnx = MyDataBase.getInstance().getCnx();
+            String req = "SELECT DISTINCT prod_name FROM panier"; // Sélectionnez les produits distincts
+            PreparedStatement cs = cnx.prepareStatement(req);
+            ResultSet rs = cs.executeQuery();
+            ObservableList<String> optionsProduits = FXCollections.observableArrayList();
+            while (rs.next()) {
+                String prod_name = rs.getString("prod_name");
+                optionsProduits.add(prod_name);
+                System.out.println("Produit récupéré depuis la base de données : " + prod_name);
+            }
+            cb_Produits.setItems(optionsProduits);
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionLivraisonController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-
-    public void Enregister(ActionEvent event) throws IOException {
-        // Vérifiez si tous les champs sont remplis
-        if (NomPrenom.getText().isEmpty() || Adresse.getText().isEmpty() || date.getValue() == null) {
-            // Affichez un message d'erreur et quittez la méthode si des champs sont manquants
-            System.out.println("Veuillez remplir tous les champs.");
-            return;
+    @FXML
+    private void Enregister(ActionEvent event) {
+        System.out.println("NomPrenom: " + NomPrenom.getText());
+        System.out.println("Adresse: " + Adresse.getText());
+        System.out.println("Produit sélectionné: " + cb_Produits.getValue());
+        System.out.println("Quantité: " + TfQuantity.getText());
+        System.out.println("Montant: " + TfMontant.getText());
+        System.out.println("Date: " + date.getValue());
+        String erreurs = "";
+        if (TfQuantity.getText().trim().isEmpty()) {
+            erreurs += "Quantity vide\n";
+        }
+        if (TfMontant.getText().trim().isEmpty()) {
+            erreurs += "Montant vide\n";
+        }
+        if (date.getValue() != null
+                && date.getValue().isBefore(LocalDate.now())
+        ) {
+            erreurs += "date must be after\n";
+        }
+        if (date.getValue() == null) {
+            erreurs += "date vide\n";
         }
 
-        // Créez une nouvelle livraison avec les données saisies par l'utilisateur
-        Livraison livraison = new Livraison();
-        livraison.setNomPrenomClient(NomPrenom.getText());
-        livraison.setAdresse(Adresse.getText());
-        livraison.setDate(Date.valueOf(date.getValue()));
+        if (erreurs.length() > 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur ajout Reclamation");
+            alert.setContentText(erreurs);
+            alert.showAndWait();
+        } else {
+            // Vérifier l'ID_Pannier
+            System.out.println("ID_Pannier: " + Livraison.getPanier_id());
 
-        // Appelez la méthode add de ServiceLivraison pour ajouter la livraison à la base de données
-        ServiceLivraison serviceLivraison = new ServiceLivraison();
-        serviceLivraison.add(livraison);
+            // Vérifier le produit sélectionné
+            System.out.println("Produit sélectionné: " + cb_Produits.getValue());
 
-        // Affichez un message de succès
-        System.out.println("Livraison ajoutée avec succès.");
+            Livraison livraison = new Livraison(NomPrenom.getText(), Adresse.getText(), cb_Produits.getValue(),
+                    Integer.parseInt(TfQuantity.getText()),
+                    Float.parseFloat(TfMontant.getText()),
+                    Date.valueOf(date.getValue()));
+            sl.add(livraison);
+            showAlert(Alert.AlertType.INFORMATION, "Livraison ajoutée", "La livraison a été ajoutée avec succès.");
+        }
     }
+
+
+
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);

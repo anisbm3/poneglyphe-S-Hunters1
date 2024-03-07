@@ -14,7 +14,7 @@ public class Livraison {
     private Date date;
     private boolean selected;
 
-    public Livraison(String text, String text1, int montant, Date date) {
+    public Livraison(String text, String text1, String value, int montant, float v, Date date) {
     }
 
     public boolean isSelected() {
