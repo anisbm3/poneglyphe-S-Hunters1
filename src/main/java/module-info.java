@@ -21,6 +21,13 @@ module tn.esprit.test {
     requires java.mail;
     requires poi;
     requires poi.ooxml;
+    requires stripe.java;
+    requires org.controlsfx.controls;
+    requires org.apache.pdfbox;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
+    requires com.google.gson;
+
 
     exports tn.esprit.test;
     exports tn.esprit.controlls;

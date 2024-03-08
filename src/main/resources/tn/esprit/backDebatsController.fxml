@@ -65,7 +65,7 @@
                </image>
             </ImageView>
             <Button layoutX="280.0" layoutY="328.0" mnemonicParsing="false" onMouseClicked="#Rating" prefHeight="23.0" prefWidth="90.0" styleClass="pane_back_body" stylesheets="@style.css" text="Rate" />
-            <Button fx:id="excelBTN" layoutX="118.0" layoutY="175.0" mnemonicParsing="false" onAction="#onClickedExport" text="Button" />
+            <Button fx:id="excelBTN" layoutX="118.0" layoutY="175.0" mnemonicParsing="false" onAction="#onClickedExport" text="Excel" />
          </children>
       </AnchorPane>
       <TextField fx:id="ResearchBar" layoutX="215.0" layoutY="38.0" />

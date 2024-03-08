@@ -66,6 +66,8 @@
                   <Button fx:id="AfficherDebatsBtn" mnemonicParsing="false" onAction="#onAfficherDebatsClicked" prefHeight="29.0" prefWidth="334.0" text="Afficher les debats " />
                   <Button fx:id="commentaireBtn" mnemonicParsing="false" onAction="#onClickedAjouterCommentaire" prefHeight="29.0" prefWidth="334.0" text="ajouter Commentaires" />
                   <Button fx:id="afficherCommentairesBtn" mnemonicParsing="false" onAction="#onAfficherCommentaireClicked" prefHeight="29.0" prefWidth="338.0" text="afficher Commentaires" />
+                  <Button fx:id="catalogueBtn" mnemonicParsing="false" onAction="#OnclickedCatalogueBtn" prefHeight="29.0" prefWidth="338.0" text="Catalogue" />
+                  <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="335.0" text="Button" />
                     </children>
                 </VBox>
                 <VBox fx:id="vboxDown" alignment="TOP_CENTER" prefHeight="418.0" prefWidth="350.0" spacing="15.0" styleClass="Home_btn" stylesheets="@style.css">

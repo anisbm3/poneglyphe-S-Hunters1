@@ -137,6 +137,7 @@
                   <Button mnemonicParsing="false" onAction="#onAfficherEventClicekd" prefHeight="26.0" prefWidth="245.0" text="Afficher Event" />
                   <Button fx:id="afficherDebatBtn" mnemonicParsing="false" onAction="#OnClickedAffihcerDebat" prefHeight="29.0" prefWidth="223.0" text="afficher Debats " />
                   <Button fx:id="commentairesBTN" mnemonicParsing="false" onAction="#OnAffichercommentaireClicked" prefHeight="29.0" prefWidth="222.0" text="afficher Commentaires " />
+                  <Button fx:id="affProduits" mnemonicParsing="false" onAction="#affProduits" prefHeight="29.0" prefWidth="229.0" text="Afficher Produits" />
                     </children>
                 </VBox>
             </children>

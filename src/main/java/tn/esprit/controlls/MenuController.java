@@ -16,7 +16,8 @@ package tn.esprit.controlls;
 
 
 public class MenuController implements Initializable {
-
+@FXML
+private Button catalogueBtn;
     @FXML
     private Button debatBtn;
     @FXML
@@ -39,6 +40,8 @@ public class MenuController implements Initializable {
     @FXML
     private Button EVENTFrontBTN;
 
+    @FXML
+    private Button integre;
 
     private Voice voice;
     // Speak a phrase
@@ -174,7 +177,20 @@ public class MenuController implements Initializable {
         }
 
     }*/
+   @FXML
+   void OnclickedCatalogueBtn(ActionEvent event) {
+       try {
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/Catalogue.fxml"));
+           Stage stage = new Stage();
+           Scene scene = new Scene(loader.load());
+           // Show the ajout scene
+           stage.setScene(scene);
+           stage.showAndWait();
 
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
     @FXML
     void OnClickedButtonDebat(ActionEvent event) {
 
@@ -226,5 +242,21 @@ public class MenuController implements Initializable {
             voice.deallocate();
         }
     }
+
+    @FXML
+    void onIntegreBtn(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/Catalogue.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(loader.load());
+            // Show the ajout scene
+            stage.setScene(scene);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

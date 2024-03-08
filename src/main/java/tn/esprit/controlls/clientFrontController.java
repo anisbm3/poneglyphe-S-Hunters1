@@ -27,6 +27,10 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class clientFrontController {
+    //anis
+
+    @FXML
+    private Button catalogueBtn;
 
 //achref
 @FXML
@@ -552,6 +556,14 @@ private Button AfficherDebatsBtn;
     void onAfficherCommentaireClicked(ActionEvent event) {
         System.out.println(loggedInUser);
         serviceusers.changeScreen(event, "/tn/esprit/AfficherCommentaires.fxml", "afficher des commentaires");
+    }
+
+
+    @FXML
+    void OnclickedCatalogueBtn(ActionEvent event) {
+
+        System.out.println(loggedInUser);
+        serviceusers.changeScreen(event, "/tn/esprit/Catalogue.fxml", "catalogues");
     }
 
 }

@@ -10,7 +10,7 @@ public class MyDataBase {
     private final String USERNAME="root";
     private final String PASSWORD ="";
 
-    Connection cnx ;
+    static Connection cnx ;
 
 
     private MyDataBase(){
@@ -32,7 +32,7 @@ public class MyDataBase {
 
         return instance;
     }
-    public Connection getCnx(){
+    public static Connection getCnx(){
         return cnx;
     }
 

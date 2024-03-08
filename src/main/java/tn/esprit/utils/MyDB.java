@@ -9,7 +9,7 @@ public class MyDB {
     private final String USER = "root";
     private final String PWD = "";
 
-    private Connection connection;
+    private static Connection connection;
 
     //3 varibale pour stocker l'instance
     private static MyDB instance;
@@ -32,7 +32,7 @@ public class MyDB {
 
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 }

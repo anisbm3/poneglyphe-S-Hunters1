@@ -42,7 +42,8 @@ public class dashboard {
     private Button afficherDebatBtn;
     //achref
 
-
+    @FXML
+    private Button affProduits;
 
     @FXML
     private ResourceBundle resources;
@@ -142,7 +143,21 @@ public class dashboard {
         updateScroll();
         updateChart();
     }
+    @FXML
+    void affProduits(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/AfficherProduit.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(loader.load());
+            // Show the ajout scene
+            stage.setScene(scene);
+            stage.showAndWait();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     public void updateScroll(){
         int column = 0;
         int row = 1;

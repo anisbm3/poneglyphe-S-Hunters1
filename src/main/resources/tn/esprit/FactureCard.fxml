@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="V2" onMouseClicked="#onFactureSelected" prefHeight="267.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.FactureCardController">
+
+    <children>
+        <VBox fx:id="V1" layoutX="6.0" prefHeight="267.0" prefWidth="298.0" spacing="5" style="-fx-padding: 10px;">
+            <Label fx:id="labelDate_Facture" prefHeight="18.0" prefWidth="305.0" text="Date_Facture:" />
+            <Label fx:id="labelNomPrenimClient" prefHeight="18.0" prefWidth="332.0" text="NomPrenomClent:" />
+            <Label fx:id="labelAdresse" prefHeight="18.0" prefWidth="329.0" text="Adresse:" />
+            <Label fx:id="labelDate_Livraison" prefHeight="18.0" prefWidth="317.0" text="Date_Livraison:" />
+         <Label fx:id="labelMontantSansRemise" prefHeight="18.0" prefWidth="404.0" text="MontantSansRemise:" />
+         <Label fx:id="labelRemise" prefHeight="18.0" prefWidth="336.0" text="Remise:" />
+         <Label fx:id="labelMontantavecremise" prefHeight="18.0" prefWidth="351.0" text="Montant avec remise :" />
+        </VBox>
+    </children>
+</AnchorPane>
