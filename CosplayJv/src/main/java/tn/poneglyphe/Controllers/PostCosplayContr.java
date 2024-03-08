@@ -170,8 +170,7 @@ public class PostCosplayContr {
             showController.addCosplayCard(cosplays);
 
             // Close the AddController window
-            Stage stage = (Stage) tfnom.getScene().getWindow();
-            stage.close();
+
 
         }
         /*

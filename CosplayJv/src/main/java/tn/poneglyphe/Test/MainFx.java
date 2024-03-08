@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static tn.poneglyphe.Controllers.AjouterCosplayController.ChatGPTAPIExample.chatGPT;
+
 public class MainFx extends Application {
 
     public static void main(String[] args) {

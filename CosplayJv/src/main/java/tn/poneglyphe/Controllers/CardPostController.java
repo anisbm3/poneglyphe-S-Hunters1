@@ -1,16 +1,25 @@
 package tn.poneglyphe.Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import tn.poneglyphe.Models.entities.Cosplay;
+import tn.poneglyphe.Services.CrudCosplay;
 import tn.poneglyphe.Services.CrudMateriaux;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -88,9 +97,14 @@ public class CardPostController {
 
     @FXML
     private Label personnage;
-
+    @FXML
+    private VBox cosplayCard;
     private Cosplay cosplay;
     private final CrudMateriaux cm = new CrudMateriaux();
+    private final CrudCosplay cs = new CrudCosplay();
+
+
+
 
     //@Override
    /* public void initialize(URL location, ResourceBundle resources) {
@@ -111,7 +125,7 @@ public class CardPostController {
 
     }
 
-    public void initData (Cosplay cosplay) {
+    public void initData(Cosplay cosplay) {
 
         Date date = cosplay.getDateCreation();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Specify the desired date format
@@ -126,14 +140,14 @@ public class CardPostController {
         if (cosplay.getImageCp() != null && !cosplay.getImageCp().isEmpty()) {
 
             Image img = new Image(new File(cosplay.getImageCp()).toURI().toString());
-           imgPost.setImage(img);
+            imgPost.setImage(img);
             double maxWidth = 100; // Set the maximum width for the image
             double maxHeight = 100; // Set the maximum height for the image
-           imgPost.setFitWidth(maxWidth);
-           imgPost.setFitHeight(maxHeight);
+            imgPost.setFitWidth(maxWidth);
+            imgPost.setFitHeight(maxHeight);
         } else {
-           imgPost.setVisible(false);
-           imgPost.setManaged(false);
+            imgPost.setVisible(false);
+            imgPost.setManaged(false);
         }
         personnage.setText(String.valueOf(cosplay.getPersonnage()));
         nomCosp.setText(String.valueOf(cosplay.getNomCp()));
@@ -157,13 +171,96 @@ public class CardPostController {
         System.out.println("Material Name: "+(materialName !=null?materialName :"No material name"));*/
 
 
-
-       public Cosplay getCosplay() {
+   public Cosplay getCosplay() {
         return cosplay;
+    }
+
+   @FXML
+    public void handleEditAction(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditDialog.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
         }
 
+        // Retrieve the controller for the dialog/form
+        EditDialogController dialogController = loader.getController();
 
-    public void handleEditAction(ActionEvent actionEvent) {
+        // Populate the dialog/form fields with existing data from the CardPost
+        dialogController.initData(cosplay);
+
+        // Create a new stage for the dialog
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.setScene(new Scene(root));
+
+        // Show the dialog and wait for user interaction
+        dialogStage.showAndWait();
+
+        // After the dialog is closed, retrieve the updated data from the dialog (if any)
+        String updatedNom = dialogController.getUpdatedNom();
+        String updatedCaption = dialogController.getUpdatedCaption();
+        String updatedPersonnage = dialogController.getUpdatedPersonnage();
+        String updatedTypemat = dialogController.getUpdatedTypemat();
+
+        // Update the UI components in the CardPost with the updated data
+        nomCosp.setText(updatedNom);
+        caption.setText(updatedCaption);
+        personnage.setText(updatedPersonnage);
+        typemat.setText(updatedTypemat);
+
+        // Call the service method to update the data
+
+        cs.update(new Cosplay(updatedNom, updatedCaption, updatedPersonnage, updatedTypemat));
+
+        // Optionally, you can also update the data model in your application
 
     }
+    private Cosplay selectedCosplay;
+
+    // Method to set the selected cosplay
+    public void setSelectedCosplay(Cosplay cosplay) {
+        this.selectedCosplay = cosplay;
+    }
+   /* @FXML
+    void handleCosplaySelection(MouseEvent event) {
+        // Assuming you have access to the CardPostController instance
+        CardPostController cardPostController = ...; // Obtain the CardPostController instance
+
+
+        Cosplay selectedCosplay = ...; // Get the selected cosplay from the UI
+
+        // Set the selected cosplay in the AjouterCosplayController
+        cardPostController.setSelectedCosplay(selectedCosplay);
+    }*/
+
+    // Method to get the selected cosplay
+    public Cosplay getSelectedCosplay() {
+        return selectedCosplay;
+    }
+
+    @FXML
+    void handleDeleteAction(ActionEvent event) {
+        Cosplay cosplayToDelete = getSelectedCosplay();
+
+        if (cosplayToDelete == null) {
+            // If no cosplay is selected, display a message and return
+            System.out.println("No cosplay selected for deletion.");
+            return;
+        }
+
+        // If a cosplay is selected, proceed with deletion
+        try {
+            cs.delete(cosplayToDelete);
+            System.out.println("Cosplay deleted successfully.");
+            // Optionally, refresh the UI or update the list view to reflect the changes
+        } catch (Exception e) {
+            System.out.println("Failed to delete cosplay: " + e.getMessage());
+            // Handle the failure, display error message, etc.
+        }
+    }
 }
+

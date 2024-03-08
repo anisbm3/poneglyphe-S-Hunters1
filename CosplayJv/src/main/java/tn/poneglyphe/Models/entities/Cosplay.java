@@ -58,8 +58,12 @@ public class Cosplay {
 
     }
 
-
-
+    public Cosplay(String nomCp, String descriptionCp, String personnage, String nomMa) {
+        this.nomCp = nomCp;
+        this.descriptionCp = descriptionCp;
+        this.personnage = personnage;
+        this.nomMa = nomMa;
+    }
 
     public int getIdCp() {
         return idCp;
