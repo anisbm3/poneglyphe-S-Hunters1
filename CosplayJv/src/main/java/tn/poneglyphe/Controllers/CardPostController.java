@@ -103,7 +103,7 @@ public class CardPostController {
     private final CrudMateriaux cm = new CrudMateriaux();
     private final CrudCosplay cs = new CrudCosplay();
 
-
+    private AjouterCosplayController mainController;
 
 
     //@Override
@@ -125,8 +125,9 @@ public class CardPostController {
 
     }
 
-    public void initData(Cosplay cosplay) {
-
+    public void initData(Cosplay cosplay,  AjouterCosplayController mainController) {
+        this.cosplay = cosplay;
+        this.mainController = mainController;
         Date date = cosplay.getDateCreation();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Specify the desired date format
         String dateString = dateFormat.format(date); // Convert the date to a string in the desired format
@@ -244,22 +245,16 @@ public class CardPostController {
 
     @FXML
     void handleDeleteAction(ActionEvent event) {
-        Cosplay cosplayToDelete = getSelectedCosplay();
+        if (cosplay != null) {
+            try {
+                // Delete the selected cosplay from the database
+                mainController.deleteCosplay(cosplay);
 
-        if (cosplayToDelete == null) {
-            // If no cosplay is selected, display a message and return
-            System.out.println("No cosplay selected for deletion.");
-            return;
-        }
-
-        // If a cosplay is selected, proceed with deletion
-        try {
-            cs.delete(cosplayToDelete);
-            System.out.println("Cosplay deleted successfully.");
-            // Optionally, refresh the UI or update the list view to reflect the changes
-        } catch (Exception e) {
-            System.out.println("Failed to delete cosplay: " + e.getMessage());
-            // Handle the failure, display error message, etc.
+                // Refresh the display of cosplays
+                mainController.refreshCosplays();
+            } catch (Exception e) {
+                e.printStackTrace(); // Handle exceptions appropriately
+            }
         }
     }
 }

@@ -203,7 +203,7 @@ public class AjouterCosplayController  implements Initializable {
                 CardPostController cosplayCardController = loader.getController();
 
                 // Initialize the data for the cosplay card
-                cosplayCardController.initData(cosplay);
+                cosplayCardController.initData(cosplay,this);
 
                 // Add the cosplay card to the cosplayContainer
                 cosplayContainer.getChildren().add(cosplayCard);
@@ -219,7 +219,27 @@ public class AjouterCosplayController  implements Initializable {
             }
         }
     }
+    public void deleteCosplay(Cosplay cosplayToDelete) {
+        // If a cosplay is selected, proceed with deletion
+        try {
+            cs.delete(cosplayToDelete);
+            System.out.println("Cosplay deleted successfully.");
+            // Optionally, refresh the UI or update the list view to reflect the changes
+        } catch (Exception e) {
+            System.out.println("Failed to delete cosplay: " + e.getMessage());
+            // Handle the failure, display error message, etc.
+        }
+    }
+    public void refreshCosplays() {
+        // Implement your logic to refresh the display of cosplays
+        cosplayContainer.getChildren().clear();
 
+        // Get the updated list of cosplays
+        ArrayList<Cosplay> updatedCosplays = cs.getAll();
+
+        // Add the updated cosplay cards
+        addCosplayCard(updatedCosplays);
+    }
     @FXML
     private TextArea chatArea;
     @FXML

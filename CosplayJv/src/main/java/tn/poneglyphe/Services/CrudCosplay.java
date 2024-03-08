@@ -105,7 +105,7 @@ public class CrudCosplay implements IService<Cosplay> {
 
     @Override
         public void update(Cosplay cosplay) {
-            String qry = "UPDATE `cosplay` SET `nomCp`=?,`descriptionCp`=?,`personnage`=?,`imageCp`=?,`dateCreation`=?,`idmateriaux`=? WHERE `idCp`=?";
+            String qry = "UPDATE `cosplay` SET `nomCp`=?,`descriptionCp`=?,`personnage`=?,`imageCp`=?,`dateCreation`=?,`idmateriaux`=? ,`nomMa`=? WHERE `idCp`=?";
 
             try {
                 PreparedStatement stm = cnx.prepareStatement(qry);
@@ -115,7 +115,10 @@ public class CrudCosplay implements IService<Cosplay> {
                 stm.setString(4, cosplay.getImageCp());
                 stm.setDate(5, cosplay.getDateCreation());
                 stm.setInt(6, cosplay.getIdmateriaux());
-                stm.setInt(7,cosplay.getIdCp());
+                stm.setString(7,cosplay.getNomMa());
+                stm.setInt(8,cosplay.getIdCp());
+
+
 
                 int rowsUpdated = stm.executeUpdate();
                 if (rowsUpdated > 0) {
