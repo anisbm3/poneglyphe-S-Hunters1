@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Reservation {
 
     public int ID_Reservation,NB_Places;
-    public String Nom_Reseervation,Etat,NOM_Event;
+    public String Nom_Reseervation,Etat,NOM_Event,iduser;
     public LocalDateTime resDate;
 
     public Reservation(){
@@ -27,6 +27,22 @@ public class Reservation {
         this.Etat=Etat;
         this.NOM_Event=NOM_Event;
         // this.ID_User=ID_User;
+    }
+
+    public Reservation(String Nom_Reseervation,int NB_Places,String Etat,String NOM_Event,String iduser){
+        this.Nom_Reseervation=Nom_Reseervation;
+        this.NB_Places=NB_Places;
+        this.Etat=Etat;
+        this.NOM_Event=NOM_Event;
+      this.iduser = iduser;
+    }
+
+    public String getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(String iduser) {
+        this.iduser = iduser;
     }
 
     public int getID_Reservation() {

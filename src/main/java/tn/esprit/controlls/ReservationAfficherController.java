@@ -7,6 +7,8 @@ import javafx.scene.layout.VBox;
 import tn.esprit.models.Reservation;
 import tn.esprit.services.ServiceEvenement;
 import tn.esprit.services.ServiceReservation;
+import tn.esprit.services.userService;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,6 +31,7 @@ public class ReservationAfficherController implements Initializable {
     @FXML
     private ChoiceBox<String> nomRES;
 
+
     @FXML
     private VBox reservationsContainer;
 
@@ -41,7 +44,8 @@ public class ReservationAfficherController implements Initializable {
     @FXML
     private TextField searchBar;
 
-
+    @FXML
+    private Button RetourBtn;
 
 
     private final ServiceReservation serviceReservation = new ServiceReservation();
@@ -49,18 +53,30 @@ public class ReservationAfficherController implements Initializable {
     private final ServiceEvenement serviceEvent = new ServiceEvenement();
 
     private Reservation selectedReservation;
+    userService serviceUtilisateurs = new userService();
 
+    public Reservation getSelectedReservation() {
+        return selectedReservation;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             refreshReservations();
+           // refreshReservations();
+            setupSearchBarListener(); // Appel du gestionnaire pour la recherche
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+
+    @FXML
+    void onClickedRetour(ActionEvent event) {
+        serviceUtilisateurs.changeScreen(event, "/tn/esprit/clientFront.fxml", "client front");
+
+    }
     private void refreshReservations() throws SQLException {
-        List<Reservation> reservations = serviceReservation.afficher();
+        List<Reservation> reservations = serviceReservation.afficherbyuser(clientFrontController.loggedInUser.getPseudo());
         EventVBox.getChildren().clear();
 
         for (Reservation reservation : reservations) {
@@ -145,4 +161,43 @@ public class ReservationAfficherController implements Initializable {
             EventVBox.getChildren().addAll(nomLabel, placesLabel, etatLabel, eventLabel);
         }
     }
+
+
+
+    private void setupSearchBarListener() {
+        searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                filterReservations(newValue);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void filterReservations(String searchText) throws SQLException {
+        List<Reservation> reservations = serviceReservation.afficherbyuser(clientFrontController.loggedInUser.getPseudo());
+        EventVBox.getChildren().clear();
+
+        for (Reservation reservation : reservations) {
+            // Vérifiez si le nom de la réservation contient le texte de recherche
+            if (reservation.getNom_Reseervation().toLowerCase().contains(searchText.toLowerCase())) {
+                Label reservationLabel = new Label("Nom: " + reservation.getNom_Reseervation() +
+                        ", Places: " + reservation.getNB_Places() +
+                        ", État: " + reservation.getEtat() +
+                        ", Événement: " + reservation.getNOM_Event() +
+                        ", res: " + reservation.getResDate());
+
+                reservationLabel.setOnMouseClicked(event -> {
+                    selectedReservation = reservation;
+                    nomField.setText(selectedReservation.getNom_Reseervation());
+                    placesField.setText(String.valueOf(selectedReservation.getNB_Places()));
+                    etatField.setText(selectedReservation.getEtat());
+                    nomRES.setValue(selectedReservation.getNOM_Event());
+                });
+
+                EventVBox.getChildren().add(reservationLabel);
+            }
+        }
+    }
+
 }

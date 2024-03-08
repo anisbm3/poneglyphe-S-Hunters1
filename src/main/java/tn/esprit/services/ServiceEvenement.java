@@ -60,6 +60,11 @@ public class ServiceEvenement implements IService<Evenement> {
     }
 
     @Override
+    public void supprimerParId(int idCommentaire) throws SQLException {
+
+    }
+
+    @Override
     public List<Evenement> afficher() {
         String req = "SELECT * FROM evenement";
         List<Evenement> list = new ArrayList<>();

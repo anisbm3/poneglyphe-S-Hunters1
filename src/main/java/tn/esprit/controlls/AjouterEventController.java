@@ -10,12 +10,21 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tn.esprit.models.Evenement;
+import tn.esprit.services.AddEventToCalendarApp;
 import tn.esprit.services.ServiceEvenement;
+import tn.esprit.services.userService;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class AjouterEventController {
 
+
+    @FXML
+    private Button revenirEnArriere;
     @FXML
     private Button ajouterbtn;
 
@@ -37,21 +46,21 @@ public class AjouterEventController {
     @FXML
     private Button afficherBtn;
 
-
+    userService serviceUtilisateurs = new userService();
     private final ServiceEvenement SE = new ServiceEvenement();
-
     @FXML
     void OnClickAjouterEv(ActionEvent event) {
+        AddEventToCalendarApp calendarApp=new AddEventToCalendarApp();
         if (champsSontValides()) {
             SE.ajouter(new Evenement(nomEv.getText(), descEv.getText(), lieuEv.getText(), dateEv.getValue().atStartOfDay()));
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Événement ajouté");
             alert.setHeaderText(null);
             alert.setContentText("L'événement a été ajouté avec succès!");
+            calendarApp.addEventToCalendar(nomEv.getText(), dateEv.getValue());
             alert.showAndWait();
             clearFields();
         } else {
-
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de saisie");
             alert.setHeaderText(null);
@@ -59,6 +68,28 @@ public class AjouterEventController {
             alert.showAndWait();
         }
     }
+
+    private void afficherInfo(String titre, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void afficherErreur(String titre, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
+    void OnClickedArriere(ActionEvent event) {
+        serviceUtilisateurs.changeScreen(event, "/tn/esprit/dashboard.fxml", "dashboard");
+    }
+
 
 
     private boolean champsSontValides() {

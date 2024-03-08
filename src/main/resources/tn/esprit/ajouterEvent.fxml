@@ -6,18 +6,19 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="Home_btn" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.AjouterEventController">
+<AnchorPane prefHeight="750.0" prefWidth="1920.0" styleClass="Home_btn" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.AjouterEventController">
    <children>
-      <Label layoutX="178.0" layoutY="40.0" text="GestionEvent" />
-      <Label layoutX="71.0" layoutY="105.0" text="Nom" />
-      <Label layoutX="41.0" layoutY="142.0" text="Description" />
-      <Label layoutX="74.0" layoutY="181.0" text="Lieu" />
-      <Label layoutX="74.0" layoutY="222.0" prefHeight="19.0" prefWidth="48.0" text="Date" />
-      <TextField fx:id="nomEv" layoutX="131.0" layoutY="101.0" />
-      <TextField fx:id="descEv" layoutX="131.0" layoutY="138.0" />
-      <TextField fx:id="lieuEv" layoutX="131.0" layoutY="177.0" />
-      <DatePicker fx:id="dateEv" layoutX="131.0" layoutY="218.0" />
-      <Button fx:id="ajouterbtn" layoutX="136.0" layoutY="272.0" mnemonicParsing="false" onAction="#OnClickAjouterEv" prefHeight="42.0" prefWidth="138.0" styleClass="normalBtn" stylesheets="@style.css" text="ajouter" />
-      <Button fx:id="afficherBtn" layoutX="300.0" layoutY="272.0" mnemonicParsing="false" onAction="#OnClickAfficherBtn" prefHeight="42.0" prefWidth="138.0" styleClass="normalBtn" stylesheets="@style.css" text="afficher" />
+      <Label layoutX="460.0" layoutY="105.0" text="GestionEvent" />
+      <Label layoutX="303.0" layoutY="171.0" text="Nom" />
+      <Label layoutX="287.0" layoutY="212.0" text="Description" />
+      <Label layoutX="313.0" layoutY="257.0" text="Lieu" />
+      <Label layoutX="304.0" layoutY="321.0" prefHeight="19.0" prefWidth="48.0" text="Date" />
+      <TextField fx:id="nomEv" layoutX="413.0" layoutY="167.0" />
+      <TextField fx:id="descEv" layoutX="413.0" layoutY="208.0" />
+      <TextField fx:id="lieuEv" layoutX="413.0" layoutY="253.0" />
+      <DatePicker fx:id="dateEv" layoutX="413.0" layoutY="307.0" />
+      <Button fx:id="ajouterbtn" layoutX="403.0" layoutY="420.0" mnemonicParsing="false" onAction="#OnClickAjouterEv" prefHeight="42.0" prefWidth="138.0" styleClass="normalBtn" stylesheets="@style.css" text="ajouter" />
+      <Button fx:id="afficherBtn" layoutX="592.0" layoutY="420.0" mnemonicParsing="false" onAction="#OnClickAfficherBtn" prefHeight="42.0" prefWidth="138.0" styleClass="normalBtn" stylesheets="@style.css" text="afficher" />
+      <Button fx:id="revenirEnArriere" layoutX="105.0" layoutY="50.0" mnemonicParsing="false" onAction="#OnClickedArriere" prefHeight="29.0" prefWidth="97.0" styleClass="choice-box" stylesheets="@style.css" text="dashboard" />
    </children>
 </AnchorPane>

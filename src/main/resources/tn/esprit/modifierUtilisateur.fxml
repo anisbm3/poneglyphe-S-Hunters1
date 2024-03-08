@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="867.0" styleClass="Home_btn" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.modifierUtilisateur">
+   <children>
+      <GridPane layoutX="200.0" layoutY="26.0" prefHeight="614.0" prefWidth="572.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label prefHeight="22.0" prefWidth="67.0" text="Pseudo">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="pseudoDashboard" promptText="Pseudo" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </TextField>
+            <Label fx:id="pseudoDashboardError" prefHeight="26.0" prefWidth="381.0" GridPane.columnIndex="2" />
+            <Label prefHeight="22.0" prefWidth="67.0" text="CIN" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cinDashboard" promptText="Cin" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </TextField>
+            <Label fx:id="cinDashboardError" prefHeight="26.0" prefWidth="384.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label prefHeight="22.0" prefWidth="67.0" text="Nom" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nomDashboard" promptText="Nom" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </TextField>
+            <Label fx:id="nomDashboardError" prefHeight="26.0" prefWidth="386.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label prefHeight="22.0" prefWidth="67.0" text="Prénom" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="prenomDashboard" promptText="Prénom" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </TextField>
+            <Label fx:id="prenomDashboardError" prefHeight="26.0" prefWidth="385.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label prefHeight="22.0" prefWidth="77.0" text="Age" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ageDashboard" promptText="Age" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </TextField>
+            <Label fx:id="ageDashboardError" prefHeight="26.0" prefWidth="387.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label prefHeight="22.0" prefWidth="87.0" text="N°Téléphone" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="numtelDashboard" promptText="N°Téléphone" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </TextField>
+            <Label fx:id="numtelDashboardError" prefHeight="26.0" prefWidth="385.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label prefHeight="22.0" prefWidth="67.0" text="E-mail" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailDashboard" promptText="E-mail" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </TextField>
+            <Label fx:id="emailDashboardError" prefHeight="26.0" prefWidth="386.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Button fx:id="modifier" mnemonicParsing="false" onAction="#modifierOnClick" prefHeight="42.0" prefWidth="48.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <graphic>
+
+               </graphic>
+            </Button>
+            <Button fx:id="retour" mnemonicParsing="false" onAction="#retourOnClick" prefHeight="42.0" prefWidth="48.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+               <graphic>
+
+               </graphic>
+            </Button>
+         </children>
+      </GridPane>
+   </children>
+</Pane>

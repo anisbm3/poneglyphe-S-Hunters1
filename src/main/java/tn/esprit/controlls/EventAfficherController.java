@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tn.esprit.models.Evenement;
 import tn.esprit.services.ServiceEvenement;
+import tn.esprit.services.userService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +27,13 @@ public class EventAfficherController implements Initializable {
     @FXML
     private Button triBtn;
 
+    @FXML
+    private TextField searchBar;
+    userService serviceUtilisateurs = new userService();
+
+
+    @FXML
+    private Button revenirEnArriere;
     @FXML
     private Button reserverBtn;
     @FXML
@@ -116,9 +124,6 @@ if(i % 2 == 0){
                             ", Lieu: " + evenement.getLieu_Event() +
                             ", Date: " + evenement.getDate_Event().toString()
             );
-
-
-
             eventLabel.setOnMouseClicked(event -> {
                 selectedEvenement = evenement;
                nomfield.setText(selectedEvenement.getNom_Event());
@@ -135,6 +140,12 @@ if(i % 2 == 0){
 
 
     @FXML
+    void onclickedRevenir(ActionEvent event) {
+        serviceUtilisateurs.changeScreen(event, "/tn/esprit/dashboard.fxml", "dashboard");
+
+    }
+
+    @FXML
     private void handleRefreshButtonAction(ActionEvent event) {
         refreshEvents();
     }
@@ -147,17 +158,11 @@ if(i % 2 == 0){
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
             stage.showAndWait();
-
             refreshEvents();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
-
-
 }
 
 

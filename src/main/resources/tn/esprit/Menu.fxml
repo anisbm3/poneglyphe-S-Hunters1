@@ -11,5 +11,8 @@
       <Button fx:id="Eventbtn" layoutX="176.0" layoutY="192.0" mnemonicParsing="false" onAction="#OnClickedEvent" prefHeight="76.0" prefWidth="184.0" styleClass="normalBtn" stylesheets="@style.css" text="affichage  Evenement " />
       <Button fx:id="AjoutBTN" layoutX="84.0" layoutY="295.0" mnemonicParsing="false" onAction="#OnClickedAjout" prefHeight="76.0" prefWidth="184.0" styleClass="normalBtn" stylesheets="@style.css" text="Ajouter Reservation" />
       <Button fx:id="AjoutEvent" layoutX="284.0" layoutY="295.0" mnemonicParsing="false" onAction="#OnClickedAjoutEvent" prefHeight="76.0" prefWidth="184.0" styleClass="normalBtn" stylesheets="@style.css" text="Ajouter Evenement" />
+      <Button fx:id="EVENTFrontBTN" layoutX="386.0" layoutY="124.0" mnemonicParsing="false" onAction="#onClickedEventFront" prefHeight="76.0" prefWidth="184.0" styleClass="normalBtn" stylesheets="@style.css" text="affichage  front event " />
+      <Button fx:id="userBtn" layoutX="423.0" layoutY="230.0" mnemonicParsing="false" onAction="#onClickedUser" text="ajouter user " />
+      <Button fx:id="debatBtn" layoutX="471.0" layoutY="302.0" mnemonicParsing="false" onAction="#OnClickedButtonDebat" prefHeight="26.0" prefWidth="109.0" text="ajouter debat " />
    </children>
 </AnchorPane>

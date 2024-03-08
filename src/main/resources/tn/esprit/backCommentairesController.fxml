@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controlls.BackCommentairesController">
+   <children>
+      <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="66.0" prefHeight="320.0" prefWidth="334.0" styleClass="pane_back_body" stylesheets="@style.css">
+         <content>
+            <VBox fx:id="VBOXcommentaire" prefHeight="305.0" prefWidth="322.0" />
+         </content>
+      </ScrollPane>
+      <Pane layoutX="4.0" layoutY="3.0" prefHeight="54.0" prefWidth="698.0" styleClass="pane_top" stylesheets="@style.css">
+         <children>
+            <!--<TextField fx:id="searchBar" layoutX="229.0" layoutY="13.0" prefHeight="30.0" prefWidth="250.0" styleClass="pane_navBar" stylesheets="@style.css" />-->
+         </children>
+      </Pane>
+      <AnchorPane layoutX="393.0" layoutY="66.0" prefHeight="320.0" prefWidth="250.0" styleClass="pane_back_body" stylesheets="@style.css">
+         <children>
+            <VBox fx:id="reservationsContainer" spacing="10" />
+
+                                    <Button fx:id="modifierBtn" layoutX="29.0" layoutY="279.0" mnemonicParsing="false" onAction="#onModifierClicked" prefHeight="26.0" prefWidth="82.0" styleClass="normalMainBtn" stylesheets="@style.css" text="modifier" />
+            <TextField fx:id="nomMES" layoutX="114.0" layoutY="101.0" prefHeight="26.0" prefWidth="118.0" styleClass="bodyy" stylesheets="@style.css" />
+            <ChoiceBox fx:id="nomSUJ" layoutX="114.0" layoutY="147.0" prefHeight="26.0" prefWidth="118.0" styleClass="bodyy" stylesheets="@style.css" />
+            <Label layoutX="38.0" layoutY="108.0" styleClass="textt" stylesheets="@style.css" text="Message" />
+            <Label layoutX="30.0" layoutY="153.0" styleClass="textt" stylesheets="@style.css" text="Sujet_Debat" />
+            <Label layoutX="23.0" layoutY="45.0" styleClass="maintext" stylesheets="@style.css" text="MODIFY YOUR Message" />
+            <Button fx:id="SuppBtn" layoutX="132.0" layoutY="279.0" mnemonicParsing="false" onAction="#onSupprimerClicked" prefHeight="26.0" prefWidth="82.0" styleClass="normalMainBtn" stylesheets="@style.css" text="supprimer" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
