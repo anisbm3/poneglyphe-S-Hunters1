@@ -22,7 +22,7 @@ public class Main {
         Debat d4 = new Debat("AOT","aaaaaa","Eren");
 
 
-        Commentaire c1 = new Commentaire("salem",16,18,4);
+        //Commentaire c1 = new Commentaire("salem",16,18,4);
 
 
         ServiceDebat servicesD = new ServiceDebat();
@@ -31,9 +31,9 @@ public class Main {
         // ajouter les debats
 
 
-       servicesD.ajouter(d3);
+       //servicesD.ajouter(d3);
 
-        servicesC.ajouter(c1);
+        //servicesC.ajouter(c1);
 
 
         //Affichage Debat
@@ -48,11 +48,11 @@ public class Main {
 
         //Affichage Commentaire
 
-        try {
+       /* try {
             System.out.println(servicesC.afficher());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }
+        }*/
 
 
 

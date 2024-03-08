@@ -7,6 +7,13 @@ public class Debat {
     String Description_Debat;
     String Sujet_Debat;
 
+    /*public int getNote_Anime() {
+        return Note_Anime;
+    }
+
+    public void setNote_Anime(int Note_Anime) {
+        this.Note_Anime = Note_Anime;
+    }*/
 
     public int getID_Debat() {
         return ID_Debat;
@@ -51,9 +58,9 @@ public class Debat {
                 '}';
     }
 
-    public Debat(int ID_Debat, String Nom_Anime, String Description_Debat, String Sujet_Debat) {
+    public Debat(int ID_Debat, String Description_Debat, String Sujet_Debat) {
         this.ID_Debat = ID_Debat;
-        this.Nom_Anime = Nom_Anime;
+        //this.Nom_Anime = Nom_Anime;
         this.Description_Debat = Description_Debat;
         this.Sujet_Debat = Sujet_Debat;
     }
@@ -70,4 +77,6 @@ public class Debat {
         this.Description_Debat = Description_Debat;
         this.Sujet_Debat = Sujet_Debat;
     }
+
+
 }

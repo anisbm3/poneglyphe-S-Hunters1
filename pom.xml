@@ -12,24 +12,68 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>17.0.1</javafx.version>
+        <mysql.connector.version>8.0.27</mysql.connector.version>
+        <poi.version>5.2.7</poi.version>
     </properties>
-   <dependencies>
-       <dependency>
-           <groupId>mysql</groupId>
-           <artifactId>mysql-connector-java</artifactId>
-           <version>8.0.33</version>
-       </dependency>
-       <dependency>
-           <groupId>org.openjfx</groupId>
-           <artifactId>javafx-fxml</artifactId>
-           <version>21.0.2</version>
-       </dependency>
-       <dependency>
-           <groupId>org.openjfx</groupId>
-           <artifactId>javafx-controls</artifactId>
-           <version>21.0.2</version>
-       </dependency>
-   </dependencies>
+
+    <dependencies>
+        <!-- MySQL Connector/J -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+        <!-- Apache POI for Excel -->
+        <!--  <dependency>
+             <groupId>org.apache.poi</groupId>
+             <artifactId>poi</artifactId>
+             <version>4.1.2</version>
+         </dependency>
+
+         <dependency>
+             <groupId>org.apache.poi</groupId>
+             <artifactId>poi-ooxml</artifactId>
+             <version>4.1.2</version>
+         </dependency>
+         <dependency>
+             <groupId>org.apache.commons</groupId>
+             <artifactId>commons-compress</artifactId>
+             <version>1.21</version>  Update to the latest non-vulnerable version -->
+
+            <!-- Apache POI for Excel -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>4.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>4.1.2</version>
+            </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+
+
+        <!-- JavaFX -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>17.0.6</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -37,9 +81,9 @@
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
-         <configuration>
-                            <mainClass>test.MainFX</mainClass>
-                        </configuration>
+                <configuration>
+                    <mainClass>test.MainFX</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

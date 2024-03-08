@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="Home_btn" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterDebatsController">
+   <children>
+      <Label layoutX="191.0" layoutY="51.0" prefHeight="18.0" prefWidth="128.0" text="Gestion Debat" />
+      <Label layoutX="39.0" layoutY="115.0" text="Sujet Debat" />
+      <Label layoutX="41.0" layoutY="152.0" text="Description" />
+      <Label layoutX="43.0" layoutY="191.0" prefHeight="19.0" prefWidth="96.0" text="Nom Anime " />
+      <TextField fx:id="nomDEBAT" layoutX="141.0" layoutY="111.0" />
+      <TextField fx:id="descDebat" layoutX="141.0" layoutY="148.0" />
+      <TextField fx:id="AnimeDebat" layoutX="141.0" layoutY="187.0" />
+      <Button fx:id="ajouterbtn" layoutX="41.0" layoutY="282.0" mnemonicParsing="false" onAction="#OnClickAjouterDebat" prefHeight="42.0" prefWidth="138.0" styleClass="normalBtn" stylesheets="@style.css" text="ajouter" />
+      <Button fx:id="afficherBtn" layoutX="191.0" layoutY="282.0" mnemonicParsing="false" onAction="#OnClickAfficherBtn" prefHeight="42.0" prefWidth="138.0" styleClass="normalBtn" stylesheets="@style.css" text="afficher" />
+      <Button fx:id="front" layoutX="338.0" layoutY="282.0" mnemonicParsing="false" onAction="#OnClickFront" prefHeight="42.0" prefWidth="138.0" styleClass="normalBtn" stylesheets="@style.css" text="Front Debat" />
+      <Button fx:id="front1" layoutX="493.0" layoutY="282.0" mnemonicParsing="false" onAction="#OnClickFrontCommentaire" prefHeight="42.0" prefWidth="138.0" styleClass="normalBtn" stylesheets="@style.css" text="Front Commentaire" />
+      <Button fx:id="ajoutercommentbtn" layoutX="384.0" layoutY="194.0" mnemonicParsing="false" onAction="#OnClickTakemetocomment" prefHeight="42.0" prefWidth="138.0" styleClass="normalBtn" stylesheets="@style.css" text="ajouter commentaire" />
+   </children>
+</AnchorPane>

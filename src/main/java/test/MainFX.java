@@ -11,7 +11,7 @@ import java.io.IOException;
 public class MainFX extends Application {
    public void start(Stage primaryStage){
        try {
-           Parent root = FXMLLoader.load(getClass().getResource("/ajouterDebat.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("/AjouterDebats.fxml"));
            Scene scene = new Scene(root);
            primaryStage.setScene(scene);
            primaryStage.show();

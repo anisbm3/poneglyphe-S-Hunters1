@@ -1,96 +1,132 @@
 package services;
+import entities.Debat;
 import utils.MyDB;
 import entities.Commentaire;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ServiceCommentaire implements IService<Commentaire> {
     private Connection connection;
 
-    public ServiceCommentaire(){
-        connection= MyDB.getInstance().getConnection();
+    public ServiceCommentaire() {
+        connection = MyDB.getInstance().getConnection();
     }
+    final ServiceDebat SD =new ServiceDebat();
+
     @Override
-    public void ajouter(Commentaire commentaire)  {
-        String req ="INSERT INTO commentaire (Message,ID_User,ID_Debat,BLOCK) VALUES (?,?,?,?)";
-        try{
-            PreparedStatement stm =connection.prepareStatement(req);
-            stm.setString(1,commentaire.getMessage());
-            stm.setInt(2,commentaire.getID_User());
-            stm.setInt(3,commentaire.getID_Debat());
-            stm.setInt(4,commentaire.getBLOCK());
-            stm.executeUpdate();
+    public void ajouter(Commentaire commentaire) throws SQLException {
+        String req = "INSERT INTO commentaire (Sujet_Debat, Message) VALUES (?, ?)";
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setString(1, commentaire.getSujet_Debat());
+            pre.setString(2, commentaire.getMessage());
 
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
 
+            pre.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error adding event: " + e.getMessage());
+        }
     }
+    public String getSujet_debatByID_Commentaire(int ID_Commentaire) throws SQLException {
+        String nomCommentaire = null;
+        String req = "SELECT Sujet_Debat FROM Commentaire WHERE ID_Commentaire=?";
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setInt(1, ID_Commentaire);
+            try (ResultSet result = pre.executeQuery()) {
+                if (result.next()) {
+                    nomCommentaire = result.getString("NOM_Event");
+                }
+            }
+        }
+        return nomCommentaire;
+    }
+
 
     @Override
     public void modifier(Commentaire commentaire) throws SQLException {
-        String req = "update commentaire set Message=? ,ID_User=?, ID_Debat=?, BLOCK=? where ID_Commentaire=?";
-        PreparedStatement pre = connection.prepareStatement(req);
-        pre.setString(1,commentaire.getMessage());
-        pre.setInt(2,commentaire.getID_User());
-        pre.setInt(3,commentaire.getID_Debat());
-        pre.setInt(4,commentaire.getBLOCK());
-        pre.setInt(5, commentaire.getID_Commentaire());
+        String req = "UPDATE commentaire SET Sujet_Debat=?, Message=?, ID_USER=?, BLOCK=? WHERE ID_Commentaire=?";
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setString(1, commentaire.getSujet_Debat());
+            pre.setString(2, commentaire.getMessage());
+            pre.setInt(3, commentaire.getID_User());
+            pre.setString(4, commentaire.getBLOCK());
+            pre.setInt(5, commentaire.getID_Commentaire());
 
-        pre.executeUpdate();
-
+            pre.executeUpdate();
+        }
+    }
+    @Override
+    public void supprimer(Commentaire commentaire) throws SQLException {
+        String req = "DELETE FROM commentaire WHERE ID_Commentaire=?";
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setInt(1, commentaire.getID_Commentaire());
+            pre.executeUpdate();
+        }
     }
 
     @Override
-    public void supprimer(Commentaire commentaire) throws SQLException {
-
-        String req = " delete from commentaire where ID_Commentaire=?";
-        PreparedStatement pre = connection.prepareStatement(req);
-        pre.setInt(1,commentaire.getID_Commentaire());
-        pre.executeUpdate();
-
+    public void supprimerParId(int idCommentaire) throws SQLException {
+        String req = "DELETE FROM commentaire WHERE ID_Commentaire=?";
+        try (PreparedStatement pre = connection.prepareStatement(req)) {
+            pre.setInt(1, idCommentaire);
+            pre.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du commentaire : " + e.getMessage());
+        }
     }
 
     @Override
     public List<Commentaire> afficher() throws SQLException {
+        String req = "SELECT * FROM commentaire ";
+        try (Statement ste = connection.createStatement(); ResultSet res = ste.executeQuery(req)) {
+            List<Commentaire> list = new ArrayList<>();
+            while (res.next()) {
+                Commentaire commentaire = new Commentaire();
+                commentaire.setID_Commentaire(res.getInt("ID_Commentaire"));
+                commentaire.setSujet_Debat(res.getString("Sujet_Debat"));
+                commentaire.setMessage(res.getString("Message"));
+                commentaire.setID_User(res.getInt("ID_User"));
+                commentaire.setBLOCK(res.getString("BLOCK"));
 
-       /* String req = "SELECT debat.*, debat.ID_Debat" +
-                "FROM debat " + "INNER JOIN commentaire ON commentaire.ID_Debat = debat.ID_Debat";*/
-        String req = "SELECT commentaire.*, debat.ID_Debat " +
-                "FROM commentaire " +
-                "INNER JOIN debat ON commentaire.ID_Debat = debat.ID_Debat";
-        //String req = "select * from commentaire";
-        Statement ste = connection.createStatement();
-        ResultSet res = ste.executeQuery(req);
-        List<Commentaire> list =new ArrayList<>();
-        while (res.next()){
-            Commentaire c = new Commentaire();
-            c.setID_Commentaire(res.getInt(1));
-            c.setMessage(res.getString("Message"));
-            c.setID_User(res.getInt(3));
-            c.setID_Debat(res.getInt("ID_Debat"));
-            c.setBLOCK(res.getInt("BLOCK"));
 
-            list.add(c);
+
+                list.add(commentaire);
+            }
+            return list;
+        }
+    }
+
+
+    public List<Commentaire> afficherbyNOM(String tri) {
+        String req = "SELECT * FROM commentaire";
+        List<Commentaire> list = new ArrayList<>();
+        try (Statement ste = connection.createStatement(); ResultSet res = ste.executeQuery(req)) {
+            while (res.next()) {
+                Commentaire commentaire = new Commentaire();
+                commentaire.setID_Commentaire(res.getInt(1));
+                commentaire.setSujet_Debat(res.getString(2));
+                commentaire.setMessage(res.getString(3));
+                commentaire.setID_User(res.getInt(4));
+                commentaire.setBLOCK(res.getString(5));
+
+
+                list.add(commentaire);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving events: " + e.getMessage());
+        }
+        if (tri.equals("ASC"))
+        {
+            Collections.sort(list, Comparator.comparing(Commentaire::getSujet_Debat));}
+        else {
+            Collections.sort(list, Comparator.comparing(Commentaire::getSujet_Debat).reversed());
         }
         return list;
     }
-    public void supprimerParId(int Id_Debat) throws SQLException {
 
-        try {
-            // Préparer la requête de suppression
-            String req = "delete from debat where ID_Debat=?";
-            PreparedStatement pre = connection.prepareStatement(req);
 
-            pre.setInt(1, Id_Debat);
-            pre.executeUpdate();
-        } catch (SQLException e) {
-            // Gérer les erreurs SQL
-            System.out.println("Erreur lors de la suppression de la réservation : " + e.getMessage());
-        }
-    }
+
 
 }
