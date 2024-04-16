@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.javafinallgestionevents.controllers.FrontReservationController">
+   <children>
+      <ScrollPane fx:id="ScrollPaneReservation" layoutX="24.0" layoutY="74.0" prefHeight="312.0" prefWidth="313.0">
+         <content>
+            <VBox fx:id="ReservationVbox" prefHeight="408.0" prefWidth="656.0" />
+         </content>
+      </ScrollPane>
+      <AnchorPane layoutX="351.0" layoutY="62.0" prefHeight="319.0" prefWidth="249.0">
+         <children>
+            <Label layoutX="14.0" layoutY="69.0" text="nom_reservation" />
+            <Label layoutX="19.0" layoutY="104.0" prefHeight="18.0" prefWidth="78.0" text="nb-places" />
+            <Label layoutX="19.0" layoutY="143.0" text="etat" />
+            <Label layoutX="19.0" layoutY="177.0" text="user_id" />
+            <Label layoutX="3.0" layoutY="213.0" prefHeight="18.0" prefWidth="78.0" text="evenement_id" />
+            <TextField fx:id="nomReservationUpdate" layoutX="114.0" layoutY="65.0" prefHeight="26.0" prefWidth="123.0" />
+            <TextField fx:id="nbPlacesUpdate" layoutX="87.0" layoutY="101.0" />
+            <TextField fx:id="etatReservationUpdate" layoutX="87.0" layoutY="139.0" />
+            <ChoiceBox fx:id="userIdUpdate" layoutX="87.0" layoutY="173.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="EventIdUpdateReservation" layoutX="87.0" layoutY="209.0" prefWidth="150.0" />
+            <Button fx:id="updateReservationBtn" layoutX="32.0" layoutY="258.0" mnemonicParsing="false" onAction="#OnClickedReserverUpdate" text="update" />
+            <Button fx:id="deleteReservationBtn" layoutX="150.0" layoutY="258.0" mnemonicParsing="false" onAction="#OnClickedDeleteReservation" text="Delete" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="14.0" layoutY="6.0" prefHeight="68.0" prefWidth="569.0">
+         <children>
+            <Label layoutX="234.0" layoutY="14.0" prefHeight="18.0" prefWidth="142.0" text="Reservation Front" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

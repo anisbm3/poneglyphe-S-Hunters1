@@ -1,0 +1,20 @@
+/* Style pour les étiquettes d'événement */
+.event-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px;
+}
+
+/* Style pour les images */
+.event-image {
+    -fx-fit-width: 200px;
+    -fx-preserve-ratio: true;
+    -fx-padding: 10px 0;
+}
+
+/* Style pour les séparateurs */
+.event-separator {
+    -fx-background-color: black;
+    -fx-opacity: 0.5;
+    -fx-margin: 10px 0;
+}
